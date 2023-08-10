@@ -1,0 +1,26 @@
+# Default values for configmaps.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @section Configuration for custom configmaps
+## @param configmaps Configuration for custom configmaps
+## Example:
+## configmaps:
+##   config-for-k8s:
+##     my-database-config.yaml: |
+##       uptime: 10000000 hours
+##     test.yaml: |
+##       test data
+##       which we
+##       should put
+##       in this
+##       configmap
+##   example-for-devs:
+##     multi.yaml: |
+##       test data
+##       which we
+##       should put
+##       in this
+##       configmap
+##
+configmaps: {}

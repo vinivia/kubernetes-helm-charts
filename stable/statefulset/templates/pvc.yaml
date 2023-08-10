@@ -1,0 +1,22 @@
+{{- if .Values.persistence.enabled -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "k8s-common.names.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels: {{- include "k8s-common.labels.standard" . | nindent 4 }}
+  annotations:
+    {{- if .Values.persistence.annotations }}
+    {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.persistence.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    volume.alpha.kubernetes.io/storage-class: {{ ternary "default" (trimPrefix "storageClassName: " (include "k8s-common.storage.class" (dict "persistence" .Values.persistence "global" .Values.global))) (empty (include "k8s-common.storage.class" (dict "persistence" .Values.persistence "global" .Values.global))) }}
+spec:
+  accessModes:
+  {{- range .Values.persistence.accessModes }}
+    - {{ . | quote }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+  {{- include "k8s-common.storage.class" (dict "persistence" .Values.persistence "global" .Values.global) | nindent 2 }}
+{{- end -}}

@@ -1,0 +1,13 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Idea files
+.idea/
+*.iml
+
+charts/
+uploads/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+deploy.sh
+Chart.lock

@@ -1,0 +1,11 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "configmaps": {
+            "type": "object",
+            "description": "Configuration for custom configmaps",
+            "default": {}
+        }
+    }
+}

@@ -1,0 +1,188 @@
+global:
+  org: "core"
+  domain: "example.com"
+  serviceName: "test"
+  production: true
+  environmentName: "stage"
+  image:
+    registry: "1234567890.dkr.ecr.eu-central-1.amazonaws.com"
+    repository: "k8s/example-service"
+    tag: "dev"
+    pullPolicy: "IfNotPresent"
+statefulset:
+  replicaCount: 3
+  nameOverride: ""
+  fullnameOverride: ""
+  podAnnotations:
+    foo.example: bar
+  priorityClassName: "critical"
+  podSecurityContext:
+    fsGroup: 1002
+    runAsUser: 1003
+    runAsGroup: 65536
+    runAsNonRoot: true
+  securityContext:
+   allowPrivilegeEscalation: false
+   readOnlyRootFilesystem: true
+   capabilities:
+     drop: ["ALL"]
+  volumes:
+    shared-files:
+      mountPath: /tmp/shared
+      emptyDir: true
+    central-config:
+      mountPath: /central-config
+      configMap:
+        application.yaml: |
+          configserver:
+            name:  JHipster Registry
+            status: Connected to the JHipster Registry running in Kubernetes
+  command:
+    - sh
+  args:
+    - hello
+  nodeSelector:
+    disktype: ssd
+  tolerations:
+    - key: "key1"
+      operator: "Equal"
+      value: "value1"
+      effect: "NoSchedule"
+  podAffinityPreset: hard
+  podAntiAffinityPreset: soft
+  nodeAffinityPreset:
+    type: soft
+    key: topology.kubernetes.io/zone
+    values:
+      - eu-central-1a
+      - eu-central-1b
+      - eu-central-1c
+  lifecycle:
+    enabled: true
+    postStartCommand: echo Hello
+    preStopCommand: echo Bye
+  podDisruptionBudget:
+    create: true
+    minAvailable: 1
+    maxUnavailable: 1
+  serviceAccount:
+    create: true
+    annotations:
+      example.foo: bar
+    name: example
+  env:
+    values:
+      FOO1: "bar-{{ .Values.global.environmentName }}"
+    refs:
+      FOO2: metadata.name
+    configmap:
+      API_CONFIG:
+        name: myConfigMap
+        key: foo.txt
+    secret:
+      API_PASSWORD:
+        name: mySecret
+        secret: password
+    vaultSecret:
+      API_KEY:
+        path: mySecret
+        secret: password
+  initContainer:
+    enabled: true
+    image:
+      repository: "abc.def"
+      tag: "latest"
+      pullPolicy: "IfNotPresent"
+    command: ["sh", "-c"]
+    args: ["sleep 1"]
+    resources:
+      limits:
+        cpu: 50m
+        memory: 50Mi
+  service:
+    enabled: true
+    name: "z"
+    type: "ClusterIP"
+    port: 80
+    ports:
+      http: 80
+    healthCheckPath: "/"
+  livenessProbe:
+    enabled: true
+    healthCheckPath:
+    initialDelaySeconds: 10
+    failureThreshold: 3
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  readinessProbe:
+    enabled: true
+    healthCheckPath:
+    failureThreshold: 3
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  ingress:
+    enabled: true
+    public: true
+    subDomain: true
+    annotations: {}
+    extraHosts:
+     - host: example.local
+       paths:
+         - "/"
+  ingressExtra:
+    enabled: true
+    public: true
+    subDomain: true
+    annotations: {}
+    host: simple.host
+    path: "/"
+    extraHosts:
+      - host: example.local
+        paths:
+          - "/"
+  metrics:
+    enabled: true
+    path: /metrics
+    serviceMonitor:
+      enabled: true
+      interval: 10s
+      scrapeTimeout: 10s
+      selector:
+    rules:
+      enabled: true
+      spec:
+        - alert: ApplicationUnstable
+          expr: |
+            absent(example_app_info)
+          for: 15m
+          labels:
+            severity: critical
+          annotations:
+            summary: "[Example] No reported applications"
+            description: >
+               Example has not reported any applications data for the past 15 minutes which
+               means that it must be down or not functioning properly. This needs to be
+               resolved for this cloud to continue to maintain state.
+  resources:
+    limits:
+      cpu: 50m
+      memory: 50Mi
+    requests:
+      cpu: 10m
+      memory: 50Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 2
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          targetAverageUtilization: 60
+      - type: Resource
+        resource:
+          name: memory
+          targetAverageUtilization: 60

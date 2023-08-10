@@ -1,0 +1,40 @@
+{{- if and .Values.ingressExtra.enabled .Values.service.enabled ( eq .Values.service.type "ClusterIP") -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ template "k8s-common.names.fullname" . }}-extra
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
+  annotations:
+  {{- if .Values.ingressExtra.annotations }}
+  {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.ingressExtra.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- include "k8s-common.ingressExtra.annotations" . | nindent 4 }}
+spec:
+  rules:
+    - host: {{ template "k8s-common.ingress.extraHost" . }}
+      http:
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "ssl-redirect" "servicePort" "use-annotation" "context" .)  | nindent 14 }}
+
+          - path: {{ .Values.ingressExtra.path }}
+            pathType: {{ .Values.ingressExtra.pathType }}
+            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" (include "k8s-common.ingress.serviceName" .) "servicePort" "http" "context" .)  | nindent 14 }}
+
+    {{- range .Values.ingressExtra.extraHosts }}
+    - host: {{ required "A valid ingressExtra.extraHosts.host entry required!" .host | quote }}
+      http:
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "ssl-redirect" "servicePort" "use-annotation" "context" $)  | nindent 14 }}
+
+          {{- range .paths }}
+          - path: {{ . }}
+            pathType: {{ $.Values.ingressExtra.pathType }}
+            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" (include "k8s-common.ingress.serviceName" $) "servicePort" "http" "context" $)  | nindent 14 }}
+          {{- end }}
+  {{- end }}
+{{- end }}

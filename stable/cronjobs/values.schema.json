@@ -1,0 +1,183 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "org": {
+                    "type": "string",
+                    "description": "Company Organization Unit(product group).",
+                    "default": ""
+                },
+                "serviceName": {
+                    "type": "string",
+                    "description": "Name of the service. Affects public DNS.",
+                    "default": ""
+                },
+                "production": {
+                    "type": "boolean",
+                    "description": "Will the service run in production environment",
+                    "default": false
+                },
+                "environmentName": {
+                    "type": "string",
+                    "description": "Name of the environment, user-specified.",
+                    "default": "dev"
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "Name of the image,",
+                            "default": ""
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "Tag of the image",
+                            "default": "latest"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The default pull policy is IfNotPresent which causes",
+                            "default": "IfNotPresent"
+                        }
+                    }
+                }
+            }
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "By default, name uses '{{ .Chart.Name }}'.",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.",
+            "default": ""
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "description": "Pod security context",
+            "default": {}
+        },
+        "securityContext": {
+            "type": "object",
+            "description": "Security context for the container",
+            "default": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "podAffinityPreset": {
+            "type": "string",
+            "description": "Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`",
+            "default": ""
+        },
+        "podAntiAffinityPreset": {
+            "type": "string",
+            "description": "Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`",
+            "default": "soft"
+        },
+        "nodeAffinityPreset": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`",
+                    "default": ""
+                },
+                "key": {
+                    "type": "string",
+                    "description": "Node label key to match Ignored if `affinity` is set.",
+                    "default": ""
+                },
+                "values": {
+                    "type": "array",
+                    "description": "Node label values to match. Ignored if `affinity` is set.",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": false
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the service account",
+                    "default": {}
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the service account to use.",
+                    "default": ""
+                }
+            }
+        },
+        "env": {
+            "type": "object",
+            "properties": {
+                "values": {
+                    "type": "object",
+                    "description": "generic Environment variables that get added to the container",
+                    "default": {}
+                },
+                "refs": {
+                    "type": "object",
+                    "description": "Environment variables as references to the pod",
+                    "default": {}
+                },
+                "configmap": {
+                    "type": "object",
+                    "description": "Environment variables that get added to the container from ConfigMap",
+                    "default": {}
+                },
+                "secret": {
+                    "type": "object",
+                    "description": "Kubernetes secrets that get added to the container",
+                    "default": {}
+                },
+                "vaultSecret": {
+                    "type": "object",
+                    "description": "Kubernetes secrets that get added to the container from Hashicorp Vault",
+                    "default": {}
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "limits": {
+                    "type": "object",
+                    "description": "The resources limits for the container",
+                    "default": {}
+                },
+                "requests": {
+                    "type": "object",
+                    "description": "The requests resources for the container",
+                    "default": {}
+                }
+            }
+        }
+    }
+}

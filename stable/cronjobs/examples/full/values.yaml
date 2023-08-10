@@ -1,0 +1,49 @@
+global:
+  org: "core"
+  serviceName: "test"
+  production: true
+  environmentName: "stage"
+  image:
+    registry: "1234567890.dkr.ecr.eu-central-1.amazonaws.com"
+    repository: "k8s/example-service"
+    tag: "dev"
+    pullPolicy: "IfNotPresent"
+cronjobs:
+  podSecurityContext:
+    fsGroup: 1001
+    runAsUser: 1001
+    runAsGroup: 65534
+    runAsNonRoot: true
+  env:
+    values:
+      FOO: "bar-{{ .Values.global.environmentName }}"
+    vaultSecret:
+      API_KEY:
+        path: mySecret
+        secret: password
+  cronjobs:
+    test:
+      concurrencyPolicy: Forbid
+      suspend: false
+      schedule: "0 * * * *"
+      command: ["php"]
+      args: ["bin/console", "exec:something"]
+      startingDeadlineSeconds: 20
+      failedJobsHistoryLimit: 10
+      successfulJobsHistoryLimit: 2
+      backoffLimit: 6 # number of times it will retries before it is considered failed. The default is 6.
+      annotations:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 256Mi
+      env:
+        values:
+          FOO: "Bar"
+        vaultSecret:
+          API_KEY_A:
+            path: mySecret
+            secret: password

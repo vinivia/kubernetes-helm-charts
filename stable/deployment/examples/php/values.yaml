@@ -1,0 +1,149 @@
+global:
+  org: "core"
+  serviceName: "test"
+  production: true
+  environmentName: "stage"
+  image:
+    repository: "dcb9/php-fpm-oneapm-helloworld"
+    tag: "latest"
+    pullPolicy: "IfNotPresent"
+
+deployment:
+  initContainers:
+    - nameOverride: copy-php-static-content
+      command: ["sh", "-c"]
+      args: ["cp -r /var/www/html/public/* /var/www/html/shared"]
+      volumes:
+        shared-files:
+          mountPath: "/var/www/html/shared"
+  sidecarContainers:
+    - nameOverride: nginx
+      image:
+        registry: "registry.hub.docker.com"
+        repository: "nginx"
+        tag: "1.21.6"
+        pullPolicy: "IfNotPresent"
+      service:
+        ports:
+          http: 80
+      livenessProbe:
+        enabled: true
+        healthCheckPath: "/healthz"
+      readinessProbe:
+        enabled: true
+        healthCheckPath: "/healthz"
+      volumes:
+        shared-files:
+          mountPath: "/var/www/html/public"
+        nginx-config:
+          mountPath: /etc/nginx/conf.d
+  ingress:
+    enabled: true
+
+  env:
+    values:
+      SQS_NAME_PREFIX: "analytics_master_"
+  resources:
+    requests:
+      cpu: "2000m"
+      memory: "4G"
+    limits:
+      cpu: "4000m"
+      memory: "8G"
+  service:
+    ports:
+      phpfpm: 9000
+
+  livenessProbe:
+    tcpSocket: 9000
+  readinessProbe:
+    tcpSocket: 9000
+  volumes:
+    php-config:
+      mountPath: /usr/local/etc/php-fpm.d
+      configMap:
+        zzz-environment.conf: |
+          [www]
+          pm = dynamic
+          ; Depends on memory_limit. One child per 60M
+          pm.max_children = 100
+          ; 30% of the max_children
+          pm.start_servers = 30
+          ; half of the start_servers
+          pm.min_spare_servers = 15
+          ; 30% of the max_children
+          pm.max_spare_servers = 30
+          ; Affects children limit. One child per 60M
+          ; Should be approx 75% of the resource.limits.memory
+          php_admin_value[memory_limit] = 6000M
+        zzz-global.conf: |
+          [www]
+          user = www-data
+          group = www-data
+          listen = 0.0.0.0:9000
+          listen.owner = www-data
+          listen.group = www-data
+          listen.mode = 0666
+          clear_env = no
+          pm.status_path = /status
+          ping.path = /ping
+          catch_workers_output = true
+          php_admin_flag[log_errors] = on
+          php_admin_value[error_log] = /proc/self/fd/2
+    shared-files:
+      emptyDir: true
+    nginx-config:
+      configMap:
+        site.conf: |
+          log_format json escape=json '{'
+                '"host":"$host",'
+                '"time_local":"$time_local",'
+                '"remote_addr_external":"$http_x_forwarded_for",'
+                '"remote_addr_internal":"$remote_addr",'
+                '"remote_user":"$remote_user",'
+                '"request":"$request",'
+                '"status":"$status",'
+                '"body_bytes_sent":"$body_bytes_sent",'
+                '"request_time":"$request_time",'
+                '"http_referrer":"$http_referer",'
+                '"http_user_agent":"$http_user_agent"'
+          '}';
+          server {
+            listen 80 default_server;
+            root /var/www/html/public;
+            server_name _;
+            index index.php index.html;
+            charset utf-8;
+            client_max_body_size 128m;
+            access_log /dev/stdout json;
+            error_log /dev/stderr error;
+            location /healthz {
+              access_log off;
+              return 200 "Ok\n";
+            }
+            location ~ ^/(status|ping|health-check|lb\.php)$ {
+              access_log off;
+              allow 10.0.0.0/8;
+              deny all;
+              fastcgi_pass {{ template "k8s-common.ingress.serviceName" . }}:9000;
+              fastcgi_index index.php;
+              include fastcgi_params;
+              fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            }
+            location / {
+              try_files $uri $uri/ /index.php$is_args$args;
+            }
+            location ~ \.php$ {
+              try_files $uri =404;
+              fastcgi_split_path_info ^(.+\.php)(/.+)$;
+              fastcgi_pass {{ template "k8s-common.ingress.serviceName" . }}:9000;
+              fastcgi_index index.php;
+              include fastcgi_params;
+              fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+              fastcgi_param PATH_INFO $fastcgi_path_info;
+              fastcgi_param HTTPS on;
+              fastcgi_read_timeout 3000;
+              fastcgi_buffer_size 32k;
+              fastcgi_buffers 4 32k;
+            }
+          }

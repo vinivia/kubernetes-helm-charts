@@ -1,0 +1,23 @@
+# Default values for vaultsecrets.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @section Kubernetes secrets
+## Example:
+## kubeSecrets:
+##    secret:
+##      - name: foo
+##        secret: password
+##        path: mySecret
+## It will be find in /secret-<global.org>/<prod|dev>/k8s/<release.namespace>/
+##
+## @param kubeSecrets [object] Secrets that get added to the container from Hashicorp Vault
+## Objects keys should be all lowercase or dashes/underscores
+## Example:
+## kubeSecrets:
+##   example:
+##   - name: foo
+##     secret: password
+##     path: mySecret
+##
+kubeSecrets: {}

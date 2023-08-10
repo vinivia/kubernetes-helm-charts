@@ -1,0 +1,83 @@
+{{- $allCronJobs := default (dict) .Values.cronjobs -}}
+{{- $namePrefix := (include "k8s-common.names.fullname" .) }}
+{{- range $key, $value := $allCronJobs }}
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ printf "%s-%s" $namePrefix $key | trunc 52 | trimSuffix "-"}}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "k8s-common.labels.standard" $ | nindent 4 }}
+    app.kubernetes.io/component: cronjob
+  {{- if $value.annotations }}
+  annotations: {{ toYaml $value.annotations | indent 4 }}
+  {{- end }}
+spec:
+  schedule: {{ $value.schedule | quote }}
+  suspend: {{ $value.suspend | default false }}
+  {{- if $.Values.global.production }}
+  concurrencyPolicy: {{ $value.concurrencyPolicy | default "Forbid" }}
+  {{- else }}
+  concurrencyPolicy: Forbid
+  {{- end }}
+
+  {{- if $value.startingDeadlineSeconds }}
+  startingDeadlineSeconds: {{ $value.startingDeadlineSeconds }}
+  {{- end }}
+
+  failedJobsHistoryLimit: {{ $value.failedJobsHistoryLimit | default 3 }}
+  successfulJobsHistoryLimit: {{ $value.successfulJobsHistoryLimit | default 1 }}
+
+  jobTemplate:
+    spec:
+      {{- if $.Values.global.production }}
+      backoffLimit: {{ $value.backoffLimit | default 6  }}
+      {{- else }}
+      backoffLimit: 0
+      {{- end }}
+      template:
+        spec:
+          {{- if $.Values.podSecurityContext }}
+          securityContext: {{ toYaml $.Values.podSecurityContext | nindent 12 }}
+          {{- end }}
+          {{- if $.Values.affinity }}
+          affinity: {{- include "k8s-common.tplvalues.render" (dict "value" $.Values.affinity "context" $) | nindent 12 }}
+          {{- else }}
+          affinity:
+            {{- if $.Values.podAffinityPreset }}
+            podAffinity: {{- include "k8s-common.affinities.pods" (dict "type" $.Values.podAffinityPreset "context" $) | nindent 14 }}
+            {{- end }}
+            {{- if $.Values.podAntiAffinityPreset }}
+            podAntiAffinity: {{- include "k8s-common.affinities.pods" (dict "type" $.Values.podAntiAffinityPreset "context" $) | nindent 14 }}
+            {{- end }}
+            {{- if $.Values.nodeAffinityPreset.type }}
+            nodeAffinity: {{- include "k8s-common.affinities.nodes" (dict "type" $.Values.nodeAffinityPreset.type "key" $.Values.nodeAffinityPreset.key "values" $.Values.nodeAffinityPreset.values) | nindent 14 }}
+            {{- end }}
+          {{- end }}
+          {{- if $.Values.nodeSelector }}
+          nodeSelector: {{ toYaml $.Values.nodeSelector | nindent 12 }}
+          {{- end }}
+          {{- if $.Values.tolerations }}
+          tolerations: {{ toYaml $.Values.tolerations | nindent 12 }}
+          {{- end }}
+          restartPolicy: "Never"
+          serviceAccountName: {{ include "k8s-common.serviceAccount.name" $ }}
+          containers:
+            - name: {{ $key }}
+              image: "{{ include "k8s-common.images.image"  $ }}"
+              imagePullPolicy: {{ $.Values.global.image.pullPolicy }}
+              env:
+                {{- include "cronjobs.globalenv.value" $ | indent 16 }}
+                {{- include "cronjobs.job.value" $value | indent 16 }}
+                {{- include "cronjobs.job.vaultSecret" (dict "jobName" $key "job" $value "global" $) | indent 16 }}
+              {{- if $value.command }}
+              command: {{- toYaml $value.command | nindent 16 }}
+              {{- end }}
+              {{- if $value.args }}
+              args: {{ toYaml $value.args | nindent 16 }}
+              {{- end }}
+              {{- with merge (default dict $value.resources) (default dict $.Values.resources) }}
+              resources: {{ toYaml . | nindent 16 }}
+              {{- end }}
+{{- end }}

@@ -1,0 +1,15 @@
+{{- $allConfigMaps := default (dict) .Values.configmaps -}}
+{{- range $key, $value := $allConfigMaps }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "k8s-common.names.fullname" $ }}-{{ $key }}
+  labels:
+    tier: configmap
+    {{- include "k8s-common.labels.standard" $ | nindent 4 }}
+data:
+{{- range $file, $content := $value }}
+  {{ $file }}: {{ toYaml $content | indent 2 }}
+{{- end -}}
+{{- end -}}

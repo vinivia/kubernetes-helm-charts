@@ -1,0 +1,34 @@
+{{- if and .Values.service.enabled ( eq .Values.service.type "ClusterIP")  -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "k8s-common.ingress.serviceName" . }}-http
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
+  annotations:
+  {{- if .Values.service.annotations }}
+  {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.service.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  type: ClusterIP
+  ports:
+    {{- range $key, $value := default (dict) .Values.service.ports }}
+    {{ if eq $key "http" }}
+    - name: {{ $key }}
+      port: {{ $value }}
+      targetPort: {{ $key }}
+      protocol: TCP
+    {{- end }}
+    {{- end }}
+    {{- range .Values.sidecarContainers }}
+    {{- range $key, $value := default (dict) (.service).ports }}
+    {{ if eq $key "http" }}
+    - name: {{ $key }}
+      port: {{ $value }}
+      targetPort: {{ $key }}
+      protocol: TCP
+    {{- end }}
+    {{- end }}
+    {{- end }}
+  selector: {{ include "k8s-common.labels.matchLabels" . | nindent 4 }}
+{{- end }}

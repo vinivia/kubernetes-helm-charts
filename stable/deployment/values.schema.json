@@ -1,0 +1,728 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "serviceName": {
+                    "type": "string",
+                    "description": "Name of the service. Affects public DNS.",
+                    "default": "example"
+                },
+                "org": {
+                    "type": "string",
+                    "description": "Company Organization Unit(product group).",
+                    "default": "example"
+                },
+                "environmentType": {
+                    "type": "string",
+                    "description": "Type of the environment, one of \"dev\", \"stage\", \"prod\".",
+                    "default": "dev"
+                },
+                "domain": {
+                    "type": "string",
+                    "description": "Company Root-level domain, expects",
+                    "default": ""
+                },
+                "production": {
+                    "type": "boolean",
+                    "description": "Will the service run in production environment",
+                    "default": false
+                },
+                "environmentName": {
+                    "type": "string",
+                    "description": "Name of the environment, user-specified.",
+                    "default": "dev"
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "Name of the image,",
+                            "default": ""
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "Tag of the image",
+                            "default": "latest"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The default pull policy is IfNotPresent which causes",
+                            "default": "IfNotPresent"
+                        }
+                    }
+                }
+            }
+        },
+        "nameOverride": {
+            "type": "string",
+            "description": "By default, name uses '{{ .Chart.Name }}'.",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.",
+            "default": ""
+        },
+        "replicaCount": {
+            "type": "number",
+            "description": "Number of the parallel-running containers. The controller will eventually make the size of the",
+            "default": 1
+        },
+        "podAnnotations": {
+            "type": "object",
+            "description": "Additional annotations to apply to the pod.",
+            "default": {}
+        },
+        "priorityClassName": {
+            "type": "string",
+            "description": "priorityClassName",
+            "default": ""
+        },
+        "podSecurityContext": {
+            "type": "object",
+            "description": "Pod security context",
+            "default": {}
+        },
+        "securityContext": {
+            "type": "object",
+            "description": "Security context for the container",
+            "default": {}
+        },
+        "vaultVolumesSupport": {
+            "type": "boolean",
+            "description": "support for vault secrets as files. Defaults false.",
+            "default": false
+        },
+        "volumes": {
+            "type": "object",
+            "description": "Container volumes configuration",
+            "default": {}
+        },
+        "command": {
+            "type": "array",
+            "description": "You can set a custom entrypoint for your docker container",
+            "default": [],
+            "items": {}
+        },
+        "args": {
+            "type": "array",
+            "description": "You can set a custom arguments for your docker container",
+            "default": [],
+            "items": {}
+        },
+        "nodeSelector": {
+            "type": "object",
+            "description": "Node labels for pod assignment",
+            "default": {}
+        },
+        "tolerations": {
+            "type": "array",
+            "description": "Tolerations for pod assignment",
+            "default": [],
+            "items": {}
+        },
+        "podAffinityPreset": {
+            "type": "string",
+            "description": "Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`",
+            "default": ""
+        },
+        "podAntiAffinityPreset": {
+            "type": "string",
+            "description": "Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`",
+            "default": "soft"
+        },
+        "preStopDelaySeconds": {
+            "type": "number",
+            "description": "pre-stop delay for graceful pod shutdown",
+            "default": 0
+        },
+        "nodeAffinityPreset": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`",
+                    "default": ""
+                },
+                "key": {
+                    "type": "string",
+                    "description": "Node label key to match Ignored if `affinity` is set.",
+                    "default": ""
+                },
+                "values": {
+                    "type": "array",
+                    "description": "Node label values to match. Ignored if `affinity` is set.",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "affinity": {
+            "type": "object",
+            "description": "Affinity for pod assignment",
+            "default": {}
+        },
+        "podDisruptionBudget": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a Pod disruption budget should be created",
+                    "default": false
+                },
+                "minAvailable": {
+                    "type": "number",
+                    "description": "Min available pods or percent of pods",
+                    "default": 1
+                },
+                "maxUnavailable": {
+                    "type": "number",
+                    "description": "Max non-available pods or percent of pods",
+                    "default": 1
+                }
+            }
+        },
+        "initContainers": {
+            "type": "array",
+            "description": "Configuration for the init container",
+            "default": [],
+            "items": {}
+        },
+        "sidecarContainers": {
+            "type": "array",
+            "description": "Configuration for the init container",
+            "default": [],
+            "items": {}
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the image,",
+                    "default": ""
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Tag of the image",
+                    "default": ""
+                },
+                "pullPolicy": {
+                    "type": "string",
+                    "description": "The default pull policy is IfNotPresent which causes",
+                    "default": ""
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether a service account should be created",
+                    "default": false
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Annotations to add to the service account",
+                    "default": {}
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the service account to use.",
+                    "default": ""
+                }
+            }
+        },
+        "env": {
+            "type": "object",
+            "properties": {
+                "values": {
+                    "type": "object",
+                    "description": "generic Environment variables that get added to the container",
+                    "default": {}
+                },
+                "refs": {
+                    "type": "object",
+                    "description": "Environment variables as references to the pod",
+                    "default": {}
+                },
+                "configmap": {
+                    "type": "object",
+                    "description": "Environment variables that get added to the container from ConfigMap",
+                    "default": {}
+                },
+                "secret": {
+                    "type": "object",
+                    "description": "Kubernetes secrets that get added to the container",
+                    "default": {}
+                },
+                "vaultSecret": {
+                    "type": "object",
+                    "description": "Kubernetes secrets that get added to the container from Hashicorp Vault",
+                    "default": {}
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "If service should be created to expose Pod.",
+                    "default": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "If you need to specify a service's full name override.",
+                    "default": ""
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Type of the service. One of ClusterIP, NodePort, LoadBalancer.",
+                    "default": "ClusterIP"
+                },
+                "ports": {
+                    "type": "object",
+                    "description": "Configuration of the service ports",
+                    "default": {}
+                },
+                "healthCheckPath": {
+                    "type": "string",
+                    "description": "default HTTP Health check for container liveness and readiness.",
+                    "default": "/"
+                },
+                "loadBalancerSourceRanges": {
+                    "type": "array",
+                    "description": "Address(es) that are allowed when service is LoadBalancer",
+                    "default": [],
+                    "items": {}
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Service annotations",
+                    "default": {}
+                }
+            }
+        },
+        "livenessProbe": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable livenessProbe",
+                    "default": true
+                },
+                "healthCheckPath": {
+                    "type": "string",
+                    "description": "Request path for livenessProbe",
+                    "default": ""
+                },
+                "tcpSocket": {
+                    "type": "number",
+                    "description": "Check availability on transport level via port",
+                    "default": 0
+                },
+                "initialDelaySeconds": {
+                    "type": "number",
+                    "description": "Initial delay seconds for livenessProbe",
+                    "default": 10
+                },
+                "failureThreshold": {
+                    "type": "number",
+                    "description": "Failure threshold for livenessProbe",
+                    "default": 3
+                },
+                "periodSeconds": {
+                    "type": "number",
+                    "description": "Period seconds for livenessProbe",
+                    "default": 10
+                },
+                "successThreshold": {
+                    "type": "number",
+                    "description": "Success threshold for livenessProbe",
+                    "default": 1
+                },
+                "timeoutSeconds": {
+                    "type": "number",
+                    "description": "Timeout seconds for livenessProbe",
+                    "default": 1
+                }
+            }
+        },
+        "readinessProbe": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable readinessProbe",
+                    "default": true
+                },
+                "healthCheckPath": {
+                    "type": "string",
+                    "description": "Request path for readinessProbe",
+                    "default": ""
+                },
+                "tcpSocket": {
+                    "type": "number",
+                    "description": "Check availability on transport level via port",
+                    "default": 0
+                },
+                "failureThreshold": {
+                    "type": "number",
+                    "description": "Failure threshold for readinessProbe",
+                    "default": 3
+                },
+                "initialDelaySeconds": {
+                    "type": "number",
+                    "description": "Initial delay seconds for readinessProbe",
+                    "default": 10
+                },
+                "periodSeconds": {
+                    "type": "number",
+                    "description": "Period seconds for readinessProbe",
+                    "default": 10
+                },
+                "successThreshold": {
+                    "type": "number",
+                    "description": "Success threshold for readinessProbe",
+                    "default": 1
+                },
+                "timeoutSeconds": {
+                    "type": "number",
+                    "description": "Timeout seconds for readinessProbe",
+                    "default": 1
+                }
+            }
+        },
+        "startupProbe": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable readinessProbe",
+                    "default": false
+                },
+                "healthCheckPath": {
+                    "type": "string",
+                    "description": "Request path for readinessProbe",
+                    "default": ""
+                },
+                "tcpSocket": {
+                    "type": "number",
+                    "description": "Check availability on transport level via port",
+                    "default": 0
+                },
+                "failureThreshold": {
+                    "type": "number",
+                    "description": "Failure threshold for readinessProbe",
+                    "default": 3
+                },
+                "initialDelaySeconds": {
+                    "type": "number",
+                    "description": "Initial delay seconds for readinessProbe",
+                    "default": 10
+                },
+                "periodSeconds": {
+                    "type": "number",
+                    "description": "Period seconds for readinessProbe",
+                    "default": 10
+                },
+                "successThreshold": {
+                    "type": "number",
+                    "description": "Success threshold for readinessProbe",
+                    "default": 1
+                },
+                "timeoutSeconds": {
+                    "type": "number",
+                    "description": "Timeout seconds for readinessProbe",
+                    "default": 1
+                }
+            }
+        },
+        "ingress": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "If service will be accessible outside of Kubernetes environment",
+                    "default": false
+                },
+                "pathType": {
+                    "type": "string",
+                    "description": "Type of the path (available options \"ImplementationSpecific\", \"Exact\", \"Prefix\")",
+                    "default": "Prefix"
+                },
+                "public": {
+                    "type": "boolean",
+                    "description": "If container will be accessible outside VPN.",
+                    "default": false
+                },
+                "subDomain": {
+                    "type": "boolean",
+                    "description": "If DNS has environment as sub-domain.",
+                    "default": false
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Prefix for the path routing",
+                    "default": "/"
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Ingress annotations",
+                    "default": {}
+                },
+                "extraHosts": {
+                    "type": "array",
+                    "description": "Extra hosts for ingress",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "ingressExtra": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "If service will be accessible outside of Kubernetes environment",
+                    "default": false
+                },
+                "pathType": {
+                    "type": "string",
+                    "description": "Type of the path (available options \"ImplementationSpecific\", \"Exact\", \"Prefix\")",
+                    "default": "Prefix"
+                },
+                "public": {
+                    "type": "boolean",
+                    "description": "If container will be accessible outside VPN.",
+                    "default": false
+                },
+                "subDomain": {
+                    "type": "boolean",
+                    "description": "If DNS has environment as sub-domain.",
+                    "default": false
+                },
+                "host": {
+                    "type": "string",
+                    "description": "DNS for the application external access",
+                    "default": ""
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Prefix for the path routing",
+                    "default": "/"
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Ingress annotations",
+                    "default": {}
+                },
+                "extraHosts": {
+                    "type": "array",
+                    "description": "Extra hosts for ingress",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "metrics": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable prometheus to access metrics endpoint",
+                    "default": false
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to the prometheus metrics endpoint",
+                    "default": "/metrics"
+                },
+                "serviceMonitor": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Create ServiceMonitor object",
+                            "default": false
+                        },
+                        "interval": {
+                            "type": "string",
+                            "description": "Interval at which metrics should be scraped",
+                            "default": "10s"
+                        },
+                        "scrapeTimeout": {
+                            "type": "string",
+                            "description": "Timeout after which the scrape is ended",
+                            "default": "3s"
+                        },
+                        "selector": {
+                            "type": "object",
+                            "description": "Additional labels for ServiceMonitor object",
+                            "default": {}
+                        }
+                    }
+                },
+                "rules": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "description": "Create PrometheusRules object",
+                            "default": false
+                        },
+                        "spec": {
+                            "type": "array",
+                            "description": "Configuration for the application alerting",
+                            "default": [],
+                            "items": {}
+                        }
+                    }
+                }
+            }
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "limits": {
+                    "type": "object",
+                    "description": "The resources limits for the container",
+                    "default": {}
+                },
+                "requests": {
+                    "type": "object",
+                    "description": "The requests resources for the container",
+                    "default": {}
+                }
+            }
+        },
+        "lifecycle": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable lifecycle hooks",
+                    "default": false
+                },
+                "postStartCommand": {
+                    "type": "string",
+                    "description": "Command to be executed after the container start",
+                    "default": ""
+                },
+                "preStopCommand": {
+                    "type": "string",
+                    "description": "Command to be executed before container shutdown",
+                    "default": ""
+                }
+            }
+        },
+        "autoscaling": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "If autoscaling is enabled",
+                    "default": false
+                },
+                "minReplicas": {
+                    "type": "number",
+                    "description": "Min number of pod replicas",
+                    "default": 1
+                },
+                "maxReplicas": {
+                    "type": "number",
+                    "description": "Max number of pod replicas",
+                    "default": 1
+                },
+                "metrics": {
+                    "type": "array",
+                    "description": "Configuration of scaling metrics",
+                    "default": [],
+                    "items": {}
+                }
+            }
+        },
+        "persistence": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "Enable persistence using Persistent Volume Claims",
+                    "default": false
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to mount persistent volume",
+                    "default": ""
+                },
+                "storageClass": {
+                    "type": "string",
+                    "description": "Persistent Volume storage class",
+                    "default": ""
+                },
+                "annotations": {
+                    "type": "object",
+                    "description": "Additional custom annotations for the PVC",
+                    "default": {}
+                },
+                "accessModes": {
+                    "type": "array",
+                    "description": "Persistent Volume access modes",
+                    "default": [
+                        "ReadWriteOnce"
+                    ],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "size": {
+                    "type": "string",
+                    "description": "Persistent Volume size",
+                    "default": "8Gi"
+                }
+            }
+        },
+        "rollouts": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "description": "If Argo Rollouts will be created instead of Deployment",
+                    "default": false
+                },
+                "strategy": {
+                    "type": "string",
+                    "description": "Argo Rollouts strategy. Allowed values: `canary` or `blueGreen`",
+                    "default": "canary"
+                },
+                "steps": {
+                    "type": "array",
+                    "description": "Steps define sequence of steps to take during an update of the canary.",
+                    "default": [],
+                    "items": {}
+                },
+                "autoPromotionEnabled": {
+                    "type": "boolean",
+                    "description": "Indicates if the rollout should automatically promote the new ReplicaSet",
+                    "default": true
+                },
+                "autoPromotionSeconds": {
+                    "type": "number",
+                    "description": "Automatically promotes the current ReplicaSet to active after the",
+                    "default": 0
+                },
+                "scaleDownDelaySeconds": {
+                    "type": "number",
+                    "description": "Adds a delay before scaling down the previous ReplicaSet. If omitted,",
+                    "default": 30
+                }
+            }
+        }
+    }
+}

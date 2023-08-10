@@ -1,0 +1,71 @@
+global:
+  org: "network"
+  serviceName: "dac-redis"
+  image:
+    name: "redis/redis-stack-server"
+    tag: "7.0.6-RC8"
+
+statefulset:
+  replicaCount: 1
+  env:
+    vaultSecret:
+      REDIS_PASSWORD:
+        path: dac-redis
+
+  service:
+    ports:
+      tcp: 6379
+
+  livenessProbe:
+    tcpSocket: 6379
+
+  readinessProbe:
+    tcpSocket: 6379
+
+  sidecarContainers:
+    - nameOverride: dac-webdis
+      image:
+        name: "nicolas/webdis"
+        tag: "0.1.21"
+      env:
+        vaultSecret:
+          REDIS_PASSWORD:
+            path: dac-redis
+          WEBDIS_USERNAME:
+            path: dac-redis
+          WEBDIS_PASSWORD:
+            path: dac-redis
+      service:
+        ports:
+          http: 7379
+      volumes:
+        webdisConfig:
+          mountPath: /etc/webdis
+          configMap:
+            webdis.json: |
+              {
+                "redis_host": "$REDIS_HOST",
+                "redis_port": 6379,
+                "redis_auth": "$REDIS_PASSWORD",
+                "http_host":  "0.0.0.0",
+                "http_port":  7379,
+                "threads":    5,
+                "pool_size": 20,
+                "daemonize":  false,
+                "websockets": false,
+                "database":   0,
+                "acl": [
+                  {
+                    "disabled": ["SET", "DEL", "FLUSHDB", "FLUSHALL", "DEBUG"]
+                  },
+                  {
+                    "http_basic_auth":        "${WEBDIS_USERNAME}:${WEBDIS_PASSWORD}",
+                    "enabled":                ["SET", "DEL", "FLUSHDB", "FLUSHALL", "DEBUG"]
+                  }
+                ],
+                "verbosity": 4,
+                "logfile": "/dev/stdout"
+              }
+  volumes:
+    data:
+      mountPath: /data

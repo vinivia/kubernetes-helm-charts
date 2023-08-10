@@ -1,0 +1,11 @@
+apiVersion: v2
+name: vaultsecrets
+description: Generator of the secrets from remote Vault server
+type: application
+version: 2.5.5
+appVersion: 1.0.0
+icon: https://miro.medium.com/max/512/1*jYtwbLncmrgV6_WEzsszkA.png
+dependencies:
+  - name: k8s-common
+    version: 1.0.0
+    repository: "oci://charts.shared.aws.cere.io/library"

@@ -1,0 +1,213 @@
+# Default values for cronjobs chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @section Global parameters
+## Global Docker image parameters
+global:
+  ## @param global.org Company Organization Unit(product group).
+  ##
+  org: ""
+  ## @param global.serviceName Name of the service. Affects public DNS.
+  ## E.g. php-admin, service-api
+  ##
+  serviceName: ""
+  ## @param global.production Will the service run in production environment
+  ##
+  production: false
+  ## @param global.environmentName Name of the environment, user-specified.
+  ## E.g. feature, stage, dev-2.
+  ##
+  environmentName: "dev"
+  ## Configuration of the image for the deployment
+  ##
+  image:
+    ## @param global.image.name Name of the image,
+    ## E.g.
+    ## name: "1234567890.dkr.ecr.eu-central-1.amazonaws.com/example"
+    ##
+    name: ""
+    ## @param global.image.tag Tag of the image
+    ##
+    tag: "latest"
+    ## @param global.image.pullPolicy The default pull policy is IfNotPresent which causes
+    ## the kubelet to skip pulling an image if it already exists.
+    ## Ref: https://kubernetes.io/docs/concepts/containers/images/#updating-images
+    ##
+    pullPolicy: "IfNotPresent"
+## @section Common parameters
+## @param nameOverride By default, name uses '{{ .Chart.Name }}'.
+## This overrides that and uses the given string instead.
+##
+nameOverride: ""
+## @param fullnameOverride By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.
+## This overrides that and uses the given string instead.
+##
+fullnameOverride: ""
+## @param podSecurityContext Pod security context
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## E.g.
+## podSecurityContext:
+##   runAsUser: 1000
+##   runAsGroup: 65534
+##   runAsNonRoot: true
+##   fsGroup: 1000
+##
+podSecurityContext: {}
+## @param securityContext Security context for the container
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+## E.g.
+## securityContext:
+##   allowPrivilegeEscalation: false
+##   readOnlyRootFilesystem: true
+##   capabilities:
+##     drop: ["ALL"]
+##
+securityContext: {}
+## @param nodeSelector Node labels for pod assignment
+## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+##
+nodeSelector: {}
+## @param tolerations Tolerations for pod assignment
+## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+##
+tolerations: []
+## @param podAffinityPreset Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+##
+podAffinityPreset: ""
+## @param podAntiAffinityPreset Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
+## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+## Allowed values: soft, hard
+##
+podAntiAffinityPreset: soft
+## @extra nodeAffinityPreset Node affinity preset
+## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+##
+nodeAffinityPreset:
+  ## @param nodeAffinityPreset.type Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
+  ##
+  type: ""
+  ## @param nodeAffinityPreset.key Node label key to match Ignored if `affinity` is set.
+  ## E.g.
+  ## key: "topology.kubernetes.io/zone"
+  ##
+  key: ""
+  ## @param nodeAffinityPreset.values Node label values to match. Ignored if `affinity` is set.
+  ## E.g.
+  ## values:
+  ##   - eu-central-1a
+  ##   - eu-central-1b
+  ##   - eu-central-1c
+  ##
+  values: []
+## @param affinity Affinity for pod assignment
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+## Note: podAffinityPreset, podAntiAffinityPreset, and  nodeAffinityPreset will be ignored when it's set
+##
+affinity: {}
+## @section Configure Service Accounts for Pod
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+serviceAccount:
+  ## @param serviceAccount.create Specifies whether a service account should be created
+  ##
+  create: false
+  ## @param serviceAccount.annotations Annotations to add to the service account
+  ##
+  annotations: {}
+  ## @param serviceAccount.name The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  ##
+  name: ""
+## @section Environment variables that get added to the container
+##
+env:
+  ## @param env.values generic Environment variables that get added to the container
+  ## Supporting helm templates
+  ## E.g.
+  ## values:
+  ##   FOO: "bar-{{ .Values.global.environmentName }}"
+  ##
+  values: {}
+  ## @param env.refs Environment variables as references to the pod
+  ## E.g.
+  ## refs:
+  ##   FOO: metadata.name
+  ##
+  refs: {}
+  ## @param env.configmap Environment variables that get added to the container from ConfigMap
+  ## E.g.
+  ## configmap:
+  ##   API_CONFIG:
+  ##     name: myConfigMap
+  ##     key: foo.txt
+  ##
+  configmap: {}
+  ## @param env.secret Kubernetes secrets that get added to the container
+  ## E.g.
+  ## secret:
+  ##   API_PASSWORD:
+  ##     name: mySecret
+  ##     secret: password
+  ##
+  secret: {}
+  ## @param env.vaultSecret Kubernetes secrets that get added to the container from Hashicorp Vault
+  ## path - Path within vault to the secret containing environment variable. It will be found in /secret-<global.org>/<prod|dev>/k8s/<release.namespace>/
+  ## secret - Optional name of the variable inside secret. Defaults to the secret key
+  ## E.g.
+  ## vaultSecret:
+  ##  API_KEY:
+  ##    path: mySecret
+  ##    secret: password
+  ##
+  vaultSecret: {}
+## @section Container resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+resources:
+  ## @param resources.limits The resources limits for the container
+  ## E.g.
+  ## limits:
+  ##   cpu: 50m
+  ##   memory: 50Mi
+  ##
+  limits: {}
+  ## @param resources.requests The requests resources for the container
+  ## E.g.
+  ## requests:
+  ##   cpu: 10m
+  ##   memory: 50Mi
+  ##
+  requests: {}
+
+## @section Cronjobs configuration
+##
+## @param cronjobs [object] Cronjobs configuration
+## Example:
+## cronjobs:
+##   test:
+##     concurrencyPolicy: Forbid
+##     suspend: false
+##     schedule: "0 * * * *"
+##     command: ["php"]
+##     args: ["bin/console", "exec:something"]
+##     startingDeadlineSeconds: 20
+##     failedJobsHistoryLimit: 10
+##     successfulJobsHistoryLimit: 2
+##     backoffLimit: 6 # number of times it will retries before it is considered failed. The default is 6.
+##     annotations:
+##     resources:
+##       limits:
+##         cpu: 100m
+##         memory: 256Mi
+##       requests:
+##         cpu: 100m
+##         memory: 256Mi
+##     env:
+##       values:
+##         FOO: "Bar"
+##       vaultSecret:
+##         API_KEY_A:
+##           path: mySecret
+##           secret: password
+##
+cronjobs: {}

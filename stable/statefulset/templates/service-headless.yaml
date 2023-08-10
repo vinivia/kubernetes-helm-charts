@@ -1,0 +1,33 @@
+{{- if .Values.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "k8s-common.ingress.serviceName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
+  annotations:
+    {{- if .Values.service.annotations }}
+    {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.service.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    {{- range $key, $value := default (dict) .Values.service.ports }}
+    - name: {{ $key }}
+      port: {{ $value }}
+      targetPort: {{ $key }}
+      protocol: TCP
+    {{- end }}
+    {{- range .Values.sidecarContainers }}
+    {{- range $key, $value := default (dict) (.service).ports }}
+    - name: {{ $key }}
+      port: {{ $value }}
+      targetPort: {{ $key }}
+      protocol: TCP
+    {{- end }}
+    {{- end }}
+  selector: {{- include "k8s-common.labels.matchLabels" . | nindent 4 }}
+{{- end }}

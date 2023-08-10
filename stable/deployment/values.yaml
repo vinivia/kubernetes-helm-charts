@@ -1,0 +1,642 @@
+# Default values for typical microservice.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @section Global parameters
+## Global Docker image parameters
+global:
+  ## @param global.serviceName Name of the service. Affects public DNS.
+  ## E.g. cherry-admin, tpt-service-api
+  ##
+  serviceName: "example"
+  ## @param global.org Company Organization Unit(product group).
+  ##
+  org: ""
+  ## @param global.product The product of the service
+  ##
+  product: ""
+  ## @param global.environmentType Type of the environment, one of "dev", "stage", "prod".
+  ##
+  environmentType: "dev"
+  ## @param global.domain Company Root-level domain, expects
+  ## <global.org>[|-<global.environmentType>].aws.<global.domain> Route53 HZ.
+  ##
+  domain: ""
+  ## @param global.production Will the service run in production environment
+  ##
+  production: false
+  ## @param global.environmentName Name of the environment, user-specified.
+  ## E.g. feature, stage, dev-2.
+  ##
+  environmentName: "dev"
+  ## Configuration of the image for the deployment
+  ##
+  image:
+    ## @param global.image.name Name of the image,
+    ## E.g.
+    ## name: "1234567890.dkr.ecr.eu-central-1.amazonaws.com/example"
+    ##
+    name: ""
+    ## @param global.image.tag Tag of the image
+    ##
+    tag: "latest"
+    ## @param global.image.pullPolicy The default pull policy is IfNotPresent which causes
+    ## the kubelet to skip pulling an image if it already exists.
+    ## Ref: https://kubernetes.io/docs/concepts/containers/images/#updating-images
+    ##
+    pullPolicy: "IfNotPresent"
+## @section Common parameters
+## @param nameOverride By default, name uses '{{ .Chart.Name }}'.
+## This overrides that and uses the given string instead.
+##
+nameOverride: ""
+## @param fullnameOverride By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.
+## This overrides that and uses the given string instead.
+##
+fullnameOverride: ""
+## @param replicaCount Number of the parallel-running containers. The controller will eventually make the size of the
+## running service equal to the expected size.
+##
+replicaCount: 1
+## @param podAnnotations Additional annotations to apply to the pod.
+##
+podAnnotations: { }
+## @param priorityClassName priorityClassName
+##
+priorityClassName: ""
+## @param podSecurityContext Pod security context
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## E.g.
+## podSecurityContext:
+##   runAsUser: 1000
+##   runAsGroup: 65534
+##   runAsNonRoot: true
+##   fsGroup: 1000
+##
+podSecurityContext: { }
+## @param securityContext Security context for the container
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+## E.g.
+## securityContext:
+##   allowPrivilegeEscalation: false
+##   readOnlyRootFilesystem: true
+##   capabilities:
+##     drop: ["ALL"]
+##
+securityContext: { }
+## @param vaultVolumesSupport support for vault secrets as files. Defaults false.
+##
+vaultVolumesSupport: false
+## @param volumes Container volumes configuration
+## E.g.
+## volumes:
+##   shared-files:
+##     mountPath: /tmp/shared
+##     emptyDir: true
+##   central-config:
+##     mountPath: /central-config
+##     configMap:
+##       application.yaml: |
+##         configserver:
+##           name:  JHipster Registry
+##           status: Connected to the JHipster Registry running in Kubernetes
+##  credentials:
+##    mountPath: /var/lib/.key
+##    secretName: kubernetes-secret
+##  vaultCredentials:
+##    mountPath: /var/lib
+##    vaultPath: my_secret_files
+##    items:
+##      - key.pass
+volumes: { }
+## @param command You can set a custom entrypoint for your docker container
+##
+command: [ ]
+## @param args You can set a custom arguments for your docker container
+##
+args: [ ]
+## @param nodeSelector Node labels for pod assignment
+## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+##
+nodeSelector: { }
+## @param tolerations Tolerations for pod assignment
+## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+##
+tolerations: [ ]
+## @param podAffinityPreset Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
+## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+##
+podAffinityPreset: ""
+## @param podAntiAffinityPreset Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
+## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
+## Allowed values: soft, hard
+##
+podAntiAffinityPreset: soft
+## @param preStopDelaySeconds pre-stop delay for graceful pod shutdown
+## Ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
+##
+preStopDelaySeconds: 0
+## @extra nodeAffinityPreset Node affinity preset
+## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+##
+nodeAffinityPreset:
+  ## @param nodeAffinityPreset.type Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
+  ##
+  type: ""
+  ## @param nodeAffinityPreset.key Node label key to match Ignored if `affinity` is set.
+  ## E.g.
+  ## key: "topology.kubernetes.io/zone"
+  ##
+  key: ""
+  ## @param nodeAffinityPreset.values Node label values to match. Ignored if `affinity` is set.
+  ## E.g.
+  ## values:
+  ##   - eu-central-1a
+  ##   - eu-central-1b
+  ##   - eu-central-1c
+  ##
+  values: [ ]
+## @param affinity Affinity for pod assignment
+## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+## Note: podAffinityPreset, podAntiAffinityPreset, and  nodeAffinityPreset will be ignored when it's set
+##
+affinity: { }
+## @extra podDisruptionBudget Pod disruption budget configuration
+## Ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+##
+podDisruptionBudget:
+  ## @param podDisruptionBudget.create Specifies whether a Pod disruption budget should be created
+  ##
+  create: false
+  ## @param podDisruptionBudget.minAvailable Min available pods or percent of pods
+  minAvailable: 1
+  ## @param podDisruptionBudget.maxUnavailable Max non-available pods or percent of pods
+  ##
+  maxUnavailable: 1
+## @section Extra Containers
+## @param initContainers Configuration for the init container
+##
+## E.g.
+## initContainers:
+##   - nameOverride: foo
+##     image:
+##       name: ""
+##       tag: ""
+##       pullPolicy: "IfNotPresent"
+##     command: []
+##     args: []
+##     resources: {}
+##
+initContainers: [ ]
+## @param sidecarContainers Configuration for the init container
+##
+## E.g.
+## sidecarContainers:
+##   - nameOverride: foo
+##     image:
+##       name: ""
+##       tag: ""
+##       pullPolicy: "IfNotPresent"
+##     command: []
+##     args: []
+##     resources: {}
+##
+sidecarContainers: [ ]
+## @section Image for the deployment
+##
+image:
+  ## @param image.name Name of the image,
+  ## E.g.
+  ## name: "1234567890.dkr.ecr.eu-central-1.amazonaws.com/example"
+  ##
+  name: ""
+  ## @param image.tag Tag of the image
+  ##
+  tag: ""
+  ## @param image.pullPolicy The default pull policy is IfNotPresent which causes
+  ## the kubelet to skip pulling an image if it already exists.
+  ## Ref: https://kubernetes.io/docs/concepts/containers/images/#updating-images
+  ##
+  pullPolicy: ""
+## @section Configure Service Accounts for Pod
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+serviceAccount:
+  ## @param serviceAccount.create Specifies whether a service account should be created
+  ##
+  create: false
+  ## @param serviceAccount.annotations Annotations to add to the service account
+  ##
+  annotations: { }
+  ## @param serviceAccount.name The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  ##
+  name: ""
+## @section Environment variables that get added to the container
+env:
+  ## @param env.values generic Environment variables that get added to the container
+  ## Supporting helm templates
+  ## E.g.
+  ## values:
+  ##   FOO: "bar-{{ .Values.global.environmentName }}"
+  ##
+  values: { }
+  ## @param env.refs Environment variables as references to the pod
+  ## E.g.
+  ## refs:
+  ##   FOO: metadata.name
+  ##
+  refs: { }
+  ## @param env.configmap Environment variables that get added to the container from ConfigMap
+  ## E.g.
+  ## configmap:
+  ##   API_CONFIG:
+  ##     name: myConfigMap
+  ##     key: foo.txt
+  ##
+  configmap: { }
+  ## @param env.secret Kubernetes secrets that get added to the container
+  ## E.g.
+  ## secret:
+  ##   API_PASSWORD:
+  ##     name: mySecret
+  ##     secret: password
+  ##
+  secret: { }
+  ## @param env.vaultSecret Kubernetes secrets that get added to the container from Hashicorp Vault
+  ## path - Path within vault to the secret containing environment variable. It will be found in /secret-<global.org>/<prod|dev>/k8s/<release.namespace>/
+  ## secret - Optional name of the variable inside secret. Defaults to the secret key
+  ## E.g.
+  ## vaultSecret:
+  ##  API_KEY:
+  ##    path: mySecret
+  ##    secret: password
+  ##
+  vaultSecret: { }
+## @section Configuration of the service
+##
+service:
+  ## @param service.enabled If service should be created to expose Pod.
+  ##
+  enabled: true
+  ## @param service.name If you need to specify a service's full name override.
+  ##
+  name: ""
+  ## @param service.type Type of the service. One of ClusterIP, NodePort, LoadBalancer.
+  ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  ##
+  type: "ClusterIP"
+  ## @param service.ports Configuration of the service ports
+  ## E.g.
+  ## ports:
+  ##   http: 80
+  ##   https: 443
+  ports: { }
+  ## @param  service.healthCheckPath default HTTP Health check for container liveness and readiness.
+  ##
+  healthCheckPath: "/"
+  ## @param service.loadBalancerSourceRanges Address(es) that are allowed when service is LoadBalancer
+  ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+  ## Example:
+  ## loadBalancerSourceRanges:
+  ## - 10.10.10.0/24
+  ##
+  loadBalancerSourceRanges: [ ]
+  ## @param service.annotations Service annotations
+  ##
+  annotations: { }
+## @section Container liveness configuration.
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+##
+livenessProbe:
+  ## @param livenessProbe.enabled Enable livenessProbe
+  ##
+  enabled: true
+  ## @param livenessProbe.healthCheckPath Request path for livenessProbe
+  ##
+  healthCheckPath: ""
+  ## @param livenessProbe.tcpSocket Check availability on transport level via port
+  ## E.g.
+  ## tcpSocket: 80
+  ##
+  tcpSocket: 0
+  ## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+  ##
+  initialDelaySeconds: 10
+  ## @param livenessProbe.failureThreshold Failure threshold for livenessProbe
+  ##
+  failureThreshold: 3
+  ## @param livenessProbe.periodSeconds Period seconds for livenessProbe
+  ##
+  periodSeconds: 10
+  ## @param livenessProbe.successThreshold Success threshold for livenessProbe
+  ##
+  successThreshold: 1
+  ## @param livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+  ##
+  timeoutSeconds: 1
+## @section Container readiness configuration.
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+##
+readinessProbe:
+  ## @param readinessProbe.enabled Enable readinessProbe
+  ##
+  enabled: true
+  ## @param readinessProbe.healthCheckPath Request path for readinessProbe
+  ##
+  healthCheckPath: ""
+  ## @param readinessProbe.tcpSocket Check availability on transport level via port
+  ## E.g.
+  ## tcpSocket: 80
+  ##
+  tcpSocket: 0
+  ## @param readinessProbe.failureThreshold Failure threshold for readinessProbe
+  ##
+  failureThreshold: 3
+  ## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  ##
+  initialDelaySeconds: 10
+  ## @param readinessProbe.periodSeconds Period seconds for readinessProbe
+  ##
+  periodSeconds: 10
+  ## @param readinessProbe.successThreshold Success threshold for readinessProbe
+  ##
+  successThreshold: 1
+  ## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+  ##
+  timeoutSeconds: 1
+## @section Container startUp configuration.
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+##
+startupProbe:
+  ## @param startupProbe.enabled Enable readinessProbe
+  ##
+  enabled: false
+  ## @param startupProbe.healthCheckPath Request path for readinessProbe
+  ##
+  healthCheckPath: ""
+  ## @param startupProbe.tcpSocket Check availability on transport level via port
+  ## E.g.
+  ## tcpSocket: 80
+  ##
+  tcpSocket: 0
+  ## @param startupProbe.failureThreshold Failure threshold for readinessProbe
+  ##
+  failureThreshold: 3
+  ## @param startupProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  ##
+  initialDelaySeconds: 10
+  ## @param startupProbe.periodSeconds Period seconds for readinessProbe
+  ##
+  periodSeconds: 10
+  ## @param startupProbe.successThreshold Success threshold for readinessProbe
+  ##
+  successThreshold: 1
+  ## @param startupProbe.timeoutSeconds Timeout seconds for readinessProbe
+  ##
+  timeoutSeconds: 1
+## @section Configuration for the main load-balancer
+##
+ingress:
+  ## @param ingress.enabled If service will be accessible outside of Kubernetes environment
+  ##
+  enabled: false
+  ## @param ingress.pathType Type of the path (available options "ImplementationSpecific", "Exact", "Prefix")
+  ##
+  pathType: Prefix
+  ## @param ingress.public If container will be accessible outside VPN.
+  ## Not recommended to for non-production environments.
+  ##
+  public: false
+  ## @param ingress.subDomain If DNS has environment as sub-domain.
+  ## The default DNS is constructed as:
+  ## <global.environmentName>[.|-]<global.serviceName>.<global.org>[|-dev|-stage].aws.[organization.domain]
+  ##
+  subDomain: false
+  ## @param ingress.path Prefix for the path routing
+  ##
+  path: "/"
+  ## @param ingress.annotations Ingress annotations
+  ##
+  annotations: { }
+  ## @param ingress.extraHosts Extra hosts for ingress
+  ## E.g.
+  ## extraHosts:
+  ## - host: example.local
+  ##   paths: []
+  ##
+  extraHosts: [ ]
+## @section Configuration for the extra load-balancer
+##
+ingressExtra:
+  ## @param ingressExtra.enabled If service will be accessible outside of Kubernetes environment
+  ##
+  enabled: false
+  ## @param ingressExtra.pathType Type of the path (available options "ImplementationSpecific", "Exact", "Prefix")
+  ##
+  pathType: Prefix
+  ## @param ingressExtra.public If container will be accessible outside VPN.
+  ## Not recommended to for non-production environments.
+  ##
+  public: false
+  ## @param ingressExtra.subDomain If DNS has environment as sub-domain.
+  ## The default DNS is constructed as:
+  ## <global.environmentName>[.|-]<global.serviceName>.<global.org>[|-dev|-stage].aws.[organization.domain]
+  ##
+  subDomain: false
+  ## @param ingressExtra.host DNS for the application external access
+  ##
+  host: ""
+  ## @param ingressExtra.path Prefix for the path routing
+  ##
+  path: "/"
+  ## @param ingressExtra.annotations Ingress annotations
+  ##
+  annotations: { }
+  ## @param ingressExtra.extraHosts Extra hosts for ingress
+  ## E.g.
+  ## extraHosts:
+  ## - host: example.local
+  ##   paths: []
+  ##
+  extraHosts: [ ]
+## @section Prometheus Exporter / Metrics
+##
+metrics:
+  ## @param metrics.enabled Enable prometheus to access metrics endpoint
+  ##
+  enabled: false
+  ## @param metrics.path Path to the prometheus metrics endpoint
+  ##
+  path: /metrics
+  ## Prometheus Operator ServiceMonitor configuration
+  ##
+  serviceMonitor:
+    ## @param metrics.serviceMonitor.enabled Create ServiceMonitor object
+    ##
+    enabled: false
+    ## @param metrics.serviceMonitor.interval Interval at which metrics should be scraped
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ##
+    interval: 10s
+    ## @param metrics.serviceMonitor.scrapeTimeout Timeout after which the scrape is ended
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ##
+    scrapeTimeout: 3s
+    ## @param metrics.serviceMonitor.selector Additional labels for ServiceMonitor object
+    ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
+    ## e.g:
+    ## selector:
+    ##   prometheus: my-prometheus
+    ##
+    selector: { }
+  ## Prometheus Operator PrometheusRules configuration
+  ##
+  rules:
+    ## @param metrics.rules.enabled Create PrometheusRules object
+    ##
+    enabled: false
+    ## @param metrics.rules.spec Configuration for the application alerting
+    ## Ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#prometheusrulespec
+    ## E.g.
+    ## spec:
+    ## - alert: ApplicationUnstable
+    ##   expr: |
+    ##     absent(example_app_info)
+    ##   for: 15m
+    ##   labels:
+    ##     severity: critical
+    ##   annotations:
+    ##     summary: "[Example] No reported applications"
+    ##     description: >
+    ##       Example has not reported any applications data for the past 15 minutes which
+    ##       means that it must be down or not functioning properly. This needs to be
+    ##       resolved for this cloud to continue to maintain state.
+    ##
+    spec: [ ]
+## @section Container resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+resources:
+  ## @param resources.limits The resources limits for the container
+  ## E.g.
+  ## limits:
+  ##   cpu: 50m
+  ##   memory: 50Mi
+  ##
+  limits: { }
+  ## @param resources.requests The requests resources for the container
+  ## E.g.
+  ## requests:
+  ##   cpu: 10m
+  ##   memory: 50Mi
+  ##
+  requests: { }
+## @section Lifecycle configuration
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/
+lifecycle:
+  ## @param lifecycle.enabled Enable lifecycle hooks
+  ##
+  enabled: false
+  ## @param lifecycle.postStartCommand Command to be executed after the container start
+  ## E.g.
+  ## postStartCommand: echo 'Hello!'
+  ##
+  postStartCommand: ""
+  ## @param lifecycle.preStopCommand Command to be executed before container shutdown
+  ## E.g.
+  ## preStopCommand: echo 'Bye!'
+  ##
+  preStopCommand: ""
+## @section Create HorizontalPodAutoscaler object for deployment type
+## Ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+##
+autoscaling:
+  ## @param autoscaling.enabled If autoscaling is enabled
+  ##
+  enabled: false
+  ## @param autoscaling.minReplicas Min number of pod replicas
+  ##
+  minReplicas: 1
+  ## @param autoscaling.maxReplicas Max number of pod replicas
+  ##
+  maxReplicas: 1
+  ## @param autoscaling.metrics Configuration of scaling metrics
+  ## E.g.
+  ## metrics:
+  ## - type: Resource
+  ##   resource:
+  ##     name: cpu
+  ##     targetAverageUtilization: 60
+  ## - type: Resource
+  ##   resource:
+  ##     name: memory
+  ##     targetAverageUtilization: 60
+  ##
+  metrics: [ ]
+## @section Persistence Parameters
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  ## @param persistence.enabled Enable persistence using Persistent Volume Claims
+  ##
+  enabled: false
+  ## @param persistence.path Path to mount persistent volume
+  ##
+  path: ""
+  ## @param persistence.storageClass Persistent Volume storage class
+  ## If defined, storageClassName: <storageClass>
+  storageClass: ""
+  ## @param persistence.annotations Additional custom annotations for the PVC
+  ##
+  annotations: { }
+  ## @param persistence.accessModes [array] Persistent Volume access modes
+  ##
+  accessModes:
+    - ReadWriteOnce
+  ## @param persistence.size Persistent Volume size
+  ##
+  size: 8Gi
+## @section Configuration for Argo Rollouts
+## Ref: https://argoproj.github.io/argo-rollouts/
+##
+rollouts:
+  ## @param rollouts.enabled If Argo Rollouts will be created instead of Deployment
+  ##
+  enabled: false
+  ## @param rollouts.strategy Argo Rollouts strategy. Allowed values: `canary` or `blueGreen`
+  ##
+  strategy: canary
+  ## @param rollouts.steps Steps define sequence of steps to take during an update of the canary.
+  ## Skipped upon initial deploy of a rollout.
+  ## Note: steps will be ignored if rollouts.strategy is set to `blueGreen`
+  ## E.g.
+  ## steps:
+  ## - setWeight: 20
+  ## - pause: {}
+  ## - setWeight: 40
+  ## - pause: {duration: 10s}
+  ## - setWeight: 60
+  ## - pause: {duration: 10m}
+  ## - setWeight: 80
+  ## - pause: {duration: 10h}
+  ##
+  steps: [ ]
+  ## @param rollouts.autoPromotionEnabled Indicates if the rollout should automatically promote the new ReplicaSet
+  ## to the active service or enter a paused state. If not specified, the
+  ## default value is true.
+  ## Note: autoPromotionEnabled will be ignored if rollouts.strategy is set to `canary`
+  ##
+  autoPromotionEnabled: true
+  ## @param rollouts.autoPromotionSeconds Automatically promotes the current ReplicaSet to active after the
+  ## specified pause delay in seconds after the ReplicaSet becomes ready.
+  ## If omitted, the Rollout enters and remains in a paused state until
+  ## manually resumed by resetting spec.Paused to false.
+  ## Note: autoPromotionSeconds will be ignored if rollouts.strategy is set to `canary`
+  ##
+  autoPromotionSeconds: 0
+  ## @param rollouts.scaleDownDelaySeconds Adds a delay before scaling down the previous ReplicaSet. If omitted,
+  ## the Rollout waits 30 seconds before scaling down the previous ReplicaSet.
+  ## A minimum of 30 seconds is recommended to ensure IP table propagation
+  ## across the nodes in a cluster.
+  ## Note: scaleDownDelaySeconds will be ignored if rollouts.strategy is set to `canary`
+  ##
+  scaleDownDelaySeconds: 30

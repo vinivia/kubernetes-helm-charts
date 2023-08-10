@@ -1,0 +1,35 @@
+{{- $allVolumes := default (dict) .Values.volumes -}}
+{{- range $key, $value := $allVolumes }}
+{{- if $value.configMap }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "k8s-common.names.fullname" $ }}-{{ $key }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "k8s-common.labels.standard" $ | nindent 4 }}
+data:
+{{- range $file, $content := $value.configMap }}
+  {{ $file }}: |{{ include "k8s-common.tplvalues.render" (dict "value" $content "context" $) | nindent 4 }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- range .Values.sidecarContainers }}
+{{- $allVolumes := default (dict) .volumes -}}
+{{- range $key, $value := $allVolumes }}
+{{- if $value.configMap }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "k8s-common.names.fullname" $ }}-{{ $key }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{ include "k8s-common.labels.standard" $ | nindent 4 }}
+data:
+{{- range $file, $content := $value.configMap }}
+  {{ $file }}: {{ toYaml $content | indent 2 }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
