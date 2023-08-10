@@ -1,10 +1,15 @@
 apiVersion: v2
 name: statefulset
+version: 1.0.0
 description: Typical StateFul Set application
 type: application
-version: 1.0.0
-appVersion: 1.0.0
 dependencies:
   - name: k8s-common
     version: 1.0.0
-    repository: "oci://charts.shared.aws.cere.io/library"
+    repository: https://next-gen-infrastructure.github.io/kubernetes-helm-charts
+home: https://next-gen-infrastructure.github.io/kubernetes-helm-charts
+sources:
+  - https://github.com/next-gen-infrastructure/kubernetes-helm-charts/tree/main/stable/statefulset
+maintainers:
+  - name: Alexander Dobrodey
+    url: https://github.com/ADobrodey
