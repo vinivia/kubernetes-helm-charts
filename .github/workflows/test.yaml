@@ -39,7 +39,7 @@ jobs:
                 --generate-name \
                 --namespace test \
                 --dependency-update \
-                --set global.pillar=core \
+                --set global.org=core \
                 --set global.serviceName=test \
                 --values values.yaml
             popd
