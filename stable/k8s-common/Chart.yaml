@@ -1,14 +1,18 @@
 apiVersion: v2
-type: library
-# Please make sure that version and appVersion are always the same.
-appVersion: 2.0.0
-version: 1.0.0
 name: k8s-common
+version: 1.0.0
 description: A Library Helm Chart for grouping common logic between charts. This chart is not deployable by itself.
-annotations:
-  category: Infrastructure
+type: library
 keywords:
   - common
   - helper
   - template
   - function
+home: https://next-gen-infrastructure.github.io/kubernetes-helm-charts
+sources:
+  - https://github.com/next-gen-infrastructure/kubernetes-helm-charts/tree/main/stable/k8s-common
+maintainers:
+  - name: Alexander Dobrodey
+    url: https://github.com/ADobrodey
+annotations:
+  category: Infrastructure
