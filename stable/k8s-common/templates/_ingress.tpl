@@ -52,7 +52,7 @@ kubernetes.io/ingress.class: "alb"
 
 alb.ingress.kubernetes.io/actions.ssl-redirect: "{\"Type\":\"redirect\",\"RedirectConfig\":{\"Protocol\":\"HTTPS\",\"Port\":\"443\",\"StatusCode\":\"HTTP_301\"}}"
 alb.ingress.kubernetes.io/backend-protocol: "HTTP"
-alb.ingress.kubernetes.io/group.name: {{ .Release.Namespace }}-{{ include "k8s-common.names.name" . }}-extra
+alb.ingress.kubernetes.io/group.name: {{ .Release.Namespace }}-extra
 alb.ingress.kubernetes.io/healthcheck-path: "{{ .Values.service.healthCheckPath | default "/" }}"
 alb.ingress.kubernetes.io/listen-ports: "[{\"HTTP\":80},{\"HTTPS\":443}]"
 alb.ingress.kubernetes.io/scheme: {{ if .Values.ingressExtra.public -}}internet-facing{{- else -}}internal{{- end }}
