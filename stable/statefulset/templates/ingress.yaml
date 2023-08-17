@@ -24,6 +24,7 @@ spec:
             backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" (print (include "k8s-common.ingress.serviceName" .) "-http") "servicePort" "http" "context" .) | nindent 14 }}
 
     {{- range .Values.ingress.extraHosts }}
+    {{- $portName := default "http" .port -}}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -34,7 +35,7 @@ spec:
           {{- range .paths }}
           - path: {{ . }}
             pathType: {{ $.Values.ingress.pathType }}
-            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" (print (include "k8s-common.ingress.serviceName" $) "-http") "servicePort" "http" "context" $) | nindent 14 }}
+            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" (print (include "k8s-common.ingress.serviceName" $) "-http") "servicePort" $portName "context" $) | nindent 14 }}
   {{- end }}
   {{- end }}
 {{- end }}

@@ -423,6 +423,7 @@ ingress:
   ## E.g.
   ## extraHosts:
   ## - host: example.local
+  ##   port: http
   ##   paths: []
   ##
   extraHosts: [ ]
@@ -457,6 +458,7 @@ ingressExtra:
   ## E.g.
   ## extraHosts:
   ## - host: example.local
+  ##   port: http
   ##   paths: []
   ##
   extraHosts: [ ]
