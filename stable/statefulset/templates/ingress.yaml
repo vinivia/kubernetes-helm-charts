@@ -18,12 +18,10 @@ spec:
           - path: "/"
             pathType: {{ .Values.ingress.pathType }}
             backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "ssl-redirect" "servicePort" "use-annotation" "context" .) | nindent 14 }}
-
           - path: "/"
             pathType: {{ .Values.ingress.pathType }}
             backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" (print (include "k8s-common.ingress.serviceName" .) "-http") "servicePort" "http" "context" .) | nindent 14 }}
-
-    {{- range .Values.ingress.extraHosts }}
+    {{ range .Values.ingress.extraHosts -}}
     {{- $portName := default "http" .port -}}
     - host: {{ .host | quote }}
       http:
@@ -31,11 +29,10 @@ spec:
           - path: "/"
             pathType: {{ $.Values.ingress.pathType }}
             backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "ssl-redirect" "servicePort" "use-annotation" "context" $) | nindent 14 }}
-
-          {{- range .paths }}
+          {{ range .paths -}}
           - path: {{ . }}
             pathType: {{ $.Values.ingress.pathType }}
             backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" (print (include "k8s-common.ingress.serviceName" $) "-http") "servicePort" $portName "context" $) | nindent 14 }}
-  {{- end }}
-  {{- end }}
+          {{ end -}}
+    {{ end -}}
 {{- end }}
