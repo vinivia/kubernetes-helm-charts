@@ -1,0 +1,27 @@
+apiVersion: v1
+entries:
+  k8s-common:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    created: "2023-12-06T22:30:10.792272652Z"
+    description: A Library Helm Chart for grouping common logic between charts. This
+      chart is not deployable by itself.
+    digest: 084dcc6ec1655c802fcfe21364da4e000d90d87044eb5305763357a3ce90b982
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    keywords:
+    - common
+    - helper
+    - template
+    - function
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: k8s-common
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/k8s-common
+    type: library
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/k8s-common-1.0.0/k8s-common-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-12-06T22:30:10.792283983Z"
