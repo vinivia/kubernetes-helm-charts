@@ -13,7 +13,12 @@
                 "org": {
                     "type": "string",
                     "description": "Company Organization Unit(product group).",
-                    "default": "example"
+                    "default": ""
+                },
+                "product": {
+                    "type": "string",
+                    "description": "The product of the service",
+                    "default": ""
                 },
                 "environmentType": {
                     "type": "string",
