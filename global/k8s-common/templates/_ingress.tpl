@@ -116,7 +116,7 @@ This solution should be changed in the future.
 {{ required "global.serviceName is missing" .Values.global.serviceName }}.
 {{- required "global.org is missing" .Values.global.org }}
 {{- if not .Values.global.production -}}-{{ .Values.global.environmentType }}{{- end -}}
-.aws.
+.infra.
 {{- required "global.domain is missing" .Values.global.domain }}
 {{- end -}}
 
@@ -129,7 +129,7 @@ This solution should be changed in the future.
 {{- required "global.serviceName is missing" .Values.global.serviceName }}.
 {{- required "global.org is missing" .Values.global.org }}
 {{- if not .Values.global.production -}}-{{ .Values.global.environmentType }}{{- end -}}
-.aws.
+.infra.
 {{- required "global.domain is missing" .Values.global.domain }}
 {{- end -}}
 {{- end -}}
