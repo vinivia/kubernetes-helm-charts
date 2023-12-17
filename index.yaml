@@ -2,6 +2,25 @@ apiVersion: v1
 entries:
   configmaps:
   - apiVersion: v2
+    created: "2023-12-17T15:09:02.760743197Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: 1.0.1
+    description: The chart for creating configmaps.
+    digest: 3352bda0ef68806cefe607f31b403f81ef62fe08c531e91652669299d1d75ea0
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: configmaps
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/configmaps
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/configmaps-1.1.1/configmaps-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2023-12-06T22:40:52.838446884Z"
     dependencies:
     - name: k8s-common
@@ -22,6 +41,24 @@ entries:
     version: 1.1.0
   cronjobs:
   - apiVersion: v2
+    created: "2023-12-17T15:09:02.939615904Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: 1.0.1
+    description: Kubernetes Cron Jobs
+    digest: d4406385a1090ce9b9e759d9447bbc6d501b7d622e4a69873f5ea1f4c6cceba2
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: cronjobs
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/cronjobs
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/cronjobs-1.1.1/cronjobs-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2023-12-06T22:40:52.988063027Z"
     dependencies:
     - name: k8s-common
@@ -40,6 +77,26 @@ entries:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/cronjobs-1.1.0/cronjobs-1.1.0.tgz
     version: 1.1.0
   deployment:
+  - apiVersion: v2
+    created: "2023-12-17T15:09:03.099682528Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: 1.0.1
+    description: Typical microservice chart. Supports Ingress controller, horizontal-scalable
+      containers
+    digest: 9840d9dff455c3fb629e33820eac63d73e62e928c4fad21690aaf4da069ed02d
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: deployment
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/deployment
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/deployment-1.1.1/deployment-1.1.1.tgz
+    version: 1.1.1
   - apiVersion: v2
     created: "2023-12-06T22:40:53.182872312Z"
     dependencies:
@@ -109,6 +166,25 @@ entries:
     version: 1.0.0
   statefulset:
   - apiVersion: v2
+    created: "2023-12-17T15:09:03.293865994Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: 1.0.1
+    description: Typical StateFul Set application
+    digest: 044dfc1b6b2fec6f5d1c71a4d2ff384ed2fd87fc46855480b4a9800b9baa520c
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: statefulset
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/statefulset
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/statefulset-1.1.1/statefulset-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2023-12-06T22:40:53.362444379Z"
     dependencies:
     - name: k8s-common
@@ -129,6 +205,25 @@ entries:
     version: 1.1.0
   vaultsecrets:
   - apiVersion: v2
+    created: "2023-12-17T15:09:03.491941912Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: 1.0.1
+    description: Generator of the secrets from remote Vault server
+    digest: dc60aece268a8500a1650669d4358a4a548abb1f1463a433290e138e229bb248
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: vaultsecrets
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/vaultsecrets
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/vaultsecrets-1.1.1/vaultsecrets-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
     created: "2023-12-06T22:40:53.540098819Z"
     dependencies:
     - name: k8s-common
@@ -147,4 +242,4 @@ entries:
     urls:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/vaultsecrets-1.1.0/vaultsecrets-1.1.0.tgz
     version: 1.1.0
-generated: "2023-12-17T15:05:31.498427954Z"
+generated: "2023-12-17T15:09:03.491989088Z"
