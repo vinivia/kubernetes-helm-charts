@@ -4,7 +4,7 @@ Return generated container configuration.
 {{- include "k8s-common.containers.container" . }}
 */}}
 {{- define "k8s-common.containers.container" -}}
-- name: "{{ include "k8s-common.names.name" . }}"
+- name: "{{ include "k8s-common.names.fullname" . }}"
   image: "{{ include "k8s-common.images.image" . }}"
   imagePullPolicy: {{ (.Values.image).pullPolicy | default .Values.global.image.pullPolicy | quote }}
   {{- if .Values.command }}
