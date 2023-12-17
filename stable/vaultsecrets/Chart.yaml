@@ -1,11 +1,11 @@
 apiVersion: v2
 name: vaultsecrets
-version: 1.1.0
+version: 1.1.1
 description: Generator of the secrets from remote Vault server
 type: application
 dependencies:
   - name: k8s-common
-    version: 1.0.0
+    version: 1.0.1
     repository: https://vinivia.github.io/kubernetes-helm-charts
 home: https://vinivia.github.io/kubernetes-helm-charts
 sources:
