@@ -112,8 +112,9 @@ Return generated container configuration.
   {{- if .Values.securityContext }}
   securityContext: {{- toYaml .Values.securityContext | trim | nindent 4 }}
   {{- end }}
+  volumeMounts:
   {{- if .Values.volumes }}
-  volumeMounts: {{- include "k8s-common.volume.mounts" . | trim | nindent 4 }}
+  {{- include "k8s-common.volume.mounts" . | trim | nindent 4 }}
   {{- end }}
   {{- if (.Values.persistence).enabled }}
     - name: data
