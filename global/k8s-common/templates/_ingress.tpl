@@ -98,19 +98,10 @@ Usage:
 {{- end -}}
 
 {{- define "k8s-common.ingress.previewServiceName" -}}
-preview-{{ include  "k8s-common.ingress.serviceName" . }}
+preview-{{- include  "k8s-common.ingress.serviceName" . -}}
 {{- end -}}
 
 {{- define "k8s-common.ingress.host" -}}
-{{ include  "k8s-common.ingress.serviceName" . }}.
-{{ include  "k8s-common.ingress.domain" . }}
-{{- end -}}
-
-{{- define "k8s-common.ingress.extraHost" -}}
-{{- if .Values.ingressExtra.host -}}
-{{ .Values.ingressExtra.host }}
-{{- else -}}
-{{- if .Values.ingressExtra.subDomain -}}.{{- else -}}-{{- end -}}
-{{ include  "k8s-common.ingress.domain" . }}
-{{- end -}}
+{{- include  "k8s-common.ingress.serviceName" . -}}.
+{{- include  "k8s-common.ingress.domain" . -}}
 {{- end -}}
