@@ -78,7 +78,7 @@ Usage:
 {{- define "k8s-common.ingress.domain" -}}
 {{- if eq .Values.global.environment "prod" -}}
 {{ .Values.global.domain }}
-{{- else if .Values.global.environment "stage" -}}
+{{- else if eq .Values.global.environment "stage" -}}
 {{ substr 0 4 .Values.global.product }}.stg
 {{- else -}}
 {{ substr 0 4 .Values.global.product }}.dev
