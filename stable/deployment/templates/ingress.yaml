@@ -39,13 +39,16 @@ spec:
     - host: {{ required "A valid ingress.extraHosts.host entry required!" .host | quote }}
       http:
         paths:
-          - path: "/"
-            pathType: Prefix
-            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "ssl-redirect" "servicePort" "use-annotation" "context" $)  | nindent 14 }}
+          {{ if .paths -}}
           {{ range .paths -}}
           - path: {{ . }}
             pathType: {{ $.Values.ingress.pathType }}
             backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" (include "k8s-common.ingress.serviceName" $) "servicePort" $portName "context" $)  | nindent 14 }}
+          {{ end -}}
+          {{ else -}}
+          - path: "/"
+            pathType: Prefix
+            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "ssl-redirect" "servicePort" "use-annotation" "context" $)  | nindent 14 }}
           {{ end -}}
     {{ end -}}
 {{- end }}

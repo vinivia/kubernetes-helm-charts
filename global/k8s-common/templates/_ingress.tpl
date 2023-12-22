@@ -79,9 +79,9 @@ Usage:
 {{- if eq .Values.global.environment "prod" -}}
 {{ .Values.global.domain }}
 {{- else if eq .Values.global.environment "stage" -}}
-{{ substr 0 4 .Values.global.product }}.stg
+{{ substr 0 4 .Values.global.product }}.stg.{{ .Values.global.domain }}
 {{- else -}}
-{{ substr 0 4 .Values.global.product }}.dev
+{{ substr 0 4 .Values.global.product }}.dev.{{ .Values.global.domain }}
 {{- end -}}
 {{- end -}}
 

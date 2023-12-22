@@ -12,18 +12,21 @@ metadata:
   {{- include "k8s-common.ingressExtra.annotations" . | nindent 4 }}
 spec:
   rules:
-    {{ range .Values.ingressExtra.extraHosts -}}
+    {{ range (required "ingressExtra.extraHosts are required for ingressExtra" .Values.ingressExtra.extraHosts) -}}
     {{- $portName := default "http" .port -}}
     - host: {{ required "A valid ingressExtra.extraHosts.host entry required!" .host | quote }}
       http:
         paths:
-          - path: "/"
-            pathType: Prefix
-            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "ssl-redirect" "servicePort" "use-annotation" "context" $)  | nindent 14 }}
+          {{ if .paths -}}
           {{ range .paths -}}
           - path: {{ . }}
             pathType: {{ $.Values.ingressExtra.pathType }}
             backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" (include "k8s-common.ingress.serviceName" $) "servicePort" $portName "context" $)  | nindent 14 }}
+          {{ end -}}
+          {{ else -}}
+          - path: "/"
+            pathType: Prefix
+            backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "ssl-redirect" "servicePort" "use-annotation" "context" $)  | nindent 14 }}
           {{ end -}}
     {{ end -}}
 {{- end }}
