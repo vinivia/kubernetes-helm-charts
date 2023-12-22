@@ -3,6 +3,40 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+## @section Global parameters
+## Global Docker image parameters
+global:
+  ## @param global.product The product of the service
+  ##
+  product: ""
+  ## @param global.serviceName Name of the service. Affects public DNS.
+  ## E.g. cherry-admin, tpt-service-api
+  ##
+  serviceName: "example"
+  ## @param global.environment Type of the environment, one of "dev", "stage", "prod".
+  ##
+  environment: "dev"
+  ## @param global.domain Company Root-level domain, expects
+  ## [<global.product>.<global.environment>].<global.domain> Route53 HZ.
+  ##
+  domain: ""
+  ## Configuration of the image for the deployment
+  ##
+  image:
+    ## @param global.image.name Name of the image,
+    ## E.g.
+    ## name: "1234567890.dkr.ecr.eu-central-1.amazonaws.com/example"
+    ##
+    name: ""
+    ## @param global.image.tag Tag of the image
+    ##
+    tag: "latest"
+    ## @param global.image.pullPolicy The default pull policy is IfNotPresent which causes
+    ## the kubelet to skip pulling an image if it already exists.
+    ## Ref: https://kubernetes.io/docs/concepts/containers/images/#updating-images
+    ##
+    pullPolicy: "IfNotPresent"
+
 ## @section Kubernetes secrets
 ## Example:
 ## kubeSecrets:
@@ -10,7 +44,7 @@
 ##      - name: foo
 ##        secret: password
 ##        path: mySecret
-## It will be find in /secret-<global.org>/<prod|dev>/k8s/<release.namespace>/
+## It will be find in /secret-<global.product>/<prod|dev>/k8s/
 ##
 ## @param kubeSecrets [object] Secrets that get added to the container from Hashicorp Vault
 ## Objects keys should be all lowercase or dashes/underscores

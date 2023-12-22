@@ -16,7 +16,7 @@ cronjobs:
     runAsNonRoot: true
   env:
     values:
-      FOO: "bar-{{ .Values.global.environmentName }}"
+      FOO: "bar-{{ .Values.global.environment }}"
     vaultSecret:
       API_KEY:
         path: mySecret

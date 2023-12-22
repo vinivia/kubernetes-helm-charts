@@ -3,7 +3,7 @@ Compile all warnings into a single message, and call fail.
 */}}
 {{- define "statefulset.validateValues" -}}
 {{- $messages := list -}}
-{{- $messages := append $messages (include "statefulset.validateValues.org" .) -}}
+{{- $messages := append $messages (include "statefulset.validateValues.product" .) -}}
 {{- $messages := without $messages "" -}}
 {{- $message := join "\n" $messages -}}
 
@@ -16,9 +16,9 @@ Compile all warnings into a single message, and call fail.
 Validate values of Deployment:
 - must set a org
 */}}
-{{- define "statefulset.validateValues.org" -}}
-{{- if not .Values.global.org -}}
-deployment: global.org
-    You must set a global.org
+{{- define "statefulset.validateValues.product" -}}
+{{- if not .Values.global.product -}}
+deployment: global.product
+    You must set a global.product
 {{- end -}}
 {{- end -}}

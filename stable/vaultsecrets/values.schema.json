@@ -1,5 +1,51 @@
 {
     "title": "Chart Values",
     "type": "object",
-    "properties": {}
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "product": {
+                    "type": "string",
+                    "description": "The product of the service",
+                    "default": ""
+                },
+                "serviceName": {
+                    "type": "string",
+                    "description": "Name of the service. Affects public DNS.",
+                    "default": "example"
+                },
+                "environment": {
+                    "type": "string",
+                    "description": "Type of the environment, one of \"dev\", \"stage\", \"prod\".",
+                    "default": "dev"
+                },
+                "domain": {
+                    "type": "string",
+                    "description": "Company Root-level domain, expects",
+                    "default": ""
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "description": "Name of the image,",
+                            "default": ""
+                        },
+                        "tag": {
+                            "type": "string",
+                            "description": "Tag of the image",
+                            "default": "latest"
+                        },
+                        "pullPolicy": {
+                            "type": "string",
+                            "description": "The default pull policy is IfNotPresent which causes",
+                            "default": "IfNotPresent"
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

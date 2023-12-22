@@ -72,7 +72,7 @@ statefulset:
     name: example
   env:
     values:
-      FOO1: "bar-{{ .Values.global.environmentName }}"
+      FOO1: "bar-{{ .Values.global.environment }}"
     refs:
       FOO2: metadata.name
     configmap:

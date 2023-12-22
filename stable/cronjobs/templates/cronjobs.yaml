@@ -16,7 +16,7 @@ metadata:
 spec:
   schedule: {{ $value.schedule | quote }}
   suspend: {{ $value.suspend | default false }}
-  {{- if $.Values.global.production }}
+  {{- if eq $.Values.global.environment "prod" }}
   concurrencyPolicy: {{ $value.concurrencyPolicy | default "Forbid" }}
   {{- else }}
   concurrencyPolicy: Forbid
@@ -31,7 +31,7 @@ spec:
 
   jobTemplate:
     spec:
-      {{- if $.Values.global.production }}
+      {{- if eq $.Values.global.environment "prod" }}
       backoffLimit: {{ $value.backoffLimit | default 6  }}
       {{- else }}
       backoffLimit: 0

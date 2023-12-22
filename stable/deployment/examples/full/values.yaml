@@ -77,8 +77,8 @@ deployment:
     name: example
   env:
     values:
-      FOO1: "foo-{{ .Values.global.environmentName }}"
-      BAR1: "bar-{{ .Values.global.environmentName }}"
+      FOO1: "foo-{{ .Values.global.environment }}"
+      BAR1: "bar-{{ .Values.global.environment }}"
     refs:
       FOO2: metadata.name
     configmap:

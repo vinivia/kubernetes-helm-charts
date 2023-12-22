@@ -5,9 +5,9 @@
         "global": {
             "type": "object",
             "properties": {
-                "org": {
+                "product": {
                     "type": "string",
-                    "description": "Company Organization Unit(product group).",
+                    "description": "The product of the service",
                     "default": ""
                 },
                 "serviceName": {
@@ -15,14 +15,9 @@
                     "description": "Name of the service. Affects public DNS.",
                     "default": ""
                 },
-                "production": {
-                    "type": "boolean",
-                    "description": "Will the service run in production environment",
-                    "default": false
-                },
-                "environmentName": {
+                "environment": {
                     "type": "string",
-                    "description": "Name of the environment, user-specified.",
+                    "description": "Name of the environment, one of \"dev\", \"stage\", \"prod\".",
                     "default": "dev"
                 },
                 "image": {

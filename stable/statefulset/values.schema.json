@@ -5,17 +5,17 @@
         "global": {
             "type": "object",
             "properties": {
+                "product": {
+                    "type": "string",
+                    "description": "The product of the service",
+                    "default": ""
+                },
                 "serviceName": {
                     "type": "string",
                     "description": "Name of the service. Affects public DNS.",
                     "default": "example"
                 },
-                "org": {
-                    "type": "string",
-                    "description": "Company Organization Unit(product group).",
-                    "default": "example"
-                },
-                "environmentType": {
+                "environment": {
                     "type": "string",
                     "description": "Type of the environment, one of \"dev\", \"stage\", \"prod\".",
                     "default": "dev"
@@ -23,16 +23,6 @@
                 "domain": {
                     "type": "string",
                     "description": "Company Root-level domain, expects",
-                    "default": ""
-                },
-                "production": {
-                    "type": "boolean",
-                    "description": "Will the service run in production environment",
-                    "default": false
-                },
-                "environmentName": {
-                    "type": "string",
-                    "description": "Name of the environment, user-specified.",
                     "default": ""
                 },
                 "image": {

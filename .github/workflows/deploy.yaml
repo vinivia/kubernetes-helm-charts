@@ -23,7 +23,7 @@ jobs:
 #            pushd $x
 #            helm dependency update .
 #            helm lint . \
-#              --set global.org=core \
+#              --set global.product=core \
 #              --set global.serviceName=test \
 #              --with-subcharts \
 #              --strict
@@ -38,7 +38,7 @@ jobs:
 #              --generate-name \
 #              --namespace test \
 #              --dependency-update \
-#              --set global.org=core \
+#              --set global.product=core \
 #              --set global.serviceName=test \
 #              --values values.yaml
 #            popd

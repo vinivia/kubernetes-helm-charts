@@ -46,12 +46,10 @@ Typical StateFul Set application
 
 | Name                      | Description                                             | Value          |
 | ------------------------- | ------------------------------------------------------- | -------------- |
+| `global.product`          | The product of the service                              | `""`           |
 | `global.serviceName`      | Name of the service. Affects public DNS.                | `example`      |
-| `global.org`              | Company Organization Unit(product group).               | `example`      |
-| `global.environmentType`  | Type of the environment, one of "dev", "stage", "prod". | `dev`          |
+| `global.environment`      | Type of the environment, one of "dev", "stage", "prod". | `dev`          |
 | `global.domain`           | Company Root-level domain, expects                      | `""`           |
-| `global.production`       | Will the service run in production environment          | `false`        |
-| `global.environmentName`  | Name of the environment, user-specified.                | `""`           |
 | `global.image.name`       | Name of the image,                                      | `""`           |
 | `global.image.tag`        | Tag of the image                                        | `latest`       |
 | `global.image.pullPolicy` | The default pull policy is IfNotPresent which causes    | `IfNotPresent` |

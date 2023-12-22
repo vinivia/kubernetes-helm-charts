@@ -6,20 +6,17 @@
 ## @section Global parameters
 ## Global Docker image parameters
 global:
-  ## @param global.org Company Organization Unit(product group).
+  ## @param global.product The product of the service
   ##
-  org: ""
+  product: ""
   ## @param global.serviceName Name of the service. Affects public DNS.
   ## E.g. php-admin, service-api
   ##
   serviceName: ""
-  ## @param global.production Will the service run in production environment
-  ##
-  production: false
-  ## @param global.environmentName Name of the environment, user-specified.
+  ## @param global.environment Name of the environment, one of "dev", "stage", "prod".
   ## E.g. feature, stage, dev-2.
   ##
-  environmentName: "dev"
+  environment: "dev"
   ## Configuration of the image for the deployment
   ##
   image:
@@ -127,7 +124,7 @@ env:
   ## Supporting helm templates
   ## E.g.
   ## values:
-  ##   FOO: "bar-{{ .Values.global.environmentName }}"
+  ##   FOO: "bar-{{ .Values.global.environment }}"
   ##
   values: {}
   ## @param env.refs Environment variables as references to the pod
@@ -153,7 +150,7 @@ env:
   ##
   secret: {}
   ## @param env.vaultSecret Kubernetes secrets that get added to the container from Hashicorp Vault
-  ## path - Path within vault to the secret containing environment variable. It will be found in /secret-<global.org>/<prod|dev>/k8s/<release.namespace>/
+  ## path - Path within vault to the secret containing environment variable. It will be found in /secret-<global.product>/<prod|dev>/k8s/<release.namespace>/
   ## secret - Optional name of the variable inside secret. Defaults to the secret key
   ## E.g.
   ## vaultSecret:
