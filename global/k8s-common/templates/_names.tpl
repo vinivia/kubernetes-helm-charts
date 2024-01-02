@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "k8s-common.names.name" -}}
-{{- default .Release.Name .Values.nameOverride | replace .Release.Namespace "" | trunc 63 | trimAll "-" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
@@ -22,7 +22,7 @@ If release name contains chart name it will be used as a full name.
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{- $name := default .Release.Name .Values.global.serviceName -}}
+{{- $name := default .Chart.Name .Values.global.serviceName -}}
 {{- printf "%s-%s" $name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
@@ -32,7 +32,7 @@ If release name contains chart name it will be used as a full name.
 {{/*{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" | quote -}}*/}}
 {{/*{{- else if .Values.global.serviceName -}}*/}}
 {{/*{{- .Values.global.serviceName | trunc 63 | trimSuffix "-" -}}*/}}
-{{/*{{- else -}}*/}}
+{{/*{{- else -}}*/}}gj
 {{/*{{- $name := default .Chart.Name .Values.nameOverride -}}*/}}
 {{/*{{- if contains $name .Release.Name -}}*/}}
 {{/*{{- .Release.Name | trunc 63 | trimSuffix "-" | quote -}}*/}}
