@@ -1,11 +1,11 @@
 apiVersion: v2
 name: configmaps
-version: 1.2.0
+version: 1.2.2
 description: The chart for creating configmaps.
 type: application
 dependencies:
   - name: k8s-common
-    version: 1.2.0
+    version: ^1.2.0
     repository: https://vinivia.github.io/kubernetes-helm-charts
 home: https://vinivia.github.io/kubernetes-helm-charts
 sources:
