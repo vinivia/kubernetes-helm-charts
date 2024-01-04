@@ -152,6 +152,26 @@ entries:
     version: 1.1.0
   deployment:
   - apiVersion: v2
+    created: "2024-01-04T10:54:54.214285732Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.2.2
+    description: Typical microservice chart. Supports Ingress controller, horizontal-scalable
+      containers
+    digest: 59a3a429bc994b048639c2161530ec6ee802deb247f7fa1fe3640cb91c9369c2
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: deployment
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/deployment
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/deployment-1.2.3/deployment-1.2.3.tgz
+    version: 1.2.3
+  - apiVersion: v2
     created: "2024-01-02T21:55:00.486323407Z"
     dependencies:
     - name: k8s-common
@@ -386,6 +406,25 @@ entries:
     version: 1.0.0
   statefulset:
   - apiVersion: v2
+    created: "2024-01-04T10:54:54.344671684Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.2.2
+    description: Typical StateFul Set application
+    digest: d47848897385d8e0abcaa384f5adeadc20e78c6ebdf744e92250764b091ecf34
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: statefulset
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/statefulset
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/statefulset-1.2.3/statefulset-1.2.3.tgz
+    version: 1.2.3
+  - apiVersion: v2
     created: "2024-01-02T21:55:00.626926406Z"
     dependencies:
     - name: k8s-common
@@ -576,4 +615,4 @@ entries:
     urls:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/vaultsecrets-1.1.0/vaultsecrets-1.1.0.tgz
     version: 1.1.0
-generated: "2024-01-02T21:55:00.785370589Z"
+generated: "2024-01-04T10:54:54.344741634Z"
