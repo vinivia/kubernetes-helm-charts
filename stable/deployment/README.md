@@ -69,33 +69,33 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 
 ### Common parameters
 
-| Name                                 | Description                                                                                    | Value   |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------- | ------- |
-| `nameOverride`                       | By default, name uses '{{ .Chart.Name }}'.                                                     | `""`    |
-| `fullnameOverride`                   | By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.                             | `""`    |
-| `replicaCount`                       | Number of the parallel-running containers. The controller will eventually make the size of the | `1`     |
-| `podAnnotations`                     | Additional annotations to apply to the pod.                                                    | `{}`    |
-| `priorityClassName`                  | priorityClassName                                                                              | `""`    |
-| `podSecurityContext`                 | Pod security context                                                                           | `{}`    |
-| `securityContext`                    | Security context for the container                                                             | `{}`    |
-| `vaultVolumesSupport`                | support for vault secrets as files. Defaults false.                                            | `false` |
-| `volumes`                            | Container volumes configuration                                                                | `{}`    |
-| `command`                            | You can set a custom entrypoint for your docker container                                      | `[]`    |
-| `args`                               | You can set a custom arguments for your docker container                                       | `[]`    |
-| `nodeSelector`                       | Node labels for pod assignment                                                                 | `{}`    |
-| `tolerations`                        | Tolerations for pod assignment                                                                 | `[]`    |
-| `podAffinityPreset`                  | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`            | `""`    |
-| `podAntiAffinityPreset`              | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`       | `soft`  |
-| `preStopDelaySeconds`                | pre-stop delay for graceful pod shutdown                                                       | `0`     |
-| `nodeAffinityPreset`                 | Node affinity preset                                                                           |         |
-| `nodeAffinityPreset.type`            | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`      | `""`    |
-| `nodeAffinityPreset.key`             | Node label key to match Ignored if `affinity` is set.                                          | `""`    |
-| `nodeAffinityPreset.values`          | Node label values to match. Ignored if `affinity` is set.                                      | `[]`    |
-| `affinity`                           | Affinity for pod assignment                                                                    | `{}`    |
-| `podDisruptionBudget`                | Pod disruption budget configuration                                                            |         |
-| `podDisruptionBudget.create`         | Specifies whether a Pod disruption budget should be created                                    | `false` |
-| `podDisruptionBudget.minAvailable`   | Min available pods or percent of pods                                                          | `1`     |
-| `podDisruptionBudget.maxUnavailable` | Max non-available pods or percent of pods                                                      | `1`     |
+| Name                        | Description                                                                                    | Value   |
+| --------------------------- | ---------------------------------------------------------------------------------------------- | ------- |
+| `nameOverride`              | By default, name uses '{{ .Chart.Name }}'.                                                     | `""`    |
+| `fullnameOverride`          | By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.                             | `""`    |
+| `replicaCount`              | Number of the parallel-running containers. The controller will eventually make the size of the | `1`     |
+| `podAnnotations`            | Additional annotations to apply to the pod.                                                    | `{}`    |
+| `priorityClassName`         | priorityClassName                                                                              | `""`    |
+| `podSecurityContext`        | Pod security context                                                                           | `{}`    |
+| `securityContext`           | Security context for the container                                                             | `{}`    |
+| `vaultVolumesSupport`       | support for vault secrets as files. Defaults false.                                            | `false` |
+| `volumes`                   | Container volumes configuration                                                                | `{}`    |
+| `command`                   | You can set a custom entrypoint for your docker container                                      | `[]`    |
+| `args`                      | You can set a custom arguments for your docker container                                       | `[]`    |
+| `nodeSelector`              | Node labels for pod assignment                                                                 | `{}`    |
+| `tolerations`               | Tolerations for pod assignment                                                                 | `[]`    |
+| `podAffinityPreset`         | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`            | `""`    |
+| `podAntiAffinityPreset`     | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`       | `soft`  |
+| `preStopDelaySeconds`       | pre-stop delay for graceful pod shutdown                                                       | `0`     |
+| `nodeAffinityPreset`        | Node affinity preset                                                                           |         |
+| `nodeAffinityPreset.type`   | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`      | `""`    |
+| `nodeAffinityPreset.key`    | Node label key to match Ignored if `affinity` is set.                                          | `""`    |
+| `nodeAffinityPreset.values` | Node label values to match. Ignored if `affinity` is set.                                      | `[]`    |
+| `affinity`                  | Affinity for pod assignment                                                                    | `{}`    |
+| `pdb`                       | Pod disruption budget configuration                                                            |         |
+| `pdb.create`                | Specifies whether a Pod disruption budget should be created                                    | `false` |
+| `pdb.minAvailable`          | Min available pods or percent of pods                                                          | `1`     |
+| `pdb.maxUnavailable`        | Max non-available pods or percent of pods                                                      | `1`     |
 
 
 ### Extra Containers

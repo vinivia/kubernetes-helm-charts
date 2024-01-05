@@ -1,9 +1,9 @@
 {{- if not .Values.rollouts.enabled -}}
-apiVersion: apps/v1
+apiVersion: {{ include "k8s-common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   name: {{ include "k8s-common.names.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
   labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
 spec:
   revisionHistoryLimit: 2
@@ -49,7 +49,7 @@ spec:
       {{- if .Values.initContainers }}
       initContainers:
         {{- range .Values.initContainers }}
-        {{- $values := dict "Values" . "Release" $.Release "Template" $.Template -}}
+        {{- $values := dict "Values" . "Chart" $.Chart "Release" $.Release "Template" $.Template -}}
         {{- $name := required "nameOverride is required for the init containers" $values.Values.nameOverride }}
         {{- $_ := set $values.Values "global" $.Values.global -}}
         {{- $__ := set $values.Values "volumes" ($values.Values.volumes | default $.Values.volumes) -}}
@@ -61,7 +61,7 @@ spec:
         {{- if .Values.sidecarContainers }}
         {{- range .Values.sidecarContainers }}
         {{/* Define configuration for subobjects (containers) with inputs from root($) context*/}}
-        {{- $values := dict "Values" . "Release" $.Release "Template" $.Template -}}
+        {{- $values := dict "Values" . "Chart" $.Chart "Release" $.Release "Template" $.Template -}}
         {{- $name := required "nameOverride is required for the sidecar containers" $values.Values.nameOverride }}
         {{- $_ := set $values.Values "global" $.Values.global -}}
         {{- $__ := set $values.Values "volumes" ($values.Values.volumes | default $.Values.volumes) -}}

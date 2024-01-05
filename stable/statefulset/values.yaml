@@ -157,13 +157,13 @@ affinity: {}
 ## @section Pod disruption budget configuration
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 ##
-podDisruptionBudget:
-  ## @param podDisruptionBudget.create Specifies whether a Pod disruption budget should be created
+pdb:
+  ## @param pdb.create Specifies whether a Pod disruption budget should be created
   ##
   create: false
-  ## @param podDisruptionBudget.minAvailable Min available pods or percent of pods
+  ## @param pdb.minAvailable Min available pods or percent of pods
   minAvailable: 1
-  ## @param podDisruptionBudget.maxUnavailable Max non-available pods or percent of pods
+  ## @param pdb.maxUnavailable Max non-available pods or percent of pods
   ##
   maxUnavailable: 1
 ## @param terminationGracePeriodSeconds Seconds the pod needs to gracefully terminate

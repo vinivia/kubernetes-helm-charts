@@ -156,7 +156,7 @@
             "description": "Affinity for pod assignment",
             "default": {}
         },
-        "podDisruptionBudget": {
+        "pdb": {
             "type": "object",
             "properties": {
                 "create": {

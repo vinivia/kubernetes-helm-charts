@@ -61,7 +61,7 @@ statefulset:
     enabled: true
     postStartCommand: echo Hello
     preStopCommand: echo Bye
-  podDisruptionBudget:
+  pdb:
     create: true
     minAvailable: 1
     maxUnavailable: 1

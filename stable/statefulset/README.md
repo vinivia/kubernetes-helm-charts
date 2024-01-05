@@ -87,12 +87,12 @@ Typical StateFul Set application
 
 ### Pod disruption budget configuration
 
-| Name                                 | Description                                                 | Value   |
-| ------------------------------------ | ----------------------------------------------------------- | ------- |
-| `podDisruptionBudget.create`         | Specifies whether a Pod disruption budget should be created | `false` |
-| `podDisruptionBudget.minAvailable`   | Min available pods or percent of pods                       | `1`     |
-| `podDisruptionBudget.maxUnavailable` | Max non-available pods or percent of pods                   | `1`     |
-| `terminationGracePeriodSeconds`      | Seconds the pod needs to gracefully terminate               | `""`    |
+| Name                            | Description                                                 | Value   |
+| ------------------------------- | ----------------------------------------------------------- | ------- |
+| `pdb.create`                    | Specifies whether a Pod disruption budget should be created | `false` |
+| `pdb.minAvailable`              | Min available pods or percent of pods                       | `1`     |
+| `pdb.maxUnavailable`            | Max non-available pods or percent of pods                   | `1`     |
+| `terminationGracePeriodSeconds` | Seconds the pod needs to gracefully terminate               | `""`    |
 
 
 ### Image for the deployment

@@ -1,0 +1,17 @@
+{{- if .Values.pdb.create }}
+apiVersion: {{ include "k8s-common.capabilities.policy.apiVersion" . }}
+kind: PodDisruptionBudget
+metadata:
+  name:  {{ include "k8s-common.names.fullname" . }}
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
+  labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
+spec:
+  {{- if .Values.pdb.minAvailable }}
+  minAvailable: {{ .Values.pdb.minAvailable }}
+  {{- end }}
+  {{- if .Values.pdb.maxUnavailable }}
+  maxUnavailable: {{ .Values.pdb.maxUnavailable }}
+  {{- end }}
+  selector:
+    matchLabels: {{ include "k8s-common.labels.matchLabels" . | nindent 6 }}
+{{- end }}

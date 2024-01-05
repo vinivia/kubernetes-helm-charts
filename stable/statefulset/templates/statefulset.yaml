@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: {{ include "k8s-common.capabilities.statefulset.apiVersion" . }}
 kind: StatefulSet
 metadata:
   name: {{ template "k8s-common.names.fullname" . }}
@@ -52,7 +52,7 @@ spec:
       {{- if .Values.initContainer.enabled }}
       initContainers:
         {{- range .Values.initContainers }}
-        {{- $values := dict "Values" . "Release" $.Release "Template" $.Template -}}
+        {{- $values := dict "Values" . "Chart" $.Chart "Release" $.Release "Template" $.Template -}}
         {{- $name := required "nameOverride is required for the init containers" $values.Values.nameOverride }}
         {{- $_ := set $values.Values "global" $.Values.global -}}
         {{- $__ := set $values.Values "volumes" ($values.Values.volumes | default $.Values.volumes) -}}
@@ -65,7 +65,7 @@ spec:
         {{- if .Values.sidecarContainers }}
         {{- range .Values.sidecarContainers }}
         {{/* Define configuration for subobjects (containers) with inputs from root($) context*/}}
-        {{- $values := dict "Values" . "Release" $.Release "Template" $.Template -}}
+        {{- $values := dict "Values" . "Chart" $.Chart "Release" $.Release "Template" $.Template -}}
         {{- $name := required "nameOverride is required for the sidecar containers" $values.Values.nameOverride }}
         {{- $_ := set $values.Values "global" $.Values.global -}}
         {{- $__ := set $values.Values "volumes" ($values.Values.volumes | default $.Values.volumes) -}}
