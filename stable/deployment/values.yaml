@@ -49,7 +49,16 @@ fullnameOverride: ""
 ## running service equal to the expected size.
 ##
 replicaCount: 1
-## @param podAnnotations Additional annotations to apply to the pod.
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+## @param podLabels Additional labels for the pod
+##
+podLabels: {}
+## @param podAnnotations Additional annotations for the pod.
 ##
 podAnnotations: { }
 ## @param priorityClassName priorityClassName

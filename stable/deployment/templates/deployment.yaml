@@ -4,17 +4,20 @@ kind: Deployment
 metadata:
   name: {{ include "k8s-common.names.fullname" . }}
   namespace: {{ include "k8s-common.names.namespace" . | quote }}
-  labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
+  labels: {{ include "k8s-common.labels.standard" (dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
 spec:
   revisionHistoryLimit: 2
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
-    matchLabels: {{ include "k8s-common.labels.matchLabels" . | nindent 6 }}
+    matchLabels: {{ include "k8s-common.labels.matchLabels" (dict "customLabels" .Values.podLabels "context" $ ) | nindent 6 }}
   template:
     metadata:
-      labels: {{ include "k8s-common.labels.matchLabels" . | nindent 8 }}
+      labels: {{ include "k8s-common.labels.standard" (dict "customLabels" .Values.podLabels "context" $ ) | nindent 8 }}
       {{- if or .Values.podAnnotations .Values.metrics.enabled }}
       annotations: {{ include "k8s-common.annotations.podAnnotations" . | trim | nindent 8 }}
       {{- end }}

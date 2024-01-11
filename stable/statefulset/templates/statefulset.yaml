@@ -3,7 +3,10 @@ kind: StatefulSet
 metadata:
   name: {{ template "k8s-common.names.fullname" . }}
   namespace: {{ .Release.Namespace }}
-  labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
+  labels: {{ include "k8s-common.labels.standard" (dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
 spec:
   revisionHistoryLimit: 2
   {{- if .Values.service.enabled }}
@@ -11,10 +14,10 @@ spec:
   {{- end }}
   replicas: {{ .Values.replicaCount }}
   selector:
-    matchLabels: {{ include "k8s-common.labels.matchLabels" . | nindent 6 }}
+    matchLabels: {{ include "k8s-common.labels.matchLabels" (dict "customLabels" .Values.podLabels "context" $ ) | nindent 6 }}
   template:
     metadata:
-      labels: {{ include "k8s-common.labels.matchLabels" . | nindent 8 }}
+      labels: {{ include "k8s-common.labels.standard" (dict "customLabels" .Values.podLabels "context" $ ) | nindent 8 }}
       {{- if or .Values.podAnnotations .Values.metrics.enabled }}
       annotations: {{ include "k8s-common.annotations.podAnnotations" . | trim | nindent 8 }}
       {{- end }}
