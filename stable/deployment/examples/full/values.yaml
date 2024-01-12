@@ -95,6 +95,7 @@ deployment:
       API_KEY:
         path: mySecret
         secret: password
+  datadogIntegration: true
   initContainers:
     - nameOverride: init
       image:
