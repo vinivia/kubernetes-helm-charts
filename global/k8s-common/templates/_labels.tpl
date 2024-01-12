@@ -25,6 +25,11 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- with .Chart.AppVersion }}
 app.kubernetes.io/version: {{ . | quote }}
 {{- end -}}
+{{- if .Values.datadogIntegration }}
+tags.datadoghq.com/env: {{ .Values.global.environment }}
+tags.datadoghq.com/service: {{ include "k8s-common.names.fullname" . }}
+tags.datadoghq.com/version: {{ .Values.global.image.tag }}
+{{- end -}}
 {{- end -}}
 {{- end -}}
 

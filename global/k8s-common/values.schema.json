@@ -1,11 +1,5 @@
 {
     "title": "Chart Values",
     "type": "object",
-    "properties": {
-        "exampleValue": {
-            "type": "string",
-            "description": "",
-            "default": "k8s-common-chart"
-        }
-    }
+    "properties": {}
 }

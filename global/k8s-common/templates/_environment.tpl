@@ -23,6 +23,24 @@ Generate environment variables as refs.
     fieldRef:
       fieldPath: {{ $value }}
 {{- end -}}
+{{- if .Values.datadogIntegration }}
+- name: DD_AGENT_HOST
+  valueFrom:
+    fieldRef:
+      fieldPath: status.hostIP
+- name: DD_ENV
+  valueFrom:
+    fieldRef:
+      fieldPath: metadata.labels['tags.datadoghq.com/env']
+- name: DD_SERVICE
+  valueFrom:
+    fieldRef:
+      fieldPath: metadata.labels['tags.datadoghq.com/service']
+- name: DD_VERSION
+  valueFrom:
+    fieldRef:
+      fieldPath: metadata.labels['tags.datadoghq.com/version']
+{{- end -}}
 {{- end -}}
 
 {{/*
