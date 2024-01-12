@@ -62,9 +62,24 @@
             "description": "Number of the parallel-running containers. The controller will eventually make the size of the",
             "default": 1
         },
+        "commonLabels": {
+            "type": "object",
+            "description": "Labels to add to all deployed objects",
+            "default": {}
+        },
+        "commonAnnotations": {
+            "type": "object",
+            "description": "Annotations to add to all deployed objects",
+            "default": {}
+        },
+        "podLabels": {
+            "type": "object",
+            "description": "Additional labels for the pod",
+            "default": {}
+        },
         "podAnnotations": {
             "type": "object",
-            "description": "Additional annotations to apply to the pod.",
+            "description": "Additional annotations for the pod.",
             "default": {}
         },
         "priorityClassName": {
@@ -654,9 +669,7 @@
                 "accessModes": {
                     "type": "array",
                     "description": "Persistent Volume access modes",
-                    "default": [
-                        "ReadWriteOnce"
-                    ],
+                    "default": "[]",
                     "items": {
                         "type": "string"
                     }

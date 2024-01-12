@@ -54,7 +54,6 @@ Typical StateFul Set application
 | `global.image.tag`        | Tag of the image                                        | `latest`       |
 | `global.image.pullPolicy` | The default pull policy is IfNotPresent which causes    | `IfNotPresent` |
 
-
 ### Common parameters
 
 | Name                              | Description                                                                                    | Value   |
@@ -62,7 +61,10 @@ Typical StateFul Set application
 | `nameOverride`                    | By default, name uses '{{ .Chart.Name }}'.                                                     | `""`    |
 | `fullnameOverride`                | By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.                             | `""`    |
 | `replicaCount`                    | Number of the parallel-running containers. The controller will eventually make the size of the | `1`     |
-| `podAnnotations`                  | Additional annotations to apply to the pod.                                                    | `{}`    |
+| `commonLabels`                    | Labels to add to all deployed objects                                                          | `{}`    |
+| `commonAnnotations`               | Annotations to add to all deployed objects                                                     | `{}`    |
+| `podLabels`                       | Additional labels for the pod                                                                  | `{}`    |
+| `podAnnotations`                  | Additional annotations for the pod.                                                            | `{}`    |
 | `priorityClassName`               | priorityClassName                                                                              | `""`    |
 | `podSecurityContext`              | Pod security context                                                                           |         |
 | `podSecurityContext.runAsUser`    | The UID to run the entrypoint of the container process                                         | `1000`  |
@@ -84,7 +86,6 @@ Typical StateFul Set application
 | `nodeAffinityPreset.values`       | Node label values to match. Ignored if `affinity` is set.                                      | `[]`    |
 | `affinity`                        | Affinity for pod assignment                                                                    | `{}`    |
 
-
 ### Pod disruption budget configuration
 
 | Name                            | Description                                                 | Value   |
@@ -94,7 +95,6 @@ Typical StateFul Set application
 | `pdb.maxUnavailable`            | Max non-available pods or percent of pods                   | `1`     |
 | `terminationGracePeriodSeconds` | Seconds the pod needs to gracefully terminate               | `""`    |
 
-
 ### Image for the deployment
 
 | Name               | Description                                          | Value |
@@ -103,7 +103,6 @@ Typical StateFul Set application
 | `image.tag`        | Tag of the image                                     | `""`  |
 | `image.pullPolicy` | The default pull policy is IfNotPresent which causes | `""`  |
 
-
 ### Configure Service Accounts for Pod
 
 | Name                         | Description                                           | Value   |
@@ -111,7 +110,6 @@ Typical StateFul Set application
 | `serviceAccount.create`      | Specifies whether a service account should be created | `false` |
 | `serviceAccount.annotations` | Annotations to add to the service account             | `{}`    |
 | `serviceAccount.name`        | The name of the service account to use.               | `""`    |
-
 
 ### Environment variables that get added to the container
 
@@ -122,7 +120,6 @@ Typical StateFul Set application
 | `env.configmap`   | Environment variables that get added to the container from ConfigMap    | `{}`  |
 | `env.secret`      | Kubernetes secrets that get added to the container                      | `{}`  |
 | `env.vaultSecret` | Kubernetes secrets that get added to the container from Hashicorp Vault | `{}`  |
-
 
 ### Configuration for the init container
 
@@ -137,7 +134,6 @@ Typical StateFul Set application
 | `initContainer.resources`        | Optionally specify how much of each resource a Container needs.   | `{}`           |
 | `sidecarContainers`              | Configuration for the init container                              | `[]`           |
 
-
 ### Configuration of the service
 
 | Name                               | Description                                                     | Value       |
@@ -149,7 +145,6 @@ Typical StateFul Set application
 | `service.healthCheckPath`          | default HTTP Health check for container liveness and readiness. | `/`         |
 | `service.loadBalancerSourceRanges` | Address(es) that are allowed when service is LoadBalancer       | `[]`        |
 | `service.annotations`              | Service annotations                                             | `{}`        |
-
 
 ### Container liveness configuration.
 
@@ -164,7 +159,6 @@ Typical StateFul Set application
 | `livenessProbe.successThreshold`    | Success threshold for livenessProbe            | `1`    |
 | `livenessProbe.timeoutSeconds`      | Timeout seconds for livenessProbe              | `1`    |
 
-
 ### Container readiness configuration.
 
 | Name                                 | Description                                    | Value  |
@@ -178,7 +172,6 @@ Typical StateFul Set application
 | `readinessProbe.successThreshold`    | Success threshold for readinessProbe           | `1`    |
 | `readinessProbe.timeoutSeconds`      | Timeout seconds for readinessProbe             | `1`    |
 
-
 ### Configuration for the main load-balancer
 
 | Name                  | Description                                                                      | Value    |
@@ -190,7 +183,6 @@ Typical StateFul Set application
 | `ingress.path`        | Prefix for the path routing                                                      | `/`      |
 | `ingress.annotations` | Ingress annotations                                                              | `{}`     |
 | `ingress.extraHosts`  | Extra hosts for ingress                                                          | `[]`     |
-
 
 ### Configuration for the extra load-balancer
 
@@ -205,7 +197,6 @@ Typical StateFul Set application
 | `ingressExtra.annotations` | Ingress annotations                                                              | `{}`     |
 | `ingressExtra.extraHosts`  | Extra hosts for ingress                                                          | `[]`     |
 
-
 ### Prometheus Exporter / Metrics
 
 | Name                                   | Description                                  | Value      |
@@ -219,14 +210,12 @@ Typical StateFul Set application
 | `metrics.rules.enabled`                | Create PrometheusRules object                | `false`    |
 | `metrics.rules.spec`                   | Configuration for the application alerting   | `[]`       |
 
-
 ### Container resource requests and limits
 
 | Name                 | Description                              | Value |
 | -------------------- | ---------------------------------------- | ----- |
 | `resources.limits`   | The resources limits for the container   | `{}`  |
 | `resources.requests` | The requests resources for the container | `{}`  |
-
 
 ### Lifecycle configuration
 
@@ -235,7 +224,6 @@ Typical StateFul Set application
 | `lifecycle.enabled`          | Enable lifecycle hooks                           | `false` |
 | `lifecycle.postStartCommand` | Command to be executed after the container start | `""`    |
 | `lifecycle.preStopCommand`   | Command to be executed before container shutdown | `""`    |
-
 
 ### Persistence Parameters
 

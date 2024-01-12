@@ -66,7 +66,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `global.image.tag`        | Tag of the image                                        | `latest`       |
 | `global.image.pullPolicy` | The default pull policy is IfNotPresent which causes    | `IfNotPresent` |
 
-
 ### Common parameters
 
 | Name                        | Description                                                                                    | Value   |
@@ -74,7 +73,10 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `nameOverride`              | By default, name uses '{{ .Chart.Name }}'.                                                     | `""`    |
 | `fullnameOverride`          | By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.                             | `""`    |
 | `replicaCount`              | Number of the parallel-running containers. The controller will eventually make the size of the | `1`     |
-| `podAnnotations`            | Additional annotations to apply to the pod.                                                    | `{}`    |
+| `commonLabels`              | Labels to add to all deployed objects                                                          | `{}`    |
+| `commonAnnotations`         | Annotations to add to all deployed objects                                                     | `{}`    |
+| `podLabels`                 | Additional labels for the pod                                                                  | `{}`    |
+| `podAnnotations`            | Additional annotations for the pod.                                                            | `{}`    |
 | `priorityClassName`         | priorityClassName                                                                              | `""`    |
 | `podSecurityContext`        | Pod security context                                                                           | `{}`    |
 | `securityContext`           | Security context for the container                                                             | `{}`    |
@@ -97,14 +99,12 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `pdb.minAvailable`          | Min available pods or percent of pods                                                          | `1`     |
 | `pdb.maxUnavailable`        | Max non-available pods or percent of pods                                                      | `1`     |
 
-
 ### Extra Containers
 
 | Name                | Description                          | Value |
 | ------------------- | ------------------------------------ | ----- |
 | `initContainers`    | Configuration for the init container | `[]`  |
 | `sidecarContainers` | Configuration for the init container | `[]`  |
-
 
 ### Image for the deployment
 
@@ -114,7 +114,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `image.tag`        | Tag of the image                                     | `""`  |
 | `image.pullPolicy` | The default pull policy is IfNotPresent which causes | `""`  |
 
-
 ### Configure Service Accounts for Pod
 
 | Name                         | Description                                           | Value   |
@@ -122,7 +121,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `serviceAccount.create`      | Specifies whether a service account should be created | `false` |
 | `serviceAccount.annotations` | Annotations to add to the service account             | `{}`    |
 | `serviceAccount.name`        | The name of the service account to use.               | `""`    |
-
 
 ### Environment variables that get added to the container
 
@@ -133,7 +131,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `env.configmap`   | Environment variables that get added to the container from ConfigMap    | `{}`  |
 | `env.secret`      | Kubernetes secrets that get added to the container                      | `{}`  |
 | `env.vaultSecret` | Kubernetes secrets that get added to the container from Hashicorp Vault | `{}`  |
-
 
 ### Configuration of the service
 
@@ -146,7 +143,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `service.healthCheckPath`          | default HTTP Health check for container liveness and readiness. | `/`         |
 | `service.loadBalancerSourceRanges` | Address(es) that are allowed when service is LoadBalancer       | `[]`        |
 | `service.annotations`              | Service annotations                                             | `{}`        |
-
 
 ### Container liveness configuration.
 
@@ -161,7 +157,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `livenessProbe.successThreshold`    | Success threshold for livenessProbe            | `1`    |
 | `livenessProbe.timeoutSeconds`      | Timeout seconds for livenessProbe              | `1`    |
 
-
 ### Container readiness configuration.
 
 | Name                                 | Description                                    | Value  |
@@ -174,7 +169,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `readinessProbe.periodSeconds`       | Period seconds for readinessProbe              | `10`   |
 | `readinessProbe.successThreshold`    | Success threshold for readinessProbe           | `1`    |
 | `readinessProbe.timeoutSeconds`      | Timeout seconds for readinessProbe             | `1`    |
-
 
 ### Container startUp configuration.
 
@@ -189,7 +183,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `startupProbe.successThreshold`    | Success threshold for readinessProbe           | `1`     |
 | `startupProbe.timeoutSeconds`      | Timeout seconds for readinessProbe             | `1`     |
 
-
 ### Configuration for the main load-balancer
 
 | Name                  | Description                                                                      | Value    |
@@ -201,7 +194,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `ingress.path`        | Prefix for the path routing                                                      | `/`      |
 | `ingress.annotations` | Ingress annotations                                                              | `{}`     |
 | `ingress.extraHosts`  | Extra hosts for ingress                                                          | `[]`     |
-
 
 ### Configuration for the extra load-balancer
 
@@ -216,7 +208,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `ingressExtra.annotations` | Ingress annotations                                                              | `{}`     |
 | `ingressExtra.extraHosts`  | Extra hosts for ingress                                                          | `[]`     |
 
-
 ### Prometheus Exporter / Metrics
 
 | Name                                   | Description                                  | Value      |
@@ -230,14 +221,12 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `metrics.rules.enabled`                | Create PrometheusRules object                | `false`    |
 | `metrics.rules.spec`                   | Configuration for the application alerting   | `[]`       |
 
-
 ### Container resource requests and limits
 
 | Name                 | Description                              | Value |
 | -------------------- | ---------------------------------------- | ----- |
 | `resources.limits`   | The resources limits for the container   | `{}`  |
 | `resources.requests` | The requests resources for the container | `{}`  |
-
 
 ### Lifecycle configuration
 
@@ -247,7 +236,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `lifecycle.postStartCommand` | Command to be executed after the container start | `""`    |
 | `lifecycle.preStopCommand`   | Command to be executed before container shutdown | `""`    |
 
-
 ### Create HorizontalPodAutoscaler object for deployment type
 
 | Name                      | Description                      | Value   |
@@ -256,7 +244,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `autoscaling.minReplicas` | Min number of pod replicas       | `1`     |
 | `autoscaling.maxReplicas` | Max number of pod replicas       | `1`     |
 | `autoscaling.metrics`     | Configuration of scaling metrics | `[]`    |
-
 
 ### Persistence Parameters
 
@@ -268,7 +255,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `persistence.annotations`  | Additional custom annotations for the PVC         | `{}`    |
 | `persistence.accessModes`  | Persistent Volume access modes                    | `[]`    |
 | `persistence.size`         | Persistent Volume size                            | `8Gi`   |
-
 
 ### Configuration for Argo Rollouts
 
