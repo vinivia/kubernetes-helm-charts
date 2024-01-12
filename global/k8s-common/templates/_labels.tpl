@@ -16,10 +16,10 @@ Kubernetes standard labels
 {{- $_ := set $default "app.kubernetes.io/version" . -}}
 {{- end -}}
 {{ template "k8s-common.tplvalues.merge" (dict "values" (list .customLabels $default) "context" .context) }}
-{{- if .Values.datadogIntegration }}
-tags.datadoghq.com/env: {{ .Values.global.environment }}
-tags.datadoghq.com/service: {{ include "k8s-common.names.fullname" . }}
-tags.datadoghq.com/version: {{ .Values.global.image.tag }}
+{{- if .context.Values.datadogIntegration }}
+tags.datadoghq.com/env: {{ .context.Values.global.environment }}
+tags.datadoghq.com/service: {{ include "k8s-common.names.fullname" .context }}
+tags.datadoghq.com/version: {{ .context.Values.global.image.tag }}
 {{- end -}}
 {{- else -}}
 app: {{ include "k8s-common.names.fullname" . }}
