@@ -95,7 +95,8 @@ Return generated container configuration.
         command:
           - "/bin/sh"
           - "-c"
-          - "{{ .Values.lifecycle.postStartCommand }}"
+          - |
+            {{ .Values.lifecycle.postStartCommand | nindent 12 }}
   {{- end }}
   {{- if .Values.lifecycle.preStopCommand }}
     preStop:
@@ -103,7 +104,8 @@ Return generated container configuration.
         command:
           - "/bin/sh"
           - "-c"
-          - "{{ .Values.lifecycle.preStopCommand }}"
+          - |
+            {{ .Values.lifecycle.preStopCommand | nindent 12 }}
   {{- end }}
   {{- end }}
   {{- if .Values.resources }}
