@@ -7,7 +7,7 @@ metadata:
   labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: {{ include "k8s-common.capabilities.deployment.apiVersion" . }}
     kind: Deployment
     name: {{ include "k8s-common.names.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
