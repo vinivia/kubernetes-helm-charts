@@ -552,6 +552,16 @@
                 }
             }
         },
+        "rbac": {
+            "type": "object",
+            "properties": {
+                "create": {
+                    "type": "boolean",
+                    "description": "Specifies whether RBAC resources should be created",
+                    "default": true
+                }
+            }
+        },
         "metrics": {
             "type": "object",
             "properties": {

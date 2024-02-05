@@ -197,6 +197,12 @@ Typical StateFul Set application
 | `ingressExtra.annotations` | Ingress annotations                                                              | `{}`     |
 | `ingressExtra.extraHosts`  | Extra hosts for ingress                                                          | `[]`     |
 
+### RBAC management
+
+| Name          | Description                                        | Value  |
+| ------------- | -------------------------------------------------- | ------ |
+| `rbac.create` | Specifies whether RBAC resources should be created | `true` |
+
 ### Prometheus Exporter / Metrics
 
 | Name                                   | Description                                  | Value      |

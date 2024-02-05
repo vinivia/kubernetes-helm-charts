@@ -461,6 +461,12 @@ ingressExtra:
   ##   paths: []
   ##
   extraHosts: [ ]
+## @section RBAC management
+rbac:
+  ## @param rbac.create Specifies whether RBAC resources should be created
+  ##
+  create: true
+
 ## @section Prometheus Exporter / Metrics
 ##
 metrics:
