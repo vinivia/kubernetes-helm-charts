@@ -8,7 +8,7 @@ metadata:
 spec:
   scaleTargetRef:
     apiVersion: {{ include "k8s-common.capabilities.deployment.apiVersion" . }}
-    kind: Deployment
+    kind: {{- if .Values.rollouts.enabled }}Rollout{{- else }}Deployment{{- end }}
     name: {{ include "k8s-common.names.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
