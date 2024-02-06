@@ -7,8 +7,13 @@ metadata:
   labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
 spec:
   scaleTargetRef:
+    {{ if .Values.rollouts.enabled -}}
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    {{ else -}}
     apiVersion: {{ include "k8s-common.capabilities.deployment.apiVersion" . }}
-    kind: {{ if .Values.rollouts.enabled }}Rollout{{ else }}Deployment{{ end }}
+    kind: Deployment
+    {{ end -}}
     name: {{ include "k8s-common.names.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
