@@ -4,8 +4,12 @@ metadata:
   name: {{ template "k8s-common.names.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels: {{ include "k8s-common.labels.standard" (dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+  annotations:
+  {{ if .Values.env.vaultSecret }}
+    reloader.stakater.com/auto: "true"
+  {{- end }}
   {{- if .Values.commonAnnotations }}
-  annotations: {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
   revisionHistoryLimit: 2
