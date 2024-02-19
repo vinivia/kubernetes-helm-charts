@@ -227,3 +227,25 @@ This check is introduced as a regexMatch instead of {{ if .Capabilities.HelmVers
   {{- true -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Return the appropriate apiVersion for networkpolicy.
+*/}}
+{{- define "k8s-common.networkPolicy.apiVersion" -}}
+{{- if semverCompare ">=1.4-0, <1.7-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- print "extensions/v1beta1" -}}
+{{- else -}}
+{{- print "networking.k8s.io/v1" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the appropriate apiGroup for PodSecurityPolicy.
+*/}}
+{{- define "k8s-common.podSecurityPolicy.apiGroup" -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- print "policy" -}}
+{{- else -}}
+{{- print "extensions" -}}
+{{- end -}}
+{{- end -}}
