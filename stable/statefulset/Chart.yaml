@@ -1,6 +1,6 @@
 apiVersion: v2
 name: statefulset
-version: 1.4.2
+version: 1.5.0
 description: Typical StateFul Set application
 type: application
 dependencies:

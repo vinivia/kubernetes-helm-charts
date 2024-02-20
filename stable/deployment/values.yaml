@@ -466,7 +466,18 @@ rbac:
   ## @param rbac.create Specifies whether RBAC resources should be created
   ##
   create: true
-
+  ## @param rbac.rules Custom RBAC rules to set
+  ## e.g:
+  ## rules:
+  ##   - apiGroups:
+  ##       - ""
+  ##     resources:
+  ##       - pods
+  ##     verbs:
+  ##       - get
+  ##       - list
+  ##
+  rules: [ ]
 ## @section Prometheus Exporter / Metrics
 ##
 metrics:
