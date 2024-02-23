@@ -18,7 +18,7 @@ Return generated container configuration.
   {{- if .Values.env.values -}}
   {{- include "k8s-common.envvar.value" . | trim | nindent 2 -}}
   {{- end -}}
-  {{- if .Values.env.refs -}}
+  {{- if or .Values.env.refs .Values.datadogIntegration -}}
   {{- include "k8s-common.envvar.ref" . | trim | nindent 2 -}}
   {{- end -}}
   {{- if .Values.env.configmap -}}
