@@ -559,6 +559,12 @@
                     "type": "boolean",
                     "description": "Specifies whether RBAC resources should be created",
                     "default": true
+                },
+                "rules": {
+                    "type": "array",
+                    "description": "Custom RBAC rules to set",
+                    "default": [],
+                    "items": {}
                 }
             }
         },

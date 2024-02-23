@@ -213,6 +213,7 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | Name          | Description                                        | Value  |
 | ------------- | -------------------------------------------------- | ------ |
 | `rbac.create` | Specifies whether RBAC resources should be created | `true` |
+| `rbac.rules`  | Custom RBAC rules to set                           | `[]`   |
 
 ### Prometheus Exporter / Metrics
 
