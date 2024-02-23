@@ -615,6 +615,29 @@ entries:
   - annotations:
       category: Infrastructure
     apiVersion: v2
+    created: "2024-02-23T10:30:14.165825064Z"
+    description: A Library Helm Chart for grouping common logic between charts. This
+      chart is not deployable by itself.
+    digest: 18bf4e6d87bbc98c8f78ec604b81ab14d7fc46a69ce175ad3aae06238c46d143
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    keywords:
+    - common
+    - helper
+    - template
+    - function
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: k8s-common
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/k8s-common
+    type: library
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/k8s-common-1.5.1/k8s-common-1.5.1.tgz
+    version: 1.5.1
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
     created: "2024-02-20T00:00:01.353514919Z"
     description: A Library Helm Chart for grouping common logic between charts. This
       chart is not deployable by itself.
@@ -1266,4 +1289,4 @@ entries:
     urls:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/vaultsecrets-1.1.0/vaultsecrets-1.1.0.tgz
     version: 1.1.0
-generated: "2024-02-20T00:09:57.211142549Z"
+generated: "2024-02-23T10:30:14.165983017Z"
