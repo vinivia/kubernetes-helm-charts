@@ -152,6 +152,26 @@ entries:
     version: 1.1.0
   deployment:
   - apiVersion: v2
+    created: "2024-02-26T16:44:04.19431778Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.5.0
+    description: Typical microservice chart. Supports Ingress controller, horizontal-scalable
+      containers
+    digest: cd12ccaac6a923a8ce715f1ef2e7c39b29e3855d347397a3d9cd6a082b9f49e4
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: deployment
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/deployment
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/deployment-1.5.2/deployment-1.5.2.tgz
+    version: 1.5.2
+  - apiVersion: v2
     created: "2024-02-23T10:36:02.761350981Z"
     dependencies:
     - name: k8s-common
@@ -1328,4 +1348,4 @@ entries:
     urls:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/vaultsecrets-1.1.0/vaultsecrets-1.1.0.tgz
     version: 1.1.0
-generated: "2024-02-23T10:36:02.939430424Z"
+generated: "2024-02-26T16:44:04.194519254Z"
