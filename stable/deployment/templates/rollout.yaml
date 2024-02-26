@@ -3,8 +3,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: {{ include "k8s-common.names.fullname" . }}
-  namespace: {{ .Release.Namespace }}
-  labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
+  labels: {{ include "k8s-common.labels.standard" (dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
   annotations:
   {{ if .Values.env.vaultSecret }}
     reloader.stakater.com/auto: "true"
@@ -18,7 +18,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
-    matchLabels: {{ include "k8s-common.labels.matchLabels" . | nindent 6 }}
+    matchLabels: {{ include "k8s-common.labels.matchLabels" (dict "customLabels" .Values.podLabels "context" $ ) | nindent 6 }}
   strategy:
   {{- if eq .Values.rollouts.strategy "canary" }}
     canary:
@@ -45,7 +45,7 @@ spec:
 
   template:
     metadata:
-      labels: {{ include "k8s-common.labels.matchLabels" . | nindent 8 }}
+      labels: {{ include "k8s-common.labels.standard" (dict "customLabels" .Values.podLabels "context" $ ) | nindent 8 }}
       {{- if or .Values.podAnnotations .Values.metrics.enabled }}
       {{- include "k8s-common.annotations.podAnnotations" . | trim | nindent 8 }}
       {{- end }}
