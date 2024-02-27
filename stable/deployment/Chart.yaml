@@ -1,11 +1,11 @@
 apiVersion: v2
 name: deployment
-version: 1.5.2
+version: 1.5.3
 description: Typical microservice chart. Supports Ingress controller, horizontal-scalable containers
 type: application
 dependencies:
   - name: k8s-common
-    version: ^1.5.0
+    version: ^1.5.1
     repository: https://vinivia.github.io/kubernetes-helm-charts
 home: https://vinivia.github.io/kubernetes-helm-charts
 sources:
