@@ -476,6 +476,9 @@ metrics:
   ## @param metrics.path Path to the prometheus metrics endpoint
   ##
   path: /metrics
+  ## @param metrics.port Name of the service port for metrics
+  ##
+  port: http
   ## Prometheus Operator ServiceMonitor configuration
   ##
   serviceMonitor:

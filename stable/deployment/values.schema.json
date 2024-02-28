@@ -565,6 +565,11 @@
                     "description": "Path to the prometheus metrics endpoint",
                     "default": "/metrics"
                 },
+                "port": {
+                    "type": "string",
+                    "description": "Name of the service port for metrics",
+                    "default": "http"
+                },
                 "serviceMonitor": {
                     "type": "object",
                     "properties": {
