@@ -31,7 +31,9 @@ spec:
     {{- end }}
     {{- end }}
   selector: {{ include "k8s-common.labels.matchLabels" . | nindent 4 }}
+  {{- if ne .Values.service.type "LoadBalancer" }}
   sessionAffinity: ClientIP
+  {{- end }}
 
 {{- if .Values.rollouts.enabled }}
 ---
