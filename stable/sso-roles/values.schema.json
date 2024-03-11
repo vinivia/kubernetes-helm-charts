@@ -27,6 +27,16 @@
                 }
             }
         },
+        "nameOverride": {
+            "type": "string",
+            "description": "By default, name uses '{{ .Chart.Name }}'.",
+            "default": ""
+        },
+        "fullnameOverride": {
+            "type": "string",
+            "description": "By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.",
+            "default": ""
+        },
         "commonLabels": {
             "type": "object",
             "description": "Labels to add to all deployed objects",

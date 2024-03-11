@@ -20,5 +20,12 @@ Kubernetes Cron Jobs
 | `global.serviceName` | Name of the service. Affects public DNS.                | `example` |
 | `global.environment` | Type of the environment, one of "dev", "stage", "prod". | `dev`     |
 | `global.domain`      | Company Root-level domain, expects                      | `""`      |
-| `commonLabels`       | Labels to add to all deployed objects                   | `{}`      |
+
+### Common parameters
+
+| Name               | Description                                                        | Value |
+| ------------------ | ------------------------------------------------------------------ | ----- |
+| `nameOverride`     | By default, name uses '{{ .Chart.Name }}'.                         | `""`  |
+| `fullnameOverride` | By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'. | `""`  |
+| `commonLabels`     | Labels to add to all deployed objects                              | `{}`  |
 

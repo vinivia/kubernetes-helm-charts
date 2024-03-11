@@ -20,7 +20,15 @@ global:
   ## [<global.product>.<global.environment>].<global.domain> Route53 HZ.
   ##
   domain: ""
-
+## @section Common parameters
+## @param nameOverride By default, name uses '{{ .Chart.Name }}'.
+## This overrides that and uses the given string instead.
+##
+nameOverride: ""
+## @param fullnameOverride By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.
+## This overrides that and uses the given string instead.
+##
+fullnameOverride: ""
 ## @param commonLabels Labels to add to all deployed objects
 ##
 commonLabels: {}
