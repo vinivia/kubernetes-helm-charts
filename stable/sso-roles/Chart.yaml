@@ -1,0 +1,14 @@
+apiVersion: v2
+name: sso-roles
+version: 1.5.0
+description: Kubernetes SSO Roles
+type: application
+dependencies:
+  - name: k8s-common
+    version: ^1.5.0
+    repository: https://vinivia.github.io/kubernetes-helm-charts
+sources:
+  - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/sso-roles
+maintainers:
+  - name: Alexander Dobrodey
+    url: https://github.com/ADobrodey

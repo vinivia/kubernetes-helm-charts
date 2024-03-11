@@ -1,0 +1,26 @@
+---
+# Default values for sso-roles chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @section Global parameters
+## Global Docker image parameters
+global:
+  ## @param global.product The product of the service
+  ##
+  product: ""
+  ## @param global.serviceName Name of the service. Affects public DNS.
+  ## E.g. cherry-admin, tpt-service-api
+  ##
+  serviceName: "example"
+  ## @param global.environment Type of the environment, one of "dev", "stage", "prod".
+  ##
+  environment: "dev"
+  ## @param global.domain Company Root-level domain, expects
+  ## [<global.product>.<global.environment>].<global.domain> Route53 HZ.
+  ##
+  domain: ""
+
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}

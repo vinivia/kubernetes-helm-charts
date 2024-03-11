@@ -1,0 +1,36 @@
+{
+    "title": "Chart Values",
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "product": {
+                    "type": "string",
+                    "description": "The product of the service",
+                    "default": ""
+                },
+                "serviceName": {
+                    "type": "string",
+                    "description": "Name of the service. Affects public DNS.",
+                    "default": "example"
+                },
+                "environment": {
+                    "type": "string",
+                    "description": "Type of the environment, one of \"dev\", \"stage\", \"prod\".",
+                    "default": "dev"
+                },
+                "domain": {
+                    "type": "string",
+                    "description": "Company Root-level domain, expects",
+                    "default": ""
+                }
+            }
+        },
+        "commonLabels": {
+            "type": "object",
+            "description": "Labels to add to all deployed objects",
+            "default": {}
+        }
+    }
+}
