@@ -988,6 +988,25 @@ entries:
     urls:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/k8s-common-1.0.0/k8s-common-1.0.0.tgz
     version: 1.0.0
+  sso-roles:
+  - apiVersion: v2
+    created: "2024-03-11T11:13:40.003863081Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.5.0
+    description: Kubernetes SSO Roles
+    digest: ebccf9baaf45b9ee4d11b85e9579f843aefe36a96ba53faa998faf7cd0aa069f
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: sso-roles
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/sso-roles
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/sso-roles-1.5.0/sso-roles-1.5.0.tgz
+    version: 1.5.0
   statefulset:
   - apiVersion: v2
     created: "2024-02-28T15:08:27.05566423Z"
@@ -1446,4 +1465,4 @@ entries:
     urls:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/vaultsecrets-1.1.0/vaultsecrets-1.1.0.tgz
     version: 1.1.0
-generated: "2024-03-07T16:41:18.802195745Z"
+generated: "2024-03-11T11:13:40.004031002Z"
