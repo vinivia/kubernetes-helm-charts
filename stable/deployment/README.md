@@ -101,10 +101,12 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 
 ### Extra Containers
 
-| Name                | Description                          | Value |
-| ------------------- | ------------------------------------ | ----- |
-| `initContainers`    | Configuration for the init container | `[]`  |
-| `sidecarContainers` | Configuration for the init container | `[]`  |
+| Name                       | Description                                           | Value   |
+| -------------------------- | ----------------------------------------------------- | ------- |
+| `initContainers`           | Configuration for the init container                  | `[]`    |
+| `sidecarContainers`        | Configuration for the init container                  | `[]`    |
+| `datadogIntegration`       | Enable datadog related integration for tracing        | `false` |
+| `githubActionsIntegration` | Allow github runners to create resources in namespace | `false` |
 
 ### Image for the deployment
 

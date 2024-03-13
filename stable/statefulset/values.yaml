@@ -291,6 +291,14 @@ initContainer:
 ##     resources: {}
 ##
 sidecarContainers: [ ]
+## @param datadogIntegration Enable datadog related integration for tracing
+## E.g.
+## datadogIntegration: true
+datadogIntegration: false
+## @param githubActionsIntegration Allow github runners to create resources in namespace
+## E.g.
+## githubActionsIntegration: true
+githubActionsIntegration: false
 ## @section Configuration of the service
 ##
 service:

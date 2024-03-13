@@ -133,6 +133,8 @@ Typical StateFul Set application
 | `initContainer.args`             | The arguments passed to the command.                              | `[]`           |
 | `initContainer.resources`        | Optionally specify how much of each resource a Container needs.   | `{}`           |
 | `sidecarContainers`              | Configuration for the init container                              | `[]`           |
+| `datadogIntegration`             | Enable datadog related integration for tracing                    | `false`        |
+| `githubActionsIntegration`       | Allow github runners to create resources in namespace             | `false`        |
 
 ### Configuration of the service
 

@@ -23,9 +23,10 @@ Kubernetes Cron Jobs
 
 ### Common parameters
 
-| Name               | Description                                                        | Value |
-| ------------------ | ------------------------------------------------------------------ | ----- |
-| `nameOverride`     | By default, name uses '{{ .Chart.Name }}'.                         | `""`  |
-| `fullnameOverride` | By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'. | `""`  |
-| `commonLabels`     | Labels to add to all deployed objects                              | `{}`  |
+| Name                       | Description                                                        | Value   |
+| -------------------------- | ------------------------------------------------------------------ | ------- |
+| `nameOverride`             | By default, name uses '{{ .Chart.Name }}'.                         | `""`    |
+| `fullnameOverride`         | By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'. | `""`    |
+| `commonLabels`             | Labels to add to all deployed objects                              | `{}`    |
+| `githubActionsIntegration` | Allow github runners to create resources in namespace              | `false` |
 

@@ -41,6 +41,11 @@
             "type": "object",
             "description": "Labels to add to all deployed objects",
             "default": {}
+        },
+        "githubActionsIntegration": {
+            "type": "boolean",
+            "description": "Allow github runners to create resources in namespace",
+            "default": false
         }
     }
 }

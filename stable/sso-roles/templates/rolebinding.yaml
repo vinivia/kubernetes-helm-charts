@@ -43,4 +43,23 @@ subjects:
   - kind: Group
     name: 'aws-guests'
     namespace: {{ include "k8s-common.names.namespace" . | quote }}
-
+{{- if .Values.githubActionsIntegration }}
+---
+apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: {{ template "k8s-common.names.fullname" . }}-github
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
+  labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+  - kind: Group
+    name: 'github'
+    namespace: {{ include "k8s-common.names.namespace" . | quote }}
+{{- end }}

@@ -32,3 +32,7 @@ fullnameOverride: ""
 ## @param commonLabels Labels to add to all deployed objects
 ##
 commonLabels: {}
+## @param githubActionsIntegration Allow github runners to create resources in namespace
+## E.g.
+## githubActionsIntegration: true
+githubActionsIntegration: false

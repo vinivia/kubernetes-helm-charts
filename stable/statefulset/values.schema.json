@@ -334,6 +334,16 @@
             "default": [],
             "items": {}
         },
+        "datadogIntegration": {
+            "type": "boolean",
+            "description": "Enable datadog related integration for tracing",
+            "default": false
+        },
+        "githubActionsIntegration": {
+            "type": "boolean",
+            "description": "Allow github runners to create resources in namespace",
+            "default": false
+        },
         "service": {
             "type": "object",
             "properties": {
