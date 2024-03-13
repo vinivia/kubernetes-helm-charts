@@ -152,6 +152,26 @@ entries:
     version: 1.1.0
   deployment:
   - apiVersion: v2
+    created: "2024-03-13T11:56:56.645699197Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.5.1
+    description: Typical microservice chart. Supports Ingress controller, horizontal-scalable
+      containers
+    digest: 1543f2d18aff7fb1c05c7ad9d54815fd916e0d25fdfd0f3294fe3278be892003
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: deployment
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/deployment
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/deployment-1.6.0/deployment-1.6.0.tgz
+    version: 1.6.0
+  - apiVersion: v2
     created: "2024-03-07T16:41:18.801948825Z"
     dependencies:
     - name: k8s-common
@@ -990,6 +1010,24 @@ entries:
     version: 1.0.0
   sso-roles:
   - apiVersion: v2
+    created: "2024-03-13T11:56:56.762564147Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.5.0
+    description: Kubernetes SSO Roles
+    digest: 0f9f0cc4383f3b803069f6c38788206dd997916d145efb34aacff535516deb71
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: sso-roles
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/sso-roles
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/sso-roles-1.6.0/sso-roles-1.6.0.tgz
+    version: 1.6.0
+  - apiVersion: v2
     created: "2024-03-11T11:21:58.91096478Z"
     dependencies:
     - name: k8s-common
@@ -1026,6 +1064,25 @@ entries:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/sso-roles-1.5.0/sso-roles-1.5.0.tgz
     version: 1.5.0
   statefulset:
+  - apiVersion: v2
+    created: "2024-03-13T11:56:56.879830694Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.5.1
+    description: Typical StateFul Set application
+    digest: 650ab14c5267b45121ccf32e828c2e156d08f2b2af79be20da71991d6e22e592
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: statefulset
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/statefulset
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/statefulset-1.6.0/statefulset-1.6.0.tgz
+    version: 1.6.0
   - apiVersion: v2
     created: "2024-02-28T15:08:27.05566423Z"
     dependencies:
@@ -1483,4 +1540,4 @@ entries:
     urls:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/vaultsecrets-1.1.0/vaultsecrets-1.1.0.tgz
     version: 1.1.0
-generated: "2024-03-11T11:21:58.911155053Z"
+generated: "2024-03-13T11:56:56.880188804Z"
