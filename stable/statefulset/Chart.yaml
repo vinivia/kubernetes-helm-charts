@@ -1,11 +1,11 @@
 apiVersion: v2
 name: statefulset
-version: 1.6.0
+version: 1.6.1
 description: Typical StateFul Set application
 type: application
 dependencies:
   - name: k8s-common
-    version: ^1.5.1
+    version: ^1.6.0
     repository: https://vinivia.github.io/kubernetes-helm-charts
 home: https://vinivia.github.io/kubernetes-helm-charts
 sources:
