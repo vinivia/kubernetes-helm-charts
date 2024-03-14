@@ -85,6 +85,8 @@ Usage:
 {{ .Values.global.domain }}
 {{- else if eq .Values.global.environment "stage" -}}
 {{ substr 0 4 .Values.global.product }}.stg.{{ .Values.global.domain }}
+{{- else if eq .Values.global.environment "perf" -}}
+{{ substr 0 4 .Values.global.product }}.prf.{{ .Values.global.domain }}
 {{- else -}}
 {{ substr 0 4 .Values.global.product }}.dev.{{ .Values.global.domain }}
 {{- end -}}
