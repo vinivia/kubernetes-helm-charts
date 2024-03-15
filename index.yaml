@@ -79,6 +79,24 @@ entries:
     version: 1.1.0
   cronjobs:
   - apiVersion: v2
+    created: "2024-03-15T10:36:46.610690792Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.2.0
+    description: Kubernetes Cron Jobs
+    digest: b0c8ca4cf13b52baf60a7341de576d3061570ce443f356cc57fe8fee996ce4b3
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: cronjobs
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/cronjobs
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/cronjobs-1.6.1/cronjobs-1.6.1.tgz
+    version: 1.6.1
+  - apiVersion: v2
     created: "2024-01-02T21:55:00.349615078Z"
     dependencies:
     - name: k8s-common
@@ -1602,4 +1620,4 @@ entries:
     urls:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/vaultsecrets-1.1.0/vaultsecrets-1.1.0.tgz
     version: 1.1.0
-generated: "2024-03-14T15:48:24.426902506Z"
+generated: "2024-03-15T10:36:46.610863205Z"
