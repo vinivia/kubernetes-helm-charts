@@ -35,7 +35,7 @@ spec:
   sessionAffinity: ClientIP
   {{- end }}
 
-{{- if .Values.rollouts.enabled }}
+{{- if and .Values.rollouts.enabled (eq .Values.rollouts.strategy "blueGreen") }}
 ---
 apiVersion: v1
 kind: Service
