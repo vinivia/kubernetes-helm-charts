@@ -79,6 +79,24 @@ entries:
     version: 1.1.0
   cronjobs:
   - apiVersion: v2
+    created: "2024-03-15T11:09:30.576105623Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.6.0
+    description: Kubernetes Cron Jobs
+    digest: 774131afd8ee9a4fc6031175ca84eb2dbf27eb164672319e8de0b106df51b9b8
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: cronjobs
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/cronjobs
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/cronjobs-1.6.3/cronjobs-1.6.3.tgz
+    version: 1.6.3
+  - apiVersion: v2
     created: "2024-03-15T10:54:29.540001791Z"
     dependencies:
     - name: k8s-common
@@ -187,6 +205,26 @@ entries:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/cronjobs-1.1.0/cronjobs-1.1.0.tgz
     version: 1.1.0
   deployment:
+  - apiVersion: v2
+    created: "2024-03-15T11:09:30.711858632Z"
+    dependencies:
+    - name: k8s-common
+      repository: https://vinivia.github.io/kubernetes-helm-charts
+      version: ^1.6.0
+    description: Typical microservice chart. Supports Ingress controller, horizontal-scalable
+      containers
+    digest: 31c1f18f1d2b73b8d32ccf04aeaf062dfd0abd2b4355debf6e322b6519ac0c3e
+    home: https://vinivia.github.io/kubernetes-helm-charts
+    maintainers:
+    - name: Alexander Dobrodey
+      url: https://github.com/ADobrodey
+    name: deployment
+    sources:
+    - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/deployment
+    type: application
+    urls:
+    - https://github.com/vinivia/kubernetes-helm-charts/releases/download/deployment-1.6.2/deployment-1.6.2.tgz
+    version: 1.6.2
   - apiVersion: v2
     created: "2024-03-14T15:48:24.321453817Z"
     dependencies:
@@ -1661,4 +1699,4 @@ entries:
     urls:
     - https://github.com/vinivia/kubernetes-helm-charts/releases/download/vaultsecrets-1.1.0/vaultsecrets-1.1.0.tgz
     version: 1.1.0
-generated: "2024-03-15T10:54:29.540172599Z"
+generated: "2024-03-15T11:09:30.712528742Z"
