@@ -23,6 +23,8 @@ spec:
   {{- if eq .Values.rollouts.strategy "canary" }}
     canary:
       steps: {{ toYaml .Values.rollouts.steps | nindent 8 }}
+      stableService: {{ include "k8s-common.ingress.serviceName" . }}
+      canaryService: {{ include "k8s-common.ingress.previewServiceName" . }}
       {{- if .Values.ingress.enabled }}
       trafficRouting:
         alb:
