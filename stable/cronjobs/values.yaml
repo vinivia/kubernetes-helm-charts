@@ -220,6 +220,9 @@ cronjobs: {}
 ##   shared-files:
 ##     mountPath: /tmp/shared
 ##     emptyDir: true
+##   host-files:
+##     mountPath: /var/lib/logs
+##     hostPath: /var/lib/logs
 ##   central-config:
 ##     mountPath: /central-config
 ##     configMap:
