@@ -8,6 +8,7 @@ global:
     repository: "k8s/example-service"
     tag: "dev"
     pullPolicy: "IfNotPresent"
+
 cronjobs:
   podSecurityContext:
     fsGroup: 1001
@@ -47,3 +48,18 @@ cronjobs:
           API_KEY_A:
             path: mySecret
             secret: password
+
+  volumes:
+    shared-files:
+      mountPath: /tmp/shared
+      emptyDir: true
+    central-config:
+      mountPath: /central-config
+      configMap:
+        application.yaml: |
+          configserver:
+            name:  JHipster Registry
+            status: Connected to the JHipster Registry running in Kubernetes
+    kube-creds:
+      mountPath: /var/lib/kube
+      secretName: foo

@@ -62,6 +62,10 @@ podSecurityContext: {}
 ##     drop: ["ALL"]
 ##
 securityContext: {}
+## @param hostPid Use the host’s pid namespace
+## E.g.
+## hostPid: true
+hostPid: false
 ## @param nodeSelector Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
@@ -209,3 +213,26 @@ resources:
 ##           secret: password
 ##
 cronjobs: {}
+
+## @param volumes Container volumes configuration
+## E.g.
+## volumes:
+##   shared-files:
+##     mountPath: /tmp/shared
+##     emptyDir: true
+##   central-config:
+##     mountPath: /central-config
+##     configMap:
+##       application.yaml: |
+##         configserver:
+##           name:  JHipster Registry
+##           status: Connected to the JHipster Registry running in Kubernetes
+##  credentials:
+##    mountPath: /var/lib/.key
+##    secretName: kubernetes-secret
+##  vaultCredentials:
+##    mountPath: /var/lib
+##    vaultPath: my_secret_files
+##    items:
+##      - key.pass
+volumes: { }

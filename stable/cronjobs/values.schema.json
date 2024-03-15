@@ -62,6 +62,11 @@
             "description": "Security context for the container",
             "default": {}
         },
+        "hostPid": {
+            "type": "boolean",
+            "description": "Use the host’s pid namespace",
+            "default": false
+        },
         "nodeSelector": {
             "type": "object",
             "description": "Node labels for pod assignment",
@@ -173,6 +178,11 @@
                     "default": {}
                 }
             }
+        },
+        "volumes": {
+            "type": "object",
+            "description": "Container volumes configuration",
+            "default": {}
         }
     }
 }
