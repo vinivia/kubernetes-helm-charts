@@ -6,10 +6,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
   annotations:
+  {{- include "k8s-common.ingress.annotations" . | nindent 4 }}
   {{- if .Values.ingress.annotations }}
   {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.ingress.annotations "context" $ ) | nindent 4 }}
   {{- end }}
-  {{- include "k8s-common.ingress.annotations" . | nindent 4 }}
 spec:
   rules:
     - host: {{ template "k8s-common.ingress.host" . }}
