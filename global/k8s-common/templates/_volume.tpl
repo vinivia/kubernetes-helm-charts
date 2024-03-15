@@ -12,7 +12,7 @@ Return generated volume mounts.
   {{ if $value.subPath -}}
   subPath: {{ $value.subPath }}
   {{ end -}}
-  {{ if or $value.secretName $value.vaultPath -}}
+  {{ if or $value.secretName $value.vaultPath $value.hostPath -}}
   readOnly: true
   {{- end -}}
 {{- end -}}
@@ -35,6 +35,9 @@ Return generated volume definitions.
   {{- else if $value.secretName -}}
   secret:
     secretName: {{ $value.secretName }}
+  {{- else if $value.hostPath -}}
+  hostPath:
+    path: {{ $value.hostPath }}
   {{- else if $value.vaultPath -}}
   secret:
     secretName: {{ include "k8s-common.names.fullname" $ }}-vault-{{ $key }}
