@@ -415,6 +415,9 @@ ingress:
   ## Not recommended to for non-production environments.
   ##
   public: false
+  ## @param ingress.stickiness enable sticky sessions for provided number of seconds
+  ##
+  stickiness: 0
   ## @param ingress.subDomain If DNS has environment as sub-domain.
   ## The default DNS is constructed as:
   ## <global.serviceName>.[<global.product>.<global.environment>].<global.domain>

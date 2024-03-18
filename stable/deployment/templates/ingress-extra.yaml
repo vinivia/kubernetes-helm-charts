@@ -10,6 +10,31 @@ metadata:
   {{- if .Values.ingressExtra.annotations }}
   {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.ingressExtra.annotations "context" $ ) | nindent 4 }}
   {{- end }}
+  {{- if gt .Values.ingress.stickiness 0 }}
+    alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds={{ .Values.ingress.stickiness }}
+    alb.ingress.kubernetes.io/actions.weighted-routing: |
+      {
+        "type":"forward",
+        "forwardConfig": {
+          "targetGroups": [
+            {
+              "serviceName": "{{ include "k8s-common.ingress.serviceName" . }}",
+              "servicePort": "{{ .Values.service.ports.http }}",
+            }
+            {{- if .Values.rollouts.enabled }}
+            ,{
+              "serviceName": "preview-{{ include "k8s-common.ingress.serviceName" . }}",
+              "servicePort": "{{ .Values.service.ports.http }}",
+            }
+            {{- end }}
+          ],
+          "TargetGroupStickinessConfig": {
+            "Enabled": true,
+            "DurationSeconds": {{ .Values.ingress.stickiness }}
+          }
+        }
+      }
+  {{- end }}
 
 spec:
   rules:
