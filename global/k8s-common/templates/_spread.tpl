@@ -1,6 +1,5 @@
-
 {{/*
-Return TopologySpreadConstraints section 
+Return TopologySpreadConstraints section
 Dict requiers  "customLabels" and "context" to proceed with "labelSelector"
 {{- include "k8s-common.topologySpreadConstraintPreset"  (dict "type" .Values.topologySpreadConstraintPreset "customLabels" .Values.podLabels "context" $) }}
 */}}
