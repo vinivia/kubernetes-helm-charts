@@ -171,26 +171,6 @@
             "description": "Affinity for pod assignment",
             "default": {}
         },
-        "pdb": {
-            "type": "object",
-            "properties": {
-                "create": {
-                    "type": "boolean",
-                    "description": "Specifies whether a Pod disruption budget should be created",
-                    "default": false
-                },
-                "minAvailable": {
-                    "type": "number",
-                    "description": "Min available pods or percent of pods",
-                    "default": 1
-                },
-                "maxUnavailable": {
-                    "type": "number",
-                    "description": "Max non-available pods or percent of pods",
-                    "default": 1
-                }
-            }
-        },
         "initContainers": {
             "type": "array",
             "description": "Configuration for the init container",
