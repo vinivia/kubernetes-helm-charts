@@ -30,10 +30,9 @@ spec:
       securityContext: {{ toYaml .Values.podSecurityContext | nindent 8 }}
       {{- end }}
       {{- if .Values.topologySpreadConstraints }}
-      topologySpreadConstraints: {{- toYaml .Values.topologySpreadConstraints | nindent 8 }}
-      {{- end }}
-      {{- if and .Values.topologySpreadConstraintPreset (not .Values.topologySpreadConstraints) }}
-      topologySpreadConstraints: {{- include "k8s-common.topologySpreadConstraintPreset"  (dict "type" .Values.topologySpreadConstraintPreset "customLabels" .Values.podLabels "context" $) | nindent 6}}
+      topologySpreadConstraints: {{- include "k8s-common.tplvalues.render" (dict "value" .Values.topologySpreadConstraints "context" $) | nindent 8 }}
+      {{- else if .Values.topologySpreadConstraintPreset  }}
+      topologySpreadConstraints: {{- include "k8s-common.topologySpreadConstraintPreset"  (dict "type" .Values.topologySpreadConstraintPreset "context" $) | nindent 6}}
       {{- end }}
       {{- if .Values.affinity }}
       affinity: {{- include "k8s-common.tplvalues.render" (dict "value" .Values.affinity "context" $) | nindent 8 }}
