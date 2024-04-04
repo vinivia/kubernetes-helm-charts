@@ -1,5 +1,5 @@
 {{- if and .Values.ingress.enabled .Values.service.enabled ( eq .Values.service.type "ClusterIP") -}}
-{{- $serviceName := ternary "weighted-routing" (include "k8s-common.ingress.serviceName" .) (gt .Values.ingress.stickiness 0) }}
+{{- $serviceName := ternary "weighted-routing" (include "k8s-common.ingress.serviceName" .) (gt (int .Values.ingress.stickiness) 0) }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -47,7 +47,7 @@ spec:
             backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "ssl-redirect" "servicePort" "use-annotation" "context" $)  | nindent 14 }}
           - path: {{ .Values.ingress.path }}
             pathType: {{ .Values.ingress.pathType }}
-            {{- if gt .Values.ingress.stickiness 0 }}
+            {{- if gt (int .Values.ingress.stickiness) 0 }}
             backend: {{- include "k8s-common.ingress.backend" (dict "serviceName" "weighted-routing" "servicePort" "use-annotation" "context" $)  | nindent 14 }}
             {{- else }}
             {{- if and (eq .Values.rollouts.strategy "canary") .Values.rollouts.enabled }}
