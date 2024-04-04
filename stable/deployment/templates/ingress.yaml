@@ -11,7 +11,7 @@ metadata:
   {{- if .Values.ingress.annotations }}
       {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.ingress.annotations "context" $ ) | nindent 4 }}
   {{- end }}
-  {{- if gt .Values.ingress.stickiness 0 }}
+  {{- if gt (int .Values.ingress.stickiness) 0 }}
     alb.ingress.kubernetes.io/target-group-attributes: stickiness.enabled=true,stickiness.lb_cookie.duration_seconds={{ .Values.ingress.stickiness }}
     alb.ingress.kubernetes.io/actions.weighted-routing: |
       {
