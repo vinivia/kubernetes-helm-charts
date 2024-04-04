@@ -180,12 +180,12 @@
                     "default": false
                 },
                 "minAvailable": {
-                    "type": "number",
+                    "type": ["number", "string"],
                     "description": "Min available pods or percent of pods",
                     "default": 1
                 },
                 "maxUnavailable": {
-                    "type": "number",
+                    "type": ["number", "string"],
                     "description": "Max non-available pods or percent of pods",
                     "default": 1
                 }

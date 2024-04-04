@@ -161,6 +161,15 @@ nodeAffinityPreset:
 ## Note: podAffinityPreset, podAntiAffinityPreset, and  nodeAffinityPreset will be ignored when it's set
 ##
 affinity: { }
+## @param topologySpreadConstraintPreset Control spread of containers across availability zones.
+## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/#topologyspreadconstraints-field
+## Allowed values: soft, hard
+topologySpreadConstraintPreset: soft
+## @param topologySpreadConstraints Control spread of containers across nodes, zones, etc.
+## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/#topologyspreadconstraints-field
+## Note: topologySpreadConstraintPreset will be ignored when it's set
+##
+topologySpreadConstraints: {}
 ## @extra pdb Pod disruption budget configuration
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 ##
