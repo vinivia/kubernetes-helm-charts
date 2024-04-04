@@ -171,6 +171,16 @@
             "description": "Affinity for pod assignment",
             "default": {}
         },
+        "topologySpreadConstraintPreset": {
+            "type": "string",
+            "description": "Control spread of containers across availability zones.",
+            "default": "soft"
+        },
+        "topologySpreadConstraints": {
+            "type": "object",
+            "description": "Control spread of containers across nodes, zones, etc.",
+            "default": {}
+        },
         "pdb": {
             "type": "object",
             "properties": {
@@ -180,12 +190,12 @@
                     "default": false
                 },
                 "minAvailable": {
-                    "type": ["number", "string"],
+                    "type": "number",
                     "description": "Min available pods or percent of pods",
                     "default": 1
                 },
                 "maxUnavailable": {
-                    "type": ["number", "string"],
+                    "type": "number",
                     "description": "Max non-available pods or percent of pods",
                     "default": 1
                 }
@@ -476,6 +486,11 @@
                     "type": "boolean",
                     "description": "If container will be accessible outside VPN.",
                     "default": false
+                },
+                "stickiness": {
+                    "type": "number",
+                    "description": "enable sticky sessions for provided number of seconds",
+                    "default": 0
                 },
                 "subDomain": {
                     "type": "boolean",
