@@ -89,7 +89,11 @@ podSecurityContext:
 ##   capabilities:
 ##     drop: ["ALL"]
 ##
-securityContext: {}
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+   drop: ["ALL"]
 ## @param vaultVolumesSupport support for vault secrets as files. Defaults false.
 ##
 vaultVolumesSupport: false
@@ -205,14 +209,14 @@ image:
 serviceAccount:
   ## @param serviceAccount.create Specifies whether a service account should be created
   ##
-  create: false
+  create: true
   ## @param serviceAccount.annotations Annotations to add to the service account
   ##
   annotations: {}
   ## @param serviceAccount.name The name of the service account to use.
   ## If not set and create is true, a name is generated using the fullname template
   ##
-  name: ""
+  name: "example"
 ## @section Environment variables that get added to the container
 ##
 env:
@@ -468,7 +472,7 @@ ingressExtra:
 rbac:
   ## @param rbac.create Specifies whether RBAC resources should be created
   ##
-  create: true
+  create: false
   ## @param rbac.rules Custom RBAC rules to set
   ## e.g:
   ## rules:
