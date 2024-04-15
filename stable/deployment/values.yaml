@@ -54,13 +54,13 @@ replicaCount: 1
 commonLabels: {}
 ## @param commonAnnotations Annotations to add to all deployed objects
 ##
-commonAnnotations: {}
+commonAnnotations: { foo: bar }
 ## @param podLabels Additional labels for the pod
 ##
 podLabels: {}
 ## @param podAnnotations Additional annotations for the pod.
 ##
-podAnnotations: { }
+podAnnotations: {}
 ## @param priorityClassName priorityClassName
 ##
 priorityClassName: ""
@@ -92,8 +92,20 @@ podSecurityContext:
   ## @param podSecurityContext.fsGroup A special supplemental group that applies to all containers in a pod
   ##
   fsGroup: 65534
-
-securityContext: { }
+## @param securityContext Security context for the container
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+## E.g.
+## securityContext:
+##   allowPrivilegeEscalation: false
+##   readOnlyRootFilesystem: true
+##   capabilities:
+##     drop: ["ALL"]
+##
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+   drop: ["ALL"]
 ## @param vaultVolumesSupport support for vault secrets as files. Defaults false.
 ##
 vaultVolumesSupport: false
@@ -118,21 +130,22 @@ vaultVolumesSupport: false
 ##    vaultPath: my_secret_files
 ##    items:
 ##      - key.pass
-volumes: { }
+
+
 ## @param command You can set a custom entrypoint for your docker container
 ##
-command: [ ]
+command: []
 ## @param args You can set a custom arguments for your docker container
 ##
-args: [ ]
+args: []
 ## @param nodeSelector Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
 ##
-nodeSelector: { }
+nodeSelector: {}
 ## @param tolerations Tolerations for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
-tolerations: [ ]
+tolerations: []
 ## @param podAffinityPreset Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 ##
@@ -165,7 +178,7 @@ nodeAffinityPreset:
   ##   - eu-central-1b
   ##   - eu-central-1c
   ##
-  values: [ ]
+  values: []
 ## @param affinity Affinity for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 ## Note: podAffinityPreset, podAntiAffinityPreset, and  nodeAffinityPreset will be ignored when it's set
@@ -250,15 +263,16 @@ image:
 serviceAccount:
   ## @param serviceAccount.create Specifies whether a service account should be created
   ##
-  create: false
+  create: true
   ## @param serviceAccount.annotations Annotations to add to the service account
   ##
-  annotations: { }
+  annotations: {}
   ## @param serviceAccount.name The name of the service account to use.
   ## If not set and create is true, a name is generated using the fullname template
   ##
-  name: ""
+  name: "example"
 ## @section Environment variables that get added to the container
+##
 env:
   ## @param env.values generic Environment variables that get added to the container
   ## Supporting helm templates
@@ -305,9 +319,9 @@ service:
   ## @param service.enabled If service should be created to expose Pod.
   ##
   enabled: true
-  ## @param service.name If you need to specify a service's full name override.
+  ## @param service.name If you need to specify a service's name.
   ##
-  name: ""
+  name: "http"
   ## @param service.type Type of the service. One of ClusterIP, NodePort, LoadBalancer.
   ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   ##
@@ -317,7 +331,8 @@ service:
   ## ports:
   ##   http: 80
   ##   https: 443
-  ports: { }
+  ports:
+    http: 80
   ## @param  service.healthCheckPath default HTTP Health check for container liveness and readiness.
   ##
   healthCheckPath: "/"
@@ -447,7 +462,7 @@ ingress:
   path: "/"
   ## @param ingress.annotations Ingress annotations
   ##
-  annotations: { }
+  annotations: { foo: bar }
   ## @param ingress.extraHosts Extra hosts for ingress
   ## E.g.
   ## extraHosts:
@@ -495,7 +510,7 @@ ingressExtra:
 rbac:
   ## @param rbac.create Specifies whether RBAC resources should be created
   ##
-  create: true
+  create: false
   ## @param rbac.rules Custom RBAC rules to set
   ## e.g:
   ## rules:
@@ -507,7 +522,10 @@ rbac:
   ##       - get
   ##       - list
   ##
-  rules: [ ]
+  rules:
+    - apiGroups: [ "" ] # "" indicates the core API group
+      resources: [ "pods" ]
+      verbs: [ "get", "watch", "list" ]
 ## @section Prometheus Exporter / Metrics
 ##
 metrics:

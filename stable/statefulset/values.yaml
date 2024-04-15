@@ -64,10 +64,22 @@ podAnnotations: {}
 ## @param priorityClassName priorityClassName
 ##
 priorityClassName: ""
-## @extra podSecurityContext Pod security context
+## @param podSecurityContext Pod security context
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## E.g.
+## podSecurityContext:
+##   runAsUser: 1000
+##   runAsGroup: 65534
+##   runAsNonRoot: true
+##   fsGroup: 1000
 ##
 podSecurityContext:
+  ## @param podSecurityContext.allowPrivilegeEscalation Controls whether a process can gain more privileges than its parent process.
+  ##
+  allowPrivilegeEscalation: false
+  ## @param podSecurityContext.readOnlyRootFilesystem Mounts the container's root filesystem as read-only.
+  ##
+  readOnlyRootFilesystem: true
   ## @param podSecurityContext.runAsUser The UID to run the entrypoint of the container process
   ##
   runAsUser: 1000
@@ -424,7 +436,7 @@ ingress:
   path: "/"
   ## @param ingress.annotations Ingress annotations
   ##
-  annotations: {}
+  annotations: { foo: bar }
   ## @param ingress.extraHosts Extra hosts for ingress
   ## E.g.
   ## extraHosts:
