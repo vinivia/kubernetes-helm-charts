@@ -54,7 +54,7 @@ replicaCount: 1
 commonLabels: {}
 ## @param commonAnnotations Annotations to add to all deployed objects
 ##
-commonAnnotations: {}
+commonAnnotations: { foo: bar }
 ## @param podLabels Additional labels for the pod
 ##
 podLabels: {}
@@ -114,7 +114,12 @@ vaultVolumesSupport: false
 ##    vaultPath: my_secret_files
 ##    items:
 ##      - key.pass
-volumes: {}
+volumes:
+  example-volume:
+    mountPath: /tmp/shared
+    emptyDir: true
+    storage: 1G
+
 ## @param command You can set a custom entrypoint for your docker container
 ##
 command: []
@@ -307,7 +312,7 @@ service:
   enabled: true
   ## @param service.name If you need to specify a service's name.
   ##
-  name: ""
+  name: "http"
   ## @param service.type Type of the service. One of ClusterIP, NodePort, LoadBalancer.
   ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   ##
@@ -317,7 +322,8 @@ service:
   ## ports:
   ##   http: 80
   ##   https: 443
-  ports: {}
+  ports:
+    http: 80
   ## @param  service.healthCheckPath default HTTP Health check for container liveness and readiness.
   ##
   healthCheckPath: "/"
@@ -474,7 +480,10 @@ rbac:
   ##       - get
   ##       - list
   ##
-  rules: [ ]
+  rules:
+    - apiGroups: [ "" ] # "" indicates the core API group
+      resources: [ "pods" ]
+      verbs: [ "get", "watch", "list" ]
 ## @section Prometheus Exporter / Metrics
 ##
 metrics:
