@@ -1,0 +1,45 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: maintainers
+rules:
+  # Full management of core API group resources
+  - apiGroups: [""]
+    resources: ["configmaps", "endpoints", "persistentvolumeclaims", "pods", "replicationcontrollers", "services", "secrets", "serviceaccounts"]
+    verbs: ["*"]
+  # Full management of batch resources
+  - apiGroups: ["batch"]
+    resources: ["cronjobs", "jobs"]
+    verbs: ["*"]
+  # Full management of apps resources
+  - apiGroups: ["apps"]
+    resources: ["daemonsets", "deployments", "replicasets", "statefulsets"]
+    verbs: ["*"]
+  # Full management of networking resources
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses", "networkpolicies"]
+    verbs: ["*"]
+  # Full management of rbac resources
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles", "rolebindings", "clusterrolebindings", "clusterroles"]
+    verbs: ["*"]
+  # Full management of autoscaling resources
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["*"]
+  # Full management of policy resources
+  - apiGroups: ["policy"]
+    resources: ["poddisruptionbudgets"]
+    verbs: ["*"]
+  # Node management
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["*"]
+  # Access to view events to aid in debugging
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["get", "list", "watch"]
+  # Workload-specific access for custom resources
+  - apiGroups: ["extensions", "argoproj.io", "aquasecurity.github.io", "external-secrets.io", "generators.external-secrets.io"]
+    resources: ["*"]
+    verbs: ["*"]

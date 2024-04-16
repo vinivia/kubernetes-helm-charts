@@ -1,0 +1,38 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: developers
+rules:
+  # Full management of core API group resources, excluding nodes and secrets
+  - apiGroups: [""]
+    resources: ["configmaps", "endpoints", "persistentvolumeclaims", "pods", "replicationcontrollers", "services", "serviceaccounts"]
+    verbs: ["*"]
+  # Full management of batch resources, excluding nodes management
+  - apiGroups: ["batch"]
+    resources: ["cronjobs", "jobs"]
+    verbs: ["*"]
+  # Full management of apps resources
+  - apiGroups: ["apps"]
+    resources: ["daemonsets", "deployments", "replicasets", "statefulsets"]
+    verbs: ["*"]
+  # Full management of networking resources, excluding network policies
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["*"]
+  # Read-only access to network policies
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["networkpolicies"]
+    verbs: ["get", "list", "watch"]
+  # No management of RBAC resources
+  # Access to view events to aid in debugging
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["get", "list", "watch"]
+  # Workload-specific access for custom resources, excluding potentially dangerous resources
+  - apiGroups: ["extensions", "argoproj.io", "aquasecurity.github.io", "external-secrets.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch", "create", "update", "delete"]
+  # Exclude access to potentially dangerous resources such as secrets
+  - apiGroups: ["*"]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
