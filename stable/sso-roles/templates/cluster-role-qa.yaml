@@ -1,0 +1,33 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: qa
+rules:
+  # Read-only access to core API group resources
+  - apiGroups: [""]
+    resources: ["configmaps", "pods", "services", "endpoints", "replicationcontrollers", "secrets"]
+    verbs: ["get", "list", "watch"]
+  # Read-only access to logs and events for diagnostics
+  - apiGroups: [""]
+    resources: ["events", "pods/log"]
+    verbs: ["get", "list", "watch"]
+  # Read-only access to apps resources
+  - apiGroups: ["apps"]
+    resources: ["daemonsets", "deployments", "replicasets", "statefulsets"]
+    verbs: ["get", "list", "watch"]
+  # Read-only access to network resources
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses", "networkpolicies"]
+    verbs: ["get", "list", "watch"]
+  # Read-only access to batch resources
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list", "watch"]
+  # Read-only access to autoscaling resources
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["get", "list", "watch"]
+  # Read-only access to custom resources used in the environment
+  - apiGroups: ["extensions", "argoproj.io", "aquasecurity.github.io", "external-secrets.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch"]

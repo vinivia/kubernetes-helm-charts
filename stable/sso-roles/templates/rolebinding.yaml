@@ -32,13 +32,58 @@ subjects:
 apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
+  name: {{ template "k8s-common.names.fullname" . }}-aws-sre
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
+  labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: 'sre'
+subjects:
+  - kind: Group
+    name: 'aws-sre'
+    namespace: {{ include "k8s-common.names.namespace" . | quote }}
+---
+apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: {{ template "k8s-common.names.fullname" . }}-aws-qa
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
+  labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: 'qa'
+subjects:
+  - kind: Group
+    name: 'aws-qa'
+    namespace: {{ include "k8s-common.names.namespace" . | quote }}
+---
+apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: {{ template "k8s-common.names.fullname" . }}-aws-data
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
+  labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: 'qa'
+subjects:
+  - kind: Group
+    name: 'aws-data'
+    namespace: {{ include "k8s-common.names.namespace" . | quote }}
+---
+apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
   name: {{ template "k8s-common.names.fullname" . }}-aws-guests
   namespace: {{ include "k8s-common.names.namespace" . | quote }}
   labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: view
+  name: 'qa'
 subjects:
   - kind: Group
     name: 'aws-guests'
