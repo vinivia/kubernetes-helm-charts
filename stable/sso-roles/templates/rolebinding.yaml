@@ -38,10 +38,10 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: 'sre'
+  name: 'support'
 subjects:
   - kind: Group
-    name: 'aws-sre'
+    name: 'aws-support'
     namespace: {{ include "k8s-common.names.namespace" . | quote }}
 ---
 apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
@@ -62,7 +62,7 @@ subjects:
 apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
-  name: {{ template "k8s-common.names.fullname" . }}-aws-data
+  name: {{ template "k8s-common.names.fullname" . }}-aws-business
   namespace: {{ include "k8s-common.names.namespace" . | quote }}
   labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
 roleRef:
@@ -71,7 +71,7 @@ roleRef:
   name: 'qa'
 subjects:
   - kind: Group
-    name: 'aws-data'
+    name: 'aws-business'
     namespace: {{ include "k8s-common.names.namespace" . | quote }}
 ---
 apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}

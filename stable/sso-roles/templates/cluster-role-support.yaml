@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: sre
+  name: support
 rules:
   # Full management of core API group resources necessary for debugging and recovery, excluding sensitive operations like create and delete
   - apiGroups: [""]
