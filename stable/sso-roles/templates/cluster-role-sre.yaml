@@ -1,0 +1,37 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sre
+rules:
+  # Full management of core API group resources necessary for debugging and recovery, excluding sensitive operations like create and delete
+  - apiGroups: [""]
+    resources: ["configmaps", "pods", "services", "endpoints", "replicationcontrollers"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  # Allow SREs to manage pod lifecycle for troubleshooting (e.g., restarts)
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["delete"]  # Necessary for pod restarts during troubleshooting
+  # Read-write access to logs and events for diagnostics
+  - apiGroups: [""]
+    resources: ["events", "pods/log"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  # Management of apps resources, focused on monitoring and minor modifications
+  - apiGroups: ["apps"]
+    resources: ["daemonsets", "deployments", "replicasets", "statefulsets"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  # Network troubleshooting and monitoring
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses", "networkpolicies"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  # Access to work with jobs for recovery or cleanup tasks
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list", "watch", "create", "delete", "update", "patch"]
+  # Access to manage horizontal pod autoscalers for performance tuning
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  # Troubleshooting and recovery permissions for custom resources
+  - apiGroups: ["extensions", "argoproj.io", "aquasecurity.github.io", "external-secrets.io"]
+    resources: ["*"]
+    verbs: ["get", "list", "watch", "update", "patch"]
