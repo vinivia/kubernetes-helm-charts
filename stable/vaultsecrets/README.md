@@ -24,7 +24,6 @@ Generator of the secrets from remote Vault server
 | `global.image.tag`        | Tag of the image                                        | `latest`       |
 | `global.image.pullPolicy` | The default pull policy is IfNotPresent which causes    | `IfNotPresent` |
 
-
 ### Kubernetes secrets
 
 | Name          | Description                                                  | Value |
