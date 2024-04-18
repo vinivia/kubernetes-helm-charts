@@ -163,7 +163,12 @@
         "resourcesPreset": {
             "type": "string",
             "description": "Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge).",
-            "default": "nano"
+            "default": "none"
+        },
+        "resources": {
+            "type": "object",
+            "description": "Container resource requests and limits",
+            "default": {}
         },
         "nodeAffinityPreset": {
             "type": "object",
@@ -641,21 +646,6 @@
                             "items": {}
                         }
                     }
-                }
-            }
-        },
-        "resources": {
-            "type": "object",
-            "properties": {
-                "limits": {
-                    "type": "object",
-                    "description": "The resources limits for the container",
-                    "default": {}
-                },
-                "requests": {
-                    "type": "object",
-                    "description": "The requests resources for the container",
-                    "default": {}
                 }
             }
         },

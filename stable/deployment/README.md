@@ -110,6 +110,7 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `sidecarContainers`        | Configuration for the init container                  | `[]`    |
 | `datadogIntegration`       | Enable datadog related integration for tracing        | `false` |
 | `githubActionsIntegration` | Allow github runners to create resources in namespace | `false` |
+| `resources`                | Container resource requests and limits                | `{}`    |
 
 ### Image for the deployment
 
@@ -234,13 +235,6 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 | `metrics.serviceMonitor.selector`      | Additional labels for ServiceMonitor object  | `{}`       |
 | `metrics.rules.enabled`                | Create PrometheusRules object                | `false`    |
 | `metrics.rules.spec`                   | Configuration for the application alerting   | `[]`       |
-
-### Container resource requests and limits
-
-| Name                 | Description                              | Value |
-| -------------------- | ---------------------------------------- | ----- |
-| `resources.limits`   | The resources limits for the container   | `{}`  |
-| `resources.requests` | The requests resources for the container | `{}`  |
 
 ### Lifecycle configuration
 

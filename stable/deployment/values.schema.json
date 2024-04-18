@@ -228,6 +228,11 @@
             "description": "Allow github runners to create resources in namespace",
             "default": false
         },
+        "resources": {
+            "type": "object",
+            "description": "Container resource requests and limits",
+            "default": {}
+        },
         "image": {
             "type": "object",
             "properties": {
@@ -640,21 +645,6 @@
                             "items": {}
                         }
                     }
-                }
-            }
-        },
-        "resources": {
-            "type": "object",
-            "properties": {
-                "limits": {
-                    "type": "object",
-                    "description": "The resources limits for the container",
-                    "default": {}
-                },
-                "requests": {
-                    "type": "object",
-                    "description": "The requests resources for the container",
-                    "default": {}
                 }
             }
         },

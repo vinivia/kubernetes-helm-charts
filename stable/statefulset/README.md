@@ -80,7 +80,8 @@ Typical StateFul Set application
 | `tolerations`                     | Tolerations for pod assignment                                                                                                     | `[]`    |
 | `podAffinityPreset`               | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                | `""`    |
 | `podAntiAffinityPreset`           | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                           | `soft`  |
-| `resourcesPreset`                 | Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). | `nano`  |
+| `resourcesPreset`                 | Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). | `none`  |
+| `resources`                       | Container resource requests and limits                                                                                             | `{}`    |
 | `nodeAffinityPreset`              | Node affinity preset                                                                                                               |         |
 | `nodeAffinityPreset.type`         | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                          | `""`    |
 | `nodeAffinityPreset.key`          | Node label key to match Ignored if `affinity` is set.                                                                              | `""`    |
@@ -220,13 +221,6 @@ Typical StateFul Set application
 | `metrics.serviceMonitor.selector`      | Additional labels for ServiceMonitor object  | `{}`       |
 | `metrics.rules.enabled`                | Create PrometheusRules object                | `false`    |
 | `metrics.rules.spec`                   | Configuration for the application alerting   | `[]`       |
-
-### Container resource requests and limits
-
-| Name                 | Description                              | Value |
-| -------------------- | ---------------------------------------- | ----- |
-| `resources.limits`   | The resources limits for the container   | `{}`  |
-| `resources.requests` | The requests resources for the container | `{}`  |
 
 ### Lifecycle configuration
 
