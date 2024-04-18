@@ -29,6 +29,10 @@ rules:
   - apiGroups: [ "networking.k8s.io" ]
     resources: [ "ingresses", ]
     verbs: [ "get", "list", "watch", "update", "patch" ]
+  # Management access to ArgoCD Rollouts
+  - apiGroups: [ "argoproj.io" ]
+    resources: [ "rollouts", "rollouts/scale", "rollouts/status" ]
+    verbs: [ "get", "list", "watch", "update", "patch" ]
 ---
 apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
 kind: Role
@@ -64,3 +68,7 @@ rules:
   - apiGroups: [ "" ]
     resources: [ "secrets" ]
     verbs: [ "list" ]
+  # Read access to ArgoCD Rollouts
+  - apiGroups: [ "argoproj.io" ]
+    resources: [ "rollouts", "rollouts/scale", "rollouts/status" ]
+    verbs: [ "get", "list", "watch" ]
