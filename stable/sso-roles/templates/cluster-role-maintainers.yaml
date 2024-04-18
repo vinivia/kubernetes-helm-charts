@@ -22,7 +22,7 @@ rules:
   # Full management of rbac resources
   - apiGroups: ["rbac.authorization.k8s.io"]
     resources: ["roles", "rolebindings", "clusterrolebindings", "clusterroles"]
-    verbs: ["*"]
+    verbs: ["get", "list", "watch"]
   # Full management of autoscaling resources
   - apiGroups: ["autoscaling"]
     resources: ["horizontalpodautoscalers"]
@@ -35,7 +35,4 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["get", "list", "watch"]
-  # Workload-specific access for custom resources
-  - apiGroups: ["extensions", "argoproj.io", "aquasecurity.github.io", "external-secrets.io", "generators.external-secrets.io"]
-    resources: ["*"]
-    verbs: ["*"]
+

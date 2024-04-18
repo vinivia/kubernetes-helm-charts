@@ -31,7 +31,3 @@ rules:
   - apiGroups: ["autoscaling"]
     resources: ["horizontalpodautoscalers"]
     verbs: ["get", "list", "watch", "update", "patch"]
-  # Troubleshooting and recovery permissions for custom resources
-  - apiGroups: ["extensions", "argoproj.io", "aquasecurity.github.io", "external-secrets.io"]
-    resources: ["*"]
-    verbs: ["get", "list", "watch", "update", "patch"]
