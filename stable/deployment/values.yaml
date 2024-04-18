@@ -75,8 +75,8 @@ priorityClassName: ""
 ##
 podSecurityContext:
   runAsUser: 1000
-  runAsGroup: 65534
   runAsNonRoot: true
+  runAsGroup: 65534
   fsGroup: 65534
 ## @param securityContext Security context for the container
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -90,6 +90,9 @@ podSecurityContext:
 securityContext:
   allowPrivilegeEscalation: false
   readOnlyRootFilesystem: true
+  runAsUser: 1000
+  runAsNonRoot: true
+  runAsGroup: 65534
   capabilities:
     drop: [ "ALL" ]
 ## @param vaultVolumesSupport support for vault secrets as files. Defaults false.
