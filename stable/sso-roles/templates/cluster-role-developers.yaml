@@ -30,4 +30,4 @@ rules:
   # Restricted access to potentially dangerous resources such as secrets
   - apiGroups: ["*"]
     resources: ["secrets"]
-    verbs: ["list", "watch"]
+    verbs: ["list"]

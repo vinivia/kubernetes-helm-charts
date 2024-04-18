@@ -5,7 +5,7 @@ metadata:
 rules:
   # Read-only access to core API group resources
   - apiGroups: [""]
-    resources: ["configmaps", "pods", "services", "endpoints", "replicationcontrollers", "secrets"]
+    resources: ["configmaps", "pods", "services", "endpoints", "replicationcontrollers"]
     verbs: ["get", "list", "watch"]
   # Read-only access to logs and events for diagnostics
   - apiGroups: [""]
