@@ -31,10 +31,6 @@ rules:
   - apiGroups: ["policy"]
     resources: ["poddisruptionbudgets"]
     verbs: ["*"]
-  # Node management
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["*"]
   # Access to view events to aid in debugging
   - apiGroups: [""]
     resources: ["events"]

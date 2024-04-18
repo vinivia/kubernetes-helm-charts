@@ -27,11 +27,7 @@ rules:
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["get", "list", "watch"]
-  # Workload-specific access for custom resources, excluding potentially dangerous resources and restricting create and delete
-  - apiGroups: ["extensions", "argoproj.io", "aquasecurity.github.io", "external-secrets.io"]
-    resources: ["*"]
-    verbs: ["get", "list", "watch", "update", "patch"]
   # Restricted access to potentially dangerous resources such as secrets
   - apiGroups: ["*"]
     resources: ["secrets"]
-    verbs: ["get", "list", "watch"]
+    verbs: ["list", "watch"]
