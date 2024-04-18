@@ -6,6 +6,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels: {{ include "k8s-common.labels.standard" . | nindent 4 }}
 spec:
+  {{- if .Values.autoscaling.behavior }}
+  behavior:
+    {{- toYaml .Values.autoscaling.behavior | nindent 4 }}
+  {{- end }}
   scaleTargetRef:
     {{ if .Values.rollouts.enabled -}}
     apiVersion: argoproj.io/v1alpha1
