@@ -54,7 +54,7 @@ replicaCount: 1
 commonLabels: {}
 ## @param commonAnnotations Annotations to add to all deployed objects
 ##
-commonAnnotations: { foo: bar }
+commonAnnotations: {}
 ## @param podLabels Additional labels for the pod
 ##
 podLabels: {}
@@ -74,14 +74,6 @@ priorityClassName: ""
 ##   fsGroup: 1000
 ##
 podSecurityContext:
-  ## @param podSecurityContext.allowPrivilegeEscalation Controls whether a process can gain more privileges than its parent process.
-  ##
-  allowPrivilegeEscalation: false
-  ## @param podSecurityContext.readOnlyRootFilesystem Mounts the container's root filesystem as read-only.
-  ##
-  readOnlyRootFilesystem: true
-  ## @param podSecurityContext.runAsUser The UID to run the entrypoint of the container process
-  ##
   runAsUser: 1000
   ## @param podSecurityContext.runAsGroup The GID to run the entrypoint of the container process
   ##
