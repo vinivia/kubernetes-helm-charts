@@ -110,6 +110,8 @@ Return generated container configuration.
   {{- end }}
   {{- if .Values.resources }}
   resources: {{- toYaml .Values.resources | trim | nindent 4 }}
+  {{- else if ne .Values.resourcesPreset "none" }}
+  resources: {{- include "k8s-common.resources.preset" (dict "type" .Values.resourcesPreset) | nindent 4 }}
   {{- end }}
   {{- if .Values.securityContext }}
   securityContext: {{- toYaml .Values.securityContext | trim | nindent 4 }}
