@@ -170,6 +170,11 @@ topologySpreadConstraintPreset: soft
 ## Note: topologySpreadConstraintPreset will be ignored when it's set
 ##
 topologySpreadConstraints: {}
+## @param resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge).
+## This is ignored if server.resources is set (server.resources is recommended for production).
+## More information: https://github.com/vinivia/kubernetes-helm-charts/blob/main/global/k8s-common/templates/_resources.tpl#L9
+##
+resourcesPreset: "nano"
 ## @extra pdb Pod disruption budget configuration
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 ##
@@ -617,6 +622,27 @@ autoscaling:
   ##       averageUtilization: 60
   ##
   metrics: [ ]
+  ## @param autoscaling.behavior HPA Behavior
+  ##
+  ## E.g.
+  ## behavior:
+  ##   scaleDown:
+  ##     stabilizationWindowSeconds: 300
+  ##     policies:
+  ##       - type: Percent
+  ##         value: 100
+  ##         periodSeconds: 15
+  ##   scaleUp:
+  ##     stabilizationWindowSeconds: 10
+  ##     policies:
+  ##       - type: Percent
+  ##         value: 100
+  ##         periodSeconds: 15
+  ##       - type: Pods
+  ##         value: 4
+  ##         periodSeconds: 15
+  ##     selectPolicy: Max
+  behavior: { }
 ## @section Persistence Parameters
 ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
 ##

@@ -138,6 +138,11 @@ podAffinityPreset: ""
 ## Allowed values: soft, hard
 ##
 podAntiAffinityPreset: soft
+## @param resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge).
+## This is ignored if server.resources is set (server.resources is recommended for production).
+## More information: https://github.com/vinivia/kubernetes-helm-charts/blob/main/global/k8s-common/templates/_resources.tpl#L9
+##
+resourcesPreset: "nano"
 ## @extra nodeAffinityPreset Node affinity preset
 ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
 ##

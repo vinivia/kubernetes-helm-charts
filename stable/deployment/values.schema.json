@@ -181,6 +181,11 @@
             "description": "Control spread of containers across nodes, zones, etc.",
             "default": {}
         },
+        "resourcesPreset": {
+            "type": "string",
+            "description": "Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge).",
+            "default": "nano"
+        },
         "pdb": {
             "type": "object",
             "properties": {
@@ -696,6 +701,11 @@
                     "description": "Configuration of scaling metrics",
                     "default": [],
                     "items": {}
+                },
+                "behavior": {
+                    "type": "object",
+                    "description": "HPA Behavior",
+                    "default": {}
                 }
             }
         },
