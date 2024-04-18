@@ -89,13 +89,73 @@
         },
         "podSecurityContext": {
             "type": "object",
-            "description": "Pod security context",
-            "default": {}
+            "properties": {
+                "runAsUser": {
+                    "type": "number",
+                    "description": "The UID to run the entrypoint of the container process",
+                    "default": 1000
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Indicates that the container must run as a non-root user",
+                    "default": true
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "The GID to run the entrypoint of the container process",
+                    "default": 65534
+                },
+                "fsGroup": {
+                    "type": "number",
+                    "description": "A special supplemental group that applies to all containers in a pod",
+                    "default": 65534
+                }
+            }
         },
         "securityContext": {
             "type": "object",
-            "description": "Security context for the container",
-            "default": {}
+            "properties": {
+                "allowPrivilegeEscalation": {
+                    "type": "boolean",
+                    "description": "Controls whether a process can gain more privileges than its parent process",
+                    "default": false
+                },
+                "readOnlyRootFilesystem": {
+                    "type": "boolean",
+                    "description": "Mounts the container's root filesystem as read-only",
+                    "default": true
+                },
+                "runAsUser": {
+                    "type": "number",
+                    "description": "The UID to run the entrypoint of the container process",
+                    "default": 1000
+                },
+                "runAsNonRoot": {
+                    "type": "boolean",
+                    "description": "Indicates that the container must run as a non-root user",
+                    "default": true
+                },
+                "runAsGroup": {
+                    "type": "number",
+                    "description": "The GID to run the entrypoint of the container process",
+                    "default": 65534
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "description": "Drop all capabilities by default",
+                            "default": [
+                                "ALL"
+                            ],
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         },
         "vaultVolumesSupport": {
             "type": "boolean",

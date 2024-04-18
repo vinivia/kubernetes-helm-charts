@@ -99,8 +99,9 @@ securityContext:
   ## @param securityContext.runAsGroup The GID to run the entrypoint of the container process
   ##
   runAsGroup: 65534
-  ## @param securityContext.capabilities Grant certain privileges to a process without granting all the privileges of the root user
+  ## @section securityContext.capabilities Grant certain privileges to a process without granting all the privileges of the root user
   capabilities:
+    ## @param securityContext.capabilities.drop Drop all capabilities by default
     drop: [ "ALL" ]
 ## @param vaultVolumesSupport support for vault secrets as files. Defaults false.
 ##
