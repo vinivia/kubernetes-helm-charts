@@ -71,12 +71,12 @@ podSecurityContext:
   ## @param podSecurityContext.runAsUser The UID to run the entrypoint of the container process
   ##
   runAsUser: 1000
-  ## @param podSecurityContext.runAsGroup The GID to run the entrypoint of the container process
-  ##
-  runAsGroup: 65534
   ## @param podSecurityContext.runAsNonRoot Indicates that the container must run as a non-root user
   ##
   runAsNonRoot: true
+  ## @param podSecurityContext.runAsGroup The GID to run the entrypoint of the container process
+  ##
+  runAsGroup: 65534
   ## @param podSecurityContext.fsGroup A special supplemental group that applies to all containers in a pod
   ##
   fsGroup: 65534
@@ -89,7 +89,14 @@ podSecurityContext:
 ##   capabilities:
 ##     drop: ["ALL"]
 ##
-securityContext: {}
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsUser: 1000
+  runAsNonRoot: true
+  runAsGroup: 65534
+  capabilities:
+    drop: [ "ALL" ]
 ## @param vaultVolumesSupport support for vault secrets as files. Defaults false.
 ##
 vaultVolumesSupport: false
