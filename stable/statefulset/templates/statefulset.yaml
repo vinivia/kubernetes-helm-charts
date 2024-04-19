@@ -56,7 +56,7 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName | quote }}
       {{- end }}
-      {{- if .Values.initContainer.enabled }}
+      {{- if .Values.initContainers }}
       initContainers:
         {{- range .Values.initContainers }}
         {{- $values := dict "Values" . "Chart" $.Chart "Release" $.Release "Template" $.Template -}}
@@ -85,4 +85,14 @@ spec:
           persistentVolumeClaim:
             claimName: {{ include "k8s-common.names.fullname" . }}
       {{- end }}
+  {{- if .Values.volumes }}
+  {{ $claimsList := list }}
+  {{- range $key, $value :=.Values.volumes }}
+  {{- if $value.storage }}
+  {{ $claimsList := append $claimsList $key }}
+  {{- end }}
+  {{- end }}
+  {{- if ne (len $claimsList ) 0 }}
   volumeClaimTemplates: {{ include "k8s-common.volume.claims" . | nindent 4 }}
+  {{- end }}
+  {{- end }}

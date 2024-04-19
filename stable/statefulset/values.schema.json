@@ -203,7 +203,7 @@
         "resourcesPreset": {
             "type": "string",
             "description": "Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge).",
-            "default": "none"
+            "default": "nano"
         },
         "resources": {
             "type": "object",
@@ -331,52 +331,11 @@
                 }
             }
         },
-        "initContainer": {
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "type": "boolean",
-                    "description": "If init container should be used in deployment",
-                    "default": false
-                },
-                "image": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "description": "Name of the image repository",
-                            "default": ""
-                        },
-                        "tag": {
-                            "type": "string",
-                            "description": "Tag of the image",
-                            "default": ""
-                        },
-                        "pullPolicy": {
-                            "type": "string",
-                            "description": "The default pull policy is IfNotPresent",
-                            "default": "IfNotPresent"
-                        }
-                    }
-                },
-                "command": {
-                    "type": "array",
-                    "description": "The command field corresponds to entrypoint in container runtime.",
-                    "default": [],
-                    "items": {}
-                },
-                "args": {
-                    "type": "array",
-                    "description": "The arguments passed to the command.",
-                    "default": [],
-                    "items": {}
-                },
-                "resources": {
-                    "type": "object",
-                    "description": "Optionally specify how much of each resource a Container needs.",
-                    "default": {}
-                }
-            }
+        "initContainers": {
+            "type": "array",
+            "description": "Configuration for the init container",
+            "default": [],
+            "items": {}
         },
         "sidecarContainers": {
             "type": "array",

@@ -155,7 +155,7 @@ podAntiAffinityPreset: soft
 ## This is ignored if server.resources is set (server.resources is recommended for production).
 ## More information: https://github.com/vinivia/kubernetes-helm-charts/blob/main/global/k8s-common/templates/_resources.tpl#L9
 ##
-resourcesPreset: "none"
+resourcesPreset: "nano"
 ## @param resources Container resource requests and limits
 ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
 ##
@@ -280,33 +280,21 @@ env:
   ##    secret: password
   ##
   vaultSecret: {}
-## @section Configuration for the init container
+## @section Extra Containers
+## @param initContainers Configuration for the init container
 ##
-initContainer:
-  ## @param initContainer.enabled If init container should be used in deployment
-  ##
-  enabled: false
-  ## Init container image. Will use global.image if not provided
-  ##
-  image:
-    ## @param initContainer.image.name Name of the image repository
-    ##
-    name: ""
-    ## @param initContainer.image.tag Tag of the image
-    ##
-    tag: ""
-    ## @param initContainer.image.pullPolicy The default pull policy is IfNotPresent
-    ##
-    pullPolicy: "IfNotPresent"
-  ## @param initContainer.command  The command field corresponds to entrypoint in container runtime.
-  ##
-  command: []
-  ## @param initContainer.args The arguments passed to the command.
-  ##
-  args: []
-  ## @param initContainer.resources Optionally specify how much of each resource a Container needs.
-  ##
-  resources: {}
+## E.g.
+## initContainers:
+##   - nameOverride: foo
+##     image:
+##       name: ""
+##       tag: ""
+##       pullPolicy: "IfNotPresent"
+##     command: []
+##     args: []
+##     resources: {}
+##
+initContainers: [ ]
 ## @param sidecarContainers Configuration for the init container
 ##
 ## E.g.

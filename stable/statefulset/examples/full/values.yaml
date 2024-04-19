@@ -87,18 +87,18 @@ statefulset:
       API_KEY:
         path: mySecret
         secret: password
-  initContainer:
-    enabled: true
-    image:
-      repository: "abc.def"
-      tag: "latest"
-      pullPolicy: "IfNotPresent"
-    command: ["sh", "-c"]
-    args: ["sleep 1"]
-    resources:
-      limits:
-        cpu: 50m
-        memory: 50Mi
+  initContainers:
+    - nameOverride: foo
+      image:
+        name: "abc.def"
+        tag: "latest"
+        pullPolicy: "IfNotPresent"
+      command: ["sh", "-c"]
+      args: ["sleep 1"]
+      resources:
+        limits:
+          cpu: 50m
+          memory: 50Mi
   service:
     enabled: true
     name: "z"

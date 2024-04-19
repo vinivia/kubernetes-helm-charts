@@ -99,7 +99,8 @@ deployment:
     enabled: true
     name: "z"
     type: "ClusterIP"
-    port: 80
+    ports:
+      http: 80
     healthCheckPath: "/"
   livenessProbe:
     enabled: true
@@ -175,11 +176,15 @@ deployment:
       - type: Resource
         resource:
           name: cpu
-          targetAverageUtilization: 60
+          target:
+            type: Utilization
+            averageUtilization: 60
       - type: Resource
         resource:
           name: memory
-          targetAverageUtilization: 60
+          target:
+            type: Utilization
+            averageUtilization: 60
   rollouts:
     enabled: true
     strategy: canary

@@ -91,7 +91,7 @@ Typical StateFul Set application
 | `tolerations`                       | Tolerations for pod assignment                                                                                                     | `[]`      |
 | `podAffinityPreset`                 | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                | `""`      |
 | `podAntiAffinityPreset`             | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                           | `soft`    |
-| `resourcesPreset`                   | Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). | `none`    |
+| `resourcesPreset`                   | Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). | `nano`    |
 | `resources`                         | Container resource requests and limits                                                                                             | `{}`      |
 | `nodeAffinityPreset`                | Node affinity preset                                                                                                               |           |
 | `nodeAffinityPreset.type`           | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                          | `""`      |
@@ -134,20 +134,14 @@ Typical StateFul Set application
 | `env.secret`      | Kubernetes secrets that get added to the container                      | `{}`  |
 | `env.vaultSecret` | Kubernetes secrets that get added to the container from Hashicorp Vault | `{}`  |
 
-### Configuration for the init container
+### Extra Containers
 
-| Name                             | Description                                                       | Value          |
-| -------------------------------- | ----------------------------------------------------------------- | -------------- |
-| `initContainer.enabled`          | If init container should be used in deployment                    | `false`        |
-| `initContainer.image.name`       | Name of the image repository                                      | `""`           |
-| `initContainer.image.tag`        | Tag of the image                                                  | `""`           |
-| `initContainer.image.pullPolicy` | The default pull policy is IfNotPresent                           | `IfNotPresent` |
-| `initContainer.command`          | The command field corresponds to entrypoint in container runtime. | `[]`           |
-| `initContainer.args`             | The arguments passed to the command.                              | `[]`           |
-| `initContainer.resources`        | Optionally specify how much of each resource a Container needs.   | `{}`           |
-| `sidecarContainers`              | Configuration for the init container                              | `[]`           |
-| `datadogIntegration`             | Enable datadog related integration for tracing                    | `false`        |
-| `githubActionsIntegration`       | Allow github runners to create resources in namespace             | `false`        |
+| Name                       | Description                                           | Value   |
+| -------------------------- | ----------------------------------------------------- | ------- |
+| `initContainers`           | Configuration for the init container                  | `[]`    |
+| `sidecarContainers`        | Configuration for the init container                  | `[]`    |
+| `datadogIntegration`       | Enable datadog related integration for tracing        | `false` |
+| `githubActionsIntegration` | Allow github runners to create resources in namespace | `false` |
 
 ### Configuration of the service
 
