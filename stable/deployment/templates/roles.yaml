@@ -1,0 +1,91 @@
+{{- if .Values.rbac.create }}
+{{- if .Values.rbac.rules }}
+---
+apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
+kind: Role
+metadata:
+  name: {{ template "k8s-common.names.fullname" . }}
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
+  labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+rules:
+  {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.rbac.rules "context" $ ) | nindent 2 }}
+{{- end }}
+---
+apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
+kind: Role
+metadata:
+  name: {{ template "k8s-common.names.fullname" . }}-aws-maintainers
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
+  labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+rules:
+  # Management access to core API group resources
+  - apiGroups: [ "" ]
+    resources: [ "configmaps", "secrets", "endpoints", "persistentvolumeclaims", "pods", "replicationcontrollers", "serviceaccounts" ]
+    verbs: [ "get", "list", "watch", "update", "patch" ]
+  # Management access to batch resources
+  - apiGroups: [ "batch" ]
+    resources: [ "cronjobs", "jobs" ]
+    verbs: [ "get", "list", "watch", "update", "patch" ]
+  # Management access to apps resources
+  - apiGroups: [ "apps" ]
+    resources: [ "daemonsets", "deployments", "replicasets", "statefulsets" ]
+    verbs: [ "get", "list", "watch", "update", "patch" ]
+  # Management access to autoscaling resources
+  - apiGroups: [ "autoscaling" ]
+    resources: [ "horizontalpodautoscalers" ]
+    verbs: [ "get", "list", "watch", "update", "patch" ]
+  # Management access to networking resources
+  - apiGroups: [ "networking.k8s.io" ]
+    resources: [ "ingresses", ]
+    verbs: [ "get", "list", "watch", "update", "patch" ]
+  # Management access to ArgoCD Rollouts
+  - apiGroups: [ "argoproj.io" ]
+    resources: [ "rollouts", "rollouts/scale", "rollouts/status" ]
+    verbs: [ "get", "list", "watch", "update", "patch" ]
+---
+apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
+kind: Role
+metadata:
+  name: {{ template "k8s-common.names.fullname" . }}-aws-developers
+  namespace: {{ include "k8s-common.names.namespace" . | quote }}
+  labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "k8s-common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+rules:
+  # Read access to core API group resources
+  - apiGroups: [ "" ]
+    resources: [ "configmaps", "endpoints", "persistentvolumeclaims", "pods", "replicationcontrollers", "serviceaccounts" ]
+    verbs: [ "get", "list", "watch" ]
+  # Read access to batch resources
+  - apiGroups: [ "batch" ]
+    resources: [ "cronjobs", "jobs" ]
+    verbs: [ "get", "list", "watch" ]
+  # Read access to apps resources
+  - apiGroups: [ "apps" ]
+    resources: [ "daemonsets", "deployments", "replicasets", "statefulsets" ]
+    verbs: [ "get", "list", "watch" ]
+  # Read access to autoscaling resources
+  - apiGroups: [ "autoscaling" ]
+    resources: [ "horizontalpodautoscalers" ]
+    verbs: [ "get", "list", "watch" ]
+  # Read access to networking resources
+  - apiGroups: [ "networking.k8s.io" ]
+    resources: [ "ingresses", ]
+    verbs: [ "get", "list", "watch" ]
+  # Restricted access secrets
+  - apiGroups: [ "" ]
+    resources: [ "secrets" ]
+    verbs: [ "list" ]
+  # Read access to ArgoCD Rollouts
+  - apiGroups: [ "argoproj.io" ]
+    resources: [ "rollouts", "rollouts/scale", "rollouts/status" ]
+    verbs: [ "get", "list", "watch" ]
+
+{{- end }}

@@ -7,8 +7,8 @@ metadata:
   labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: 'admin'
+  kind: Role
+  name: 'aws-maintainers'
 subjects:
   - kind: Group
     name: 'aws-maintainers'
@@ -22,26 +22,11 @@ metadata:
   labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: 'edit'
+  kind: Role
+  name: 'aws-developers'
 subjects:
   - kind: Group
     name: 'aws-developers'
-    namespace: {{ include "k8s-common.names.namespace" . | quote }}
----
-apiVersion: {{ include "k8s-common.capabilities.rbac.apiVersion" . }}
-kind: RoleBinding
-metadata:
-  name: {{ template "k8s-common.names.fullname" . }}-aws-guests
-  namespace: {{ include "k8s-common.names.namespace" . | quote }}
-  labels: {{- include "k8s-common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: view
-subjects:
-  - kind: Group
-    name: 'aws-guests'
     namespace: {{ include "k8s-common.names.namespace" . | quote }}
 {{- if .Values.githubActionsIntegration }}
 ---

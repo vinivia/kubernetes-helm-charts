@@ -64,26 +64,45 @@ podAnnotations: { }
 ## @param priorityClassName priorityClassName
 ##
 priorityClassName: ""
-## @param podSecurityContext Pod security context
+## @extra podSecurityContext Pod security context
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-## E.g.
-## podSecurityContext:
-##   runAsUser: 1000
-##   runAsGroup: 65534
-##   runAsNonRoot: true
-##   fsGroup: 1000
 ##
-podSecurityContext: { }
-## @param securityContext Security context for the container
-## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-## E.g.
-## securityContext:
-##   allowPrivilegeEscalation: false
-##   readOnlyRootFilesystem: true
-##   capabilities:
-##     drop: ["ALL"]
+podSecurityContext:
+  ## @param podSecurityContext.runAsUser The UID to run the entrypoint of the container process
+  ##
+  runAsUser: 1000
+  ## @param podSecurityContext.runAsNonRoot Indicates that the container must run as a non-root user
+  ##
+  runAsNonRoot: true
+  ## @param podSecurityContext.runAsGroup The GID to run the entrypoint of the container process
+  ##
+  runAsGroup: 65534
+  ## @param podSecurityContext.fsGroup A special supplemental group that applies to all containers in a pod
+  ##
+  fsGroup: 65534
+## @extra securityContext Container security context
+## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
 ##
-securityContext: { }
+securityContext:
+  ## @param securityContext.allowPrivilegeEscalation Controls whether a process can gain more privileges than its parent process
+  ##
+  allowPrivilegeEscalation: false
+  ## @param securityContext.readOnlyRootFilesystem  Mounts the container's root filesystem as read-only
+  ##
+  readOnlyRootFilesystem: true
+  ## @param securityContext.runAsUser The UID to run the entrypoint of the container process
+  ##
+  runAsUser: 1000
+  ## @param securityContext.runAsNonRoot Indicates that the container must run as a non-root user
+  ##
+  runAsNonRoot: true
+  ## @param securityContext.runAsGroup The GID to run the entrypoint of the container process
+  ##
+  runAsGroup: 65534
+  ## @section securityContext.capabilities Grant certain privileges to a process without granting all the privileges of the root user
+  capabilities:
+    ## @param securityContext.capabilities.drop Drop all capabilities by default
+    drop: [ "ALL" ]
 ## @param vaultVolumesSupport support for vault secrets as files. Defaults false.
 ##
 vaultVolumesSupport: false

@@ -68,39 +68,54 @@ Typical microservice chart. Supports Ingress controller, horizontal-scalable con
 
 ### Common parameters
 
-| Name                             | Description                                                                                                                        | Value   |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `nameOverride`                   | By default, name uses '{{ .Chart.Name }}'.                                                                                         | `""`    |
-| `fullnameOverride`               | By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.                                                                 | `""`    |
-| `replicaCount`                   | Number of the parallel-running containers. The controller will eventually make the size of the                                     | `1`     |
-| `commonLabels`                   | Labels to add to all deployed objects                                                                                              | `{}`    |
-| `commonAnnotations`              | Annotations to add to all deployed objects                                                                                         | `{}`    |
-| `podLabels`                      | Additional labels for the pod                                                                                                      | `{}`    |
-| `podAnnotations`                 | Additional annotations for the pod.                                                                                                | `{}`    |
-| `priorityClassName`              | priorityClassName                                                                                                                  | `""`    |
-| `podSecurityContext`             | Pod security context                                                                                                               | `{}`    |
-| `securityContext`                | Security context for the container                                                                                                 | `{}`    |
-| `vaultVolumesSupport`            | support for vault secrets as files. Defaults false.                                                                                | `false` |
-| `volumes`                        | Container volumes configuration                                                                                                    | `{}`    |
-| `command`                        | You can set a custom entrypoint for your docker container                                                                          | `[]`    |
-| `args`                           | You can set a custom arguments for your docker container                                                                           | `[]`    |
-| `nodeSelector`                   | Node labels for pod assignment                                                                                                     | `{}`    |
-| `tolerations`                    | Tolerations for pod assignment                                                                                                     | `[]`    |
-| `podAffinityPreset`              | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                | `""`    |
-| `podAntiAffinityPreset`          | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                           | `soft`  |
-| `preStopDelaySeconds`            | pre-stop delay for graceful pod shutdown                                                                                           | `0`     |
-| `nodeAffinityPreset`             | Node affinity preset                                                                                                               |         |
-| `nodeAffinityPreset.type`        | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                          | `""`    |
-| `nodeAffinityPreset.key`         | Node label key to match Ignored if `affinity` is set.                                                                              | `""`    |
-| `nodeAffinityPreset.values`      | Node label values to match. Ignored if `affinity` is set.                                                                          | `[]`    |
-| `affinity`                       | Affinity for pod assignment                                                                                                        | `{}`    |
-| `topologySpreadConstraintPreset` | Control spread of containers across availability zones.                                                                            | `soft`  |
-| `topologySpreadConstraints`      | Control spread of containers across nodes, zones, etc.                                                                             | `{}`    |
-| `resourcesPreset`                | Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). | `nano`  |
-| `pdb`                            | Pod disruption budget configuration                                                                                                |         |
-| `pdb.create`                     | Specifies whether a Pod disruption budget should be created                                                                        | `false` |
-| `pdb.minAvailable`               | Min available pods or percent of pods                                                                                              | `1`     |
-| `pdb.maxUnavailable`             | Max non-available pods or percent of pods                                                                                          | `1`     |
+| Name                                       | Description                                                                                    | Value   |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------- | ------- |
+| `nameOverride`                             | By default, name uses '{{ .Chart.Name }}'.                                                     | `""`    |
+| `fullnameOverride`                         | By default, fullname uses '{{ .Release.Name }}-{{ .Chart.Name }}'.                             | `""`    |
+| `replicaCount`                             | Number of the parallel-running containers. The controller will eventually make the size of the | `1`     |
+| `commonLabels`                             | Labels to add to all deployed objects                                                          | `{}`    |
+| `commonAnnotations`                        | Annotations to add to all deployed objects                                                     | `{}`    |
+| `podLabels`                                | Additional labels for the pod                                                                  | `{}`    |
+| `podAnnotations`                           | Additional annotations for the pod.                                                            | `{}`    |
+| `priorityClassName`                        | priorityClassName                                                                              | `""`    |
+| `podSecurityContext`                       | Pod security context                                                                           |         |
+| `podSecurityContext.runAsUser`             | The UID to run the entrypoint of the container process                                         | `1000`  |
+| `podSecurityContext.runAsNonRoot`          | Indicates that the container must run as a non-root user                                       | `true`  |
+| `podSecurityContext.runAsGroup`            | The GID to run the entrypoint of the container process                                         | `65534` |
+| `podSecurityContext.fsGroup`               | A special supplemental group that applies to all containers in a pod                           | `65534` |
+| `securityContext`                          | Container security context                                                                     |         |
+| `securityContext.allowPrivilegeEscalation` | Controls whether a process can gain more privileges than its parent process                    | `false` |
+| `securityContext.readOnlyRootFilesystem`   | Mounts the container's root filesystem as read-only                                            | `true`  |
+| `securityContext.runAsUser`                | The UID to run the entrypoint of the container process                                         | `1000`  |
+| `securityContext.runAsNonRoot`             | Indicates that the container must run as a non-root user                                       | `true`  |
+| `securityContext.runAsGroup`               | The GID to run the entrypoint of the container process                                         | `65534` |
+
+### securityContext.capabilities Grant certain privileges to a process without granting all the privileges of the root user
+
+| Name                                | Description                                                                                                                        | Value     |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `securityContext.capabilities.drop` | Drop all capabilities by default                                                                                                   | `["ALL"]` |
+| `vaultVolumesSupport`               | support for vault secrets as files. Defaults false.                                                                                | `false`   |
+| `volumes`                           | Container volumes configuration                                                                                                    | `{}`      |
+| `command`                           | You can set a custom entrypoint for your docker container                                                                          | `[]`      |
+| `args`                              | You can set a custom arguments for your docker container                                                                           | `[]`      |
+| `nodeSelector`                      | Node labels for pod assignment                                                                                                     | `{}`      |
+| `tolerations`                       | Tolerations for pod assignment                                                                                                     | `[]`      |
+| `podAffinityPreset`                 | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                | `""`      |
+| `podAntiAffinityPreset`             | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                           | `soft`    |
+| `preStopDelaySeconds`               | pre-stop delay for graceful pod shutdown                                                                                           | `0`       |
+| `nodeAffinityPreset`                | Node affinity preset                                                                                                               |           |
+| `nodeAffinityPreset.type`           | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                          | `""`      |
+| `nodeAffinityPreset.key`            | Node label key to match Ignored if `affinity` is set.                                                                              | `""`      |
+| `nodeAffinityPreset.values`         | Node label values to match. Ignored if `affinity` is set.                                                                          | `[]`      |
+| `affinity`                          | Affinity for pod assignment                                                                                                        | `{}`      |
+| `topologySpreadConstraintPreset`    | Control spread of containers across availability zones.                                                                            | `soft`    |
+| `topologySpreadConstraints`         | Control spread of containers across nodes, zones, etc.                                                                             | `{}`      |
+| `resourcesPreset`                   | Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). | `nano`    |
+| `pdb`                               | Pod disruption budget configuration                                                                                                |           |
+| `pdb.create`                        | Specifies whether a Pod disruption budget should be created                                                                        | `false`   |
+| `pdb.minAvailable`                  | Min available pods or percent of pods                                                                                              | `1`       |
+| `pdb.maxUnavailable`                | Max non-available pods or percent of pods                                                                                          | `1`       |
 
 ### Extra Containers
 
