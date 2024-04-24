@@ -1,0 +1,9 @@
+apiVersion: v2
+name: daemonset
+version: 1.8.1
+description: Typical Daemon Set application
+type: application
+dependencies:
+  - name: k8s-common
+    version: ^1.8.0
+    repository: https://vinivia.github.io/kubernetes-helm-charts
