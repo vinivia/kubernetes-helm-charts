@@ -7,3 +7,6 @@ dependencies:
   - name: k8s-common
     version: ^1.8.0
     repository: https://vinivia.github.io/kubernetes-helm-charts
+home: https://vinivia.github.io/kubernetes-helm-charts
+sources:
+  - https://github.com/vinivia/kubernetes-helm-charts/tree/main/stable/daemonset
