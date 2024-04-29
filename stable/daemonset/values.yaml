@@ -1,5 +1,5 @@
 ---
-# Default values for daemonset.
+# Default values for statefulset.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -313,38 +313,6 @@ datadogIntegration: false
 ## E.g.
 ## githubActionsIntegration: true
 githubActionsIntegration: false
-## @section Configuration of the service
-##
-service:
-  ## @param service.enabled If service should be created to expose Pod.
-  ##
-  enabled: true
-  ## @param service.name If you need to specify a service's name.
-  ##
-  name: ""
-  ## @param service.type Type of the service. One of ClusterIP, NodePort, LoadBalancer.
-  ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  ##
-  type: "ClusterIP"
-  ## @param service.ports Configuration of the service ports
-  ## E.g.
-  ## ports:
-  ##   http: 80
-  ##   https: 443
-  ports: {}
-  ## @param  service.healthCheckPath default HTTP Health check for container liveness and readiness.
-  ##
-  healthCheckPath: "/"
-  ## @param service.loadBalancerSourceRanges Address(es) that are allowed when service is LoadBalancer
-  ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
-  ## Example:
-  ## loadBalancerSourceRanges:
-  ## - 10.10.10.0/24
-  ##
-  loadBalancerSourceRanges: []
-  ## @param service.annotations Service annotations
-  ##
-  annotations: {}
 ## @section Container liveness configuration.
 ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ##
@@ -405,73 +373,6 @@ readinessProbe:
   ## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
   ##
   timeoutSeconds: 1
-## @section Configuration for the main load-balancer
-##
-ingress:
-  ## @param ingress.enabled If service will be accessible outside of Kubernetes environment
-  ##
-  enabled: false
-  ## @param ingress.pathType Type of the path (available options "ImplementationSpecific", "Exact", "Prefix")
-  ##
-  pathType: Prefix
-  ## @param ingress.public If container will be accessible outside VPN.
-  ## Not recommended to for non-production environments.
-  ##
-  public: false
-  ## @param ingress.subDomain If DNS has environment as sub-domain.
-  ## The default DNS is constructed as:
-  ## <global.serviceName>.[<global.product>.<global.environment>].<global.domain>
-  ##
-  subDomain: false
-  ## @param ingress.path Prefix for the path routing
-  ##
-  path: "/"
-  ## @param ingress.annotations Ingress annotations
-  ##
-  annotations: {}
-  ## @param ingress.extraHosts Extra hosts for ingress
-  ## E.g.
-  ## extraHosts:
-  ## - host: example.local
-  ##   port: http
-  ##   paths: []
-  ##
-  extraHosts: []
-## @section Configuration for the extra load-balancer
-##
-ingressExtra:
-  ## @param ingressExtra.enabled If service will be accessible outside of Kubernetes environment
-  ##
-  enabled: false
-  ## @param ingressExtra.pathType Type of the path (available options "ImplementationSpecific", "Exact", "Prefix")
-  ##
-  pathType: Prefix
-  ## @param ingressExtra.public If container will be accessible outside VPN.
-  ## Not recommended to for non-production environments.
-  ##
-  public: false
-  ## @param ingressExtra.subDomain If DNS has environment as sub-domain.
-  ## The default DNS is constructed as:
-  ## <global.serviceName>.[<global.product>.<global.environment>].<global.domain> Route53 HZ.
-  ##
-  subDomain: false
-  ## @param ingressExtra.host DNS for the application external access
-  ##
-  host: ""
-  ## @param ingressExtra.path Prefix for the path routing
-  ##
-  path: "/"
-  ## @param ingressExtra.annotations Ingress annotations
-  ##
-  annotations: {}
-  ## @param ingressExtra.extraHosts Extra hosts for ingress
-  ## E.g.
-  ## extraHosts:
-  ## - host: example.local
-  ##   port: http
-  ##   paths: []
-  ##
-  extraHosts: []
 ## @section RBAC management
 rbac:
   ## @param rbac.create Specifies whether RBAC resources should be created

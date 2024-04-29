@@ -1,0 +1,87 @@
+global:
+  org: "core"
+  domain: "example.com"
+  serviceName: "test"
+  production: true
+  environmentName: "stage"
+  image:
+    registry: "registry.platform.vinivia.dev"
+    repository: "fluent/fluentd"
+    tag: "v1.16-debian-amd64-2"
+    pullPolicy: "IfNotPresent"
+daemonset:
+  nameOverride: ""
+  fullnameOverride: ""
+  serviceAccount:
+    annotations:
+      foo: bar
+  rbac:
+    create: false
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 30m
+      memory: 64Mi
+  command:
+    - /fluent-bit/bin/fluent-bit
+  args:
+    - --workdir=/fluent-bit/etc
+    - --config=/fluent-bit/etc/conf/fluent-bit.conf
+  volumes:
+    varlog:
+      mountPath: /var/log
+      hostPath: /var/log
+    varlibdockercontainers:
+      mountPath: /var/lib/docker/containers
+      hostPath: /var/lib/docker/containers
+      readOnly: true
+    etcmachineid:
+      mountPath: /etc/machine-id
+      hostPath: /etc/machine-id
+      readOnly: true
+    config:
+      mountPath: /fluent-bit/etc/conf
+      configMap:
+        service: |
+          [SERVICE]
+              Daemon Off
+              Flush 1
+              Log_Level info
+              Parsers_File /fluent-bit/etc/parsers.conf
+              Parsers_File /fluent-bit/etc/conf/custom_parsers.conf
+              HTTP_Server On
+              HTTP_Listen 0.0.0.0
+              HTTP_Port {{ .Values.metricsPort }}
+              Health_Check On
+        inputs: |
+          [INPUT]
+              Name tail
+              Path /var/log/containers/*.log
+              multiline.parser docker, cri
+              Tag kube.*
+              Mem_Buf_Limit 5MB
+              Skip_Long_Lines On
+        filters: |
+          [FILTER]
+              Name kubernetes
+              Match kube.*
+              Merge_Log On
+              Keep_Log Off
+              K8S-Logging.Parser On
+              K8S-Logging.Exclude On
+        outputs: |
+          [OUTPUT]
+              Name es
+              Match kube.*
+              Host elasticsearch-master
+              Logstash_Format On
+              Retry_Limit False
+        customParsers: |
+          [PARSER]
+              Name docker_no_time
+              Format json
+              Time_Keep Off
+              Time_Key time
+              Time_Format %Y-%m-%dT%H:%M:%S.%L

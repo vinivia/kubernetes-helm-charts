@@ -98,14 +98,6 @@ daemonset:
         limits:
           cpu: 50m
           memory: 50Mi
-  service:
-    enabled: true
-    name: "z"
-    type: "ClusterIP"
-    port: 80
-    ports:
-      http: 80
-    healthCheckPath: "/"
   livenessProbe:
     enabled: true
     healthCheckPath:
@@ -122,26 +114,6 @@ daemonset:
     periodSeconds: 10
     successThreshold: 1
     timeoutSeconds: 1
-  ingress:
-    enabled: true
-    public: true
-    subDomain: true
-    annotations: {}
-    extraHosts:
-     - host: example.local
-       paths:
-         - "/"
-  ingressExtra:
-    enabled: true
-    public: true
-    subDomain: true
-    annotations: {}
-    host: simple.host
-    path: "/"
-    extraHosts:
-      - host: example.local
-        paths:
-          - "/"
   metrics:
     enabled: true
     path: /metrics
