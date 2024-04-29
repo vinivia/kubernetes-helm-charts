@@ -114,18 +114,6 @@ Typical Daemon Set application
 | `datadogIntegration`       | Enable datadog related integration for tracing        | `false` |
 | `githubActionsIntegration` | Allow github runners to create resources in namespace | `false` |
 
-### Configuration of the service
-
-| Name                               | Description                                                     | Value       |
-| ---------------------------------- | --------------------------------------------------------------- | ----------- |
-| `service.enabled`                  | If service should be created to expose Pod.                     | `true`      |
-| `service.name`                     | If you need to specify a service's name.                        | `""`        |
-| `service.type`                     | Type of the service. One of ClusterIP, NodePort, LoadBalancer.  | `ClusterIP` |
-| `service.ports`                    | Configuration of the service ports                              | `{}`        |
-| `service.healthCheckPath`          | default HTTP Health check for container liveness and readiness. | `/`         |
-| `service.loadBalancerSourceRanges` | Address(es) that are allowed when service is LoadBalancer       | `[]`        |
-| `service.annotations`              | Service annotations                                             | `{}`        |
-
 ### Container liveness configuration.
 
 | Name                                | Description                                    | Value  |
@@ -151,31 +139,6 @@ Typical Daemon Set application
 | `readinessProbe.periodSeconds`       | Period seconds for readinessProbe              | `10`   |
 | `readinessProbe.successThreshold`    | Success threshold for readinessProbe           | `1`    |
 | `readinessProbe.timeoutSeconds`      | Timeout seconds for readinessProbe             | `1`    |
-
-### Configuration for the main load-balancer
-
-| Name                  | Description                                                                      | Value    |
-| --------------------- | -------------------------------------------------------------------------------- | -------- |
-| `ingress.enabled`     | If service will be accessible outside of Kubernetes environment                  | `false`  |
-| `ingress.pathType`    | Type of the path (available options "ImplementationSpecific", "Exact", "Prefix") | `Prefix` |
-| `ingress.public`      | If container will be accessible outside VPN.                                     | `false`  |
-| `ingress.subDomain`   | If DNS has environment as sub-domain.                                            | `false`  |
-| `ingress.path`        | Prefix for the path routing                                                      | `/`      |
-| `ingress.annotations` | Ingress annotations                                                              | `{}`     |
-| `ingress.extraHosts`  | Extra hosts for ingress                                                          | `[]`     |
-
-### Configuration for the extra load-balancer
-
-| Name                       | Description                                                                      | Value    |
-| -------------------------- | -------------------------------------------------------------------------------- | -------- |
-| `ingressExtra.enabled`     | If service will be accessible outside of Kubernetes environment                  | `false`  |
-| `ingressExtra.pathType`    | Type of the path (available options "ImplementationSpecific", "Exact", "Prefix") | `Prefix` |
-| `ingressExtra.public`      | If container will be accessible outside VPN.                                     | `false`  |
-| `ingressExtra.subDomain`   | If DNS has environment as sub-domain.                                            | `false`  |
-| `ingressExtra.host`        | DNS for the application external access                                          | `""`     |
-| `ingressExtra.path`        | Prefix for the path routing                                                      | `/`      |
-| `ingressExtra.annotations` | Ingress annotations                                                              | `{}`     |
-| `ingressExtra.extraHosts`  | Extra hosts for ingress                                                          | `[]`     |
 
 ### RBAC management
 
