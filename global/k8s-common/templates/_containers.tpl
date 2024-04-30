@@ -36,7 +36,7 @@ Return generated container configuration.
     {{- if .Values.livenessProbe.tcpSocket }}
     tcpSocket:
       port: {{ .Values.livenessProbe.tcpSocket }}
-    {{- else if .Values.service.ports.http }}
+    {{- else if (.Values.service).ports.http }}
     httpGet:
       path: {{ .Values.livenessProbe.healthCheckPath | default .Values.service.healthCheckPath }}
       port: http
@@ -52,7 +52,7 @@ Return generated container configuration.
     {{- if .Values.readinessProbe.tcpSocket }}
     tcpSocket:
       port: {{ .Values.readinessProbe.tcpSocket }}
-    {{- else if .Values.service.ports.http }}
+    {{- else if (.Values.service).ports.http }}
     httpGet:
       path: {{ .Values.readinessProbe.healthCheckPath | default .Values.service.healthCheckPath }}
       port: http
