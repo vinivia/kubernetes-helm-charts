@@ -1,6 +1,6 @@
 apiVersion: v2
 name: deployment
-version: 1.8.3
+version: 1.8.5
 description: Typical microservice chart. Supports Ingress controller, horizontal-scalable containers
 type: application
 dependencies:
